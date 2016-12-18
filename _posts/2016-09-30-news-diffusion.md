@@ -9,7 +9,7 @@ header:
   cta_label: "Read More"
   cta_url: "/about"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "寻找人类传播行为可计算化的基因."
+excerpt: "新闻的传播过程是科学界与工业界都关注的重要问题。传统研究多关注新闻在社交网络上的传递。但是以人为节点，以人们彼此间的交互为连边的社交网络，是很容易变化的。在这个不断变化的背景上研究新闻的复制和扩散，显然不是一个非常聪明的策略。"
 modified: 2016-11-03T11:55:22-04:00
 comments: true
 author_profile: true
@@ -114,7 +114,7 @@ $C/∑C=a_2β_2G(L)/e^{β_2L}$
 
 $C′=β_2k[ln(1/t′)]^be^{−k[ln(1/t′)]b}$
 
-其中 $t′=t/t_{max}$, C′=C/∑C, $b=β_2/β_1$, $k=a2/a1^{β_2/β_1}$
+其中 $t′=t/t_{max}$, C′=C/∑C, $b=β_2/β_1$, $k=a_2/a_1^{β_2/β_1}$
 
 本论文已在Scientific Reports上发表：The Collective Direction of Attention Diffusion。
 
