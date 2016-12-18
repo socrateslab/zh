@@ -15,6 +15,46 @@ layouts_gallery:
 modified: 2016-11-03T11:55:22-04:00
 ---
 
+## 我们的愿景
+
+寻找可计算化的基因。计算传播学简介 (点这里阅读)。基因是生物学飞跃的原因，货币是经济学发展的关键。人类传播行为所隐藏的计算化“基因”是什么？
+
+人类不应停止对永恒的普适法则的追寻，不仅在学术，而且在生活中，如康德所言：
+> A person acts morally when he or she acts as if his or her conduct was establishing a universal law governing others in similar circumstances.
+
+计算传播学网站致力于寻找传播学可计算化的基因、学习和传播可计算化思维/方法（电子化数据收集能力、编程能力、数学建模能力、网络分析、文本挖掘）、了解和训练计算传播学的社会化应用方法（数据新闻、计算广告、可视化等）。
+
+## 版面的设置
+
+现在的计算传播学主要分为七个功能板块：两个研究领域（传播网络分析、媒介文本挖掘）、两个应用领域（数据新闻、计算广告）、两类研究方法（数学模型、编程工具），以及开放数据。这是与我们在计算传播学介绍一文中谈及的理论的层级相联系的。理论起源于数据，阶及模式、法则、机制，而达根本原理。将人类传播行为（开放数据）可计算化的转化过程依赖于我们的研究方法（数学模型、编程工具），专注于我们的研究领域（传播网络分析、媒介文本挖掘），而应用于数据新闻和计算广告领域。在此基础上，我们开始总结和整理既有的研究，组建了《计算传播学讲义》板块。
+
+- 网络科学的发展给可计算社会科学注入活力，也为计算传播学的发展注入力量。主要表现为传播网络分析的发展。
+- 数据新闻现在炙手可热，因为所有的媒体都开始寻找新的生存方法。数据新闻是整合资源，吸引眼球的好方法。
+- 计算广告是计算传播学的重要组成部分，但其发展却主要由计算机科学推动。
+
+我们主张计算传播网成为计算传播学社区沟通交流的平台，但是这种交流应该建立在分享有价值的知识的基础上，因而我们主要聚焦于介绍经典或前沿的研究论文&研究方法，在此基础上将计算传播网构建为一个系统化的、有深度的知识网络。
+寻找责任编辑和总编辑
+
+ 《计算传播学》小站求贤英雄帖:愿意成为管理员的同学请告诉我！成为创造者你可以学到更多；变成分享者，你会变得更强大!
+
+## 我们是一个社区
+
+现在的作者团队：http://computational-communication.com/community/
+
+凡对计算传播学感兴趣者，欢迎加入请加入谷歌邮件组：
+https://groups.google.com/group/computational-communication
+申请成为编辑请发邮件至：computational.communication@gmail.com
+我们更欢迎你成为内容贡献者，网站编辑每个月需贡献不少于一篇文章，
+竞选主编需要贡献四篇文章以上，且需要编委会投票半数以上通过。
+作者编辑注意事项和工具
+
+具体如下：http://computational-communication.com/2015/11/test-markdown/
+latex online: codecogs.com/latex/eqneditor.php
+wolframalpha: http://www.wolframalpha.com/
+
+
+## Minimal Mistakes
+
 Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your personal site, blog, or portfolio on GitHub or self-hosting on your own server. As the name implies --- styling is purposely minimalistic to be enhanced and customized by you :smile:.
 
 {% include gallery id="layouts_gallery" caption="Examples of included layouts `splash`, `single`, and `archive`." %}
