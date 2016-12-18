@@ -18,7 +18,7 @@ teaser                   : "/assets/images/500x300.png" # path of fallback tease
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : true # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
     shortname            : "ChengjunWANG" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
@@ -235,12 +235,12 @@ compress_html:
 defaults:
   # _posts
   - scope:
-      path: ""
+      path: "_posts/articles"
       type: posts
     values:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
