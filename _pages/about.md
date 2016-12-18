@@ -11,6 +11,8 @@ comments: true
 author_profile: true
 ---
 
+{% include toc title="Table" icon="file-text" %}
+
 {% include base_path %}
 
 {% capture fig_img %}
