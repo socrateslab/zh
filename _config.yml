@@ -14,7 +14,7 @@ description              : "An amazing website."
 url                      : "https://data-science-lab.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "data-science-lab/data-science-lab.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+teaser                   : "/assets/images/500x300.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
@@ -55,7 +55,7 @@ yandex_site_verification :
 
 # Social Sharing
 twitter:
-  username               :
+  username               : "ChengJunWang"
 facebook:
   username               :
   app_id                 :
@@ -64,7 +64,7 @@ og_image                 : # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
+  type                   : Organization # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
 
@@ -82,14 +82,14 @@ author:
   bio              : "Computational Communication"
   location         : "Nanjing"
   email            : computational.communication@gmail.com
-  uri              :
+  uri              : "https://computational-communication.com"
   bitbucket        :
   codepen          :
   dribbble         :
   flickr           :
   facebook         :
   foursquare       :
-  github           :
+  github           : "data-science-lab"
   google_plus      :
   keybase          :
   instagram        :
@@ -102,7 +102,7 @@ author:
   tumblr           :
   twitter          :
   vine             :
-  weibo            :
+  weibo            : "http://weibo.com/p/10080843f915e125a13c116fe1854bc43ccf0a/home"
   xing             :
   youtube          :
 
