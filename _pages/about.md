@@ -1,7 +1,7 @@
 ---
 layout: single
 permalink: /about/
-title: "About"
+title: ""
 excerpt: "Minimal Mistakes is a flexible two-column Jekyll theme."
 header:
   image: assets/images/unsplash-image-9.jpg
