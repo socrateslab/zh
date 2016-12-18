@@ -7,13 +7,13 @@
 
 # Site Settings
 locale                   : "en"
-title                    : "Site Title"
+title                    : "计算传播网"
 title_separator          : "-"
-name                     : "Your Name"
+name                     : "计算传播网"
 description              : "An amazing website."
 url                      : "https://data-science-lab.github.io"
 baseurl                  : "data-science-lab.github.io" # the subpath of your site, e.g. "/blog"
-repository               : "data-science-lab/data-science-lab.github.io"# GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "data-science-lab/data-science-lab.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
