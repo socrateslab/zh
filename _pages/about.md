@@ -3,6 +3,9 @@ layout: single
 permalink: /about/
 title: "About"
 excerpt: "Minimal Mistakes is a flexible two-column Jekyll theme."
+header:
+  image: assets/images/unsplash-image-9.jpg
+  caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 modified: 2016-11-03T11:55:22-04:00
 comments: true
 author_profile: true

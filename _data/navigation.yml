@@ -4,7 +4,7 @@ main:
      url: https://data-science-lab.github.io/about/
    - title: "Archive"
      url: /year-archive/
-   - title: "Collections"
-     url: /collection-archive/
+   - title: "Wiki"
+     url: https://github.com/data-science-lab/data-science-lab.github.io/wiki
    - title: "Sitemap"
      url: /sitemap/
