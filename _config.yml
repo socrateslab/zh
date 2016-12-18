@@ -77,11 +77,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an amazing person."
-  location         : "Somewhere"
-  email            :
+  name             : "计算传播网"
+  avatar           : "/assets/images/bio-photo.jpg"
+  bio              : "Computational Communication"
+  location         : "Nanjing"
+  email            : computational.communication@gmail.com
   uri              :
   bitbucket        :
   codepen          :
@@ -238,7 +238,7 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      layout: splash
       author_profile: true
       read_time: true
       comments: # true
