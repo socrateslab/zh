@@ -18,13 +18,14 @@ author: "吴令飞"
 
 {% include toc title="Table" icon="file-text" %}
 
-![firebug](http://oaf2qt3yk.bkt.clouddn.com/094233394bc62666876d0db1c060771d.png)http://computational-communication.com/wp-content/uploads/2016/09/Snip20160930_63.png
-
-图1. 延时摄影获得的森林中的萤火虫图像。
-
 新闻的传播过程是科学界与工业界都关注的重要问题。传统研究多关注新闻在社交网络上的传递。但是以人为节点，以人们彼此间的交互为连边的社交网络，是很容易变化的。在这个不断变化的背景上研究新闻的复制和扩散，显然不是一个非常聪明的策略。
 
 从物理学的经典思路出发，一般来说，我们希望研究对象在一个相对稳定的空间里运动，然后我们试图刻画其运动的规律性。所以，要研究新闻的传播，我们需要假设：
+
+![firebug](http://oaf2qt3yk.bkt.clouddn.com/094233394bc62666876d0db1c060771d.png)
+
+图1. 延时摄影获得的森林中的萤火虫图像。
+
 
 有一个相对固定的背景空间；
 有许多新闻，这些新闻在这个背景空间里不断运动，但所有新闻遵循相同的运动方程。
@@ -36,7 +37,7 @@ author: "吴令飞"
 
 首先，我们以新闻为节点，以用户在新闻之间的跳转为连边构造注意力流网络。与普通的带权有向网络不同，我们添加了两个人工节点，源和汇，来平衡所有其他节点上的注意力流的进出关系。源的出流和汇的入流等于全网流的总输入或者总耗散。在这个网络上做统计，我们可以研究其嵌入的背景空间结构。
 
-![flownetwork](http://oaf2qt3yk.bkt.clouddn.com/75ddaf30ae9970b5e2ffd2a166a8726e.png)http://computational-communication.com/wp-content/uploads/2016/09/Snip20160930_64.png
+![flownetwork](http://oaf2qt3yk.bkt.clouddn.com/75ddaf30ae9970b5e2ffd2a166a8726e.png)
 
 图2. 一个注意力流网络的示意图。
 
@@ -50,7 +51,7 @@ author: "吴令飞"
 
 从图3可以看出，背景空间与新闻的年龄有着密切关系，而与新闻的类别没有太多关系。我们发现，年龄比较大的新闻在外围，年龄比较小的新闻在圆心。接下来，让我们看一下在不同时间拍的“快照”，以观察新闻的运动情况。
 
-![spiraltree](http://oaf2qt3yk.bkt.clouddn.com/cfea56fe9285838619f30ab8f2feb936.png)http://computational-communication.com/wp-content/uploads/2016/09/Snip20160930_66.png
+![spiraltree](http://oaf2qt3yk.bkt.clouddn.com/cfea56fe9285838619f30ab8f2feb936.png)
 
 图4. 注意力网络在一个月内随时间变化。2009-06-10图对应图3，上色仍然依据年龄，但与图3略有不同。
 
@@ -58,7 +59,7 @@ author: "吴令飞"
 
 随着时间过去，新的新闻不断从靠近源的地方“生长”出来，把所有旧新闻往外推。而由于注意力场的覆盖范围和密度不随时间变化，因此造成了随时间过去单个新闻获得注意力先增后减的固定兴衰周期。
 
-![timespace](http://oaf2qt3yk.bkt.clouddn.com/e6e831dd59aca954bd65fab87f4d5727.png)http://computational-communication.com/wp-content/uploads/2016/09/Snip20160930_67.png
+![timespace](http://oaf2qt3yk.bkt.clouddn.com/e6e831dd59aca954bd65fab87f4d5727.png)
 
 ## 新闻的逃逸和注意力衰减速度
 
@@ -108,7 +109,7 @@ C∑C=a2β2G(L)eβ2L
 
 需要注意的是，这里的∑C∑C与之前的tmaxtmax不同。tmaxtmax是对所有新闻都一样的，即33天。∑C∑C是每个新闻自己获得的总点击量，不同新闻之间是不一样的。
 
-新闻随年龄增加获得的点击变化
+## 新闻随年龄增加获得的点击变化
 
 我们前面既然知道了新闻的漂移速度，又知道了用户注意力的场密度，就应该可以推测出在漂移过程中新闻获得注意力的变化。我们根据Eq.1与Eq.3预测新闻的年龄与点击存在如下关系
 
@@ -118,4 +119,6 @@ C′=β2k[ln(1t′)]be−k[ln(1t′)]b
 
 本论文已在Scientific Reports上发表：The Collective Direction of Attention Diffusion。
 
-详见: Wang, C.J., Wu, L*, Zhang, J., Janssen, M. (2016) The Collective Direction of Attention Diffusion. Scientific Reports. 6: 34059. doi:10.1038/srep34059 链接：http://www.nature.com/articles/srep34059
+## Reference
+
+详见: Wang, C.J., Wu, L*, Zhang, J., Janssen, M. (2016) The Collective Direction of Attention Diffusion. Scientific Reports. 6: 34059. doi:10.1038/srep34059 [链接: http://www.nature.com/articles/srep34059](http://www.nature.com/articles/srep34059)
