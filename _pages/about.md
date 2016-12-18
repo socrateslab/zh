@@ -3,31 +3,22 @@ layout: single
 permalink: /about/
 title: "About"
 excerpt: "Minimal Mistakes is a flexible two-column Jekyll theme."
-gallery:
-  - url: /assets/images/mm-layout-splash.png
-    image_path: /assets/images/mm-layout-splash.png
-    alt: "splash layout example"
-  - url: /assets/images/mm-layout-single-meta.png
-    image_path: /assets/images/mm-layout-single-meta.png
-    alt: "single layout with comments and related posts"
-  - url: /assets/images/mm-layout-archive.png
-    image_path: /assets/images/mm-layout-archive.png
-    alt: "archive layout example"
 modified: 2016-11-03T11:55:22-04:00
 author_profile: true
 ---
 
-```liquid
-{% raw %}{% include gallery caption="This is a sample gallery with **Markdown support**." %}{% endraw %}
-```
+{% include base_path %}
 
-{% include gallery caption="This is a sample gallery with **Markdown support**." %}
+{% capture fig_img %}
+![Foo]({{ basepath }}/assets/images/unsplash-gallery-image-3.jpg)
+{% endcapture %}
 
 ## 我们的愿景
 
-寻找可计算化的基因。计算传播学简介 (点这里阅读)。基因是生物学飞跃的原因，货币是经济学发展的关键。人类传播行为所隐藏的计算化“基因”是什么？
+寻找人类传播行为可计算化的基因。计算传播学简介 (点这里阅读)。基因是生物学飞跃的原因，货币是经济学发展的关键。人类传播行为所隐藏的计算化“基因”是什么？
 
 人类不应停止对永恒的普适法则的追寻，不仅在学术，而且在生活中，如康德所言：
+
 > A person acts morally when he or she acts as if his or her conduct was establishing a universal law governing others in similar circumstances.
 
 计算传播学网站致力于寻找传播学可计算化的基因、学习和传播可计算化思维/方法（电子化数据收集能力、编程能力、数学建模能力、网络分析、文本挖掘）、了解和训练计算传播学的社会化应用方法（数据新闻、计算广告、可视化等）。
