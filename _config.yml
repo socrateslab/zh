@@ -78,7 +78,7 @@ analytics:
 # Site Author
 author:
   name             : "计算传播网"
-  avatar           : "/assets/logo.png"
+  avatar           : "/assets/logo.jpg"
   bio              : "Computational Communication"
   location         : "Nanjing"
   email            : computational.communication@gmail.com
