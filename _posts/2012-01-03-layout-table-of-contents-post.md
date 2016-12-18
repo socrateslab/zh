@@ -7,7 +7,7 @@ tags:
   - table of contents
 ---
 
-{% include toc title="Unique Title" icon="file-text" %}
+{% include toc title="Table" icon="file-text" %}
 
 Testing Kramdown auto-generated table of contents with unique title and icon assigned in the include like so:
 
