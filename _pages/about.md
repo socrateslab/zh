@@ -70,7 +70,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 
 [Install the Theme]({{ "/docs/quick-start-guide/" | absolute_url }}){: .btn .btn--success .btn--large}
 
-## Notable Features
+### Notable Features
 
 - Compatible with Jekyll 3.x and GitHub Pages
 - Support for Jekyll's built-in Sass/SCSS preprocessor
@@ -81,7 +81,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 - [Google Analytics](https://www.google.com/analytics/) support.
 - UI localized text in English (default), Brazilian Portguese, Chinese, French, German, Italian, Spanish, and Turkish
 
-## Demo Pages
+### Demo Pages
 
 | Name                                        | Description                                           |
 | ------------------------------------------- | ----------------------------------------------------- |
