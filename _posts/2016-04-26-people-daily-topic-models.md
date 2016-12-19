@@ -64,7 +64,8 @@ cutter <- worker(bylines = T,stop_word = file.choose())
 
 现在载入需要分析的文本
 
-```r                                                 comments_seg <- cutter[file.choose()]
+```r  
+comments_seg <- cutter[file.choose()]
 ```                                                                                                             
 
 这一步执行完之后，（在和分析文本的同一文件夹内）会生成一个txt，如我这个就叫做party_master_merged.segment.2016-04-26_11_51_24.txt. 就是分好的词。
@@ -73,9 +74,7 @@ cutter <- worker(bylines = T,stop_word = file.choose())
 
 ```r  
 comments_segged<- readLines(file.choose(),encoding="UTF-8")
-
 comments <- as.list(comments_segged)
-
 doc.list <- strsplit(as.character(comments),split=" ")
 term.table <- table(unlist(doc.list))
 term.table <- sort(term.table, decreasing = TRUE)  
@@ -85,14 +84,14 @@ term.table <- sort(term.table, decreasing = TRUE)
 
 ```r
 del <- term.table < 5| nchar(names(term.table))<2   #把不符合要求的筛出来，使用了一个“或”语句 ( |)
-
 term.table <- term.table[!del]   #把不符合要求的、也就是集合（del）里的元素，从table里去掉
 vocab <- names(term.table)    #创建词库，用于下一步分析
 ```                                                                                                             
 
 大家可以对比一下执行上一面一段代码之前和之后的词频。使用head()命令可以看一个数据的表头。大家可以感受一下表一和表二的区别。
 
-```r                                                 head(term.table)
+```r                                                 
+head(term.table)
 ```                                                                                                             
 
 表一：筛除单个的字和出现小于5次的词之前排名前五名的词
@@ -118,9 +117,8 @@ vocab <- names(term.table)    #创建词库，用于下一步分析
 
 表四：排名前50的词语（《政府工作报告》， 1969-2016）
 
-```r
-发展（139）， 建设（68）， 经济（67）， 改革（62）， 推进（62）， 创新（56）， 加快（42）， 加强（41）， 政府（40）， 促进（37）， 实施（36）， 增长（36）， 企业（35）， 政策（35）， 推动（34）， 社会（34）， 中国（32）， 提高（31）， 我们（30）， 全面（28）， 完善（27）， 扩大（26）， 工作（26）， 制度（26）， 实现（25）， 就业（24）， 人民（24）， 支持（24）， 坚持（23）， 我国（22）， 国家（21）， 一批（21）， 创业（21）， 安全（21）， 农村（20）， 合作（20）， 国际（20）， 继续（19）， 地方（19）， 服务（19）， 投资（19）， 积极（19）， 取得（19）， 基本（18）， 落实（18）， 加大（18）， 机制（18）， 今年（18）， 地区（17）， 问题（17）
-```                                                                                                             
+    发展（139）， 建设（68）， 经济（67）， 改革（62）， 推进（62）， 创新（56）， 加快（42）， 加强（41）， 政府（40）， 促进（37）， 实施（36）， 增长（36）， 企业（35）， 政策（35）， 推动（34）， 社会（34）， 中国（32）， 提高（31）， 我们（30）， 全面（28）， 完善（27）， 扩大（26）， 工作（26）， 制度（26）， 实现（25）， 就业（24）， 人民（24）， 支持（24）， 坚持（23）， 我国（22）， 国家（21）， 一批（21）， 创业（21）， 安全（21）， 农村（20）， 合作（20）， 国际（20）， 继续（19）， 地方（19）， 服务（19）， 投资（19）， 积极（19）， 取得（19）， 基本（18）， 落实（18）， 加大（18）， 机制（18）， 今年（18）， 地区（17）， 问题（17）
+
 
 因此，一个仓促的结论似乎是这样的：仅词频这个角度来说，党媒对于音乐选秀类节目的话语似乎更倾向于市场化的一面，并且将选秀节目拓展至国家发展的一部分，并将之与国家宏观调控发展的策略进行接合（articulation）。 如刚才所展示的，创新、社会、国际、市场、模式、卫视、制作、网络、收视率、产业这一系列只可能出现在新闻联播头条的、与张学友张国荣张家辉张涵宇张惠妹张少涵张含韵张雨琪章子怡邓紫琪等毫无关系的词语，赫然榜上。 不过，在政府工作报告中的高频词，如建设、经济、改革、推进、农村等基础建设的议题则暂时没有出现。
 
@@ -146,7 +144,6 @@ set.seed(360)
 
 ```r
 fit10 <- lda.collapsed.gibbs.sampler(documents = documents, K = 10, vocab = vocab, num.iterations = G, alpha = alpha, eta = eta, initial = NULL, burnin = 0, compute.log.likelihood = TRUE)
-
 fit5 <- lda.collapsed.gibbs.sampler(documents = documents, K = 5, vocab = vocab, num.iterations = G, alpha = alpha, eta = eta, initial = NULL, burnin = 0, compute.log.likelihood = TRUE)
 ```                                                                                                             
 
