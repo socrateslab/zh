@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/unsplash-image-3.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。对"
+excerpt: "本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。"
 modified: 2016-04-26T11:55:22-04:00
 comments: true
 author_profile: true

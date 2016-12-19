@@ -1,0 +1,145 @@
+body {
+  position: relative;
+  padding:0px;
+  margin:0px;
+  background-color: #e9e9e9;
+  -moz-user-select:none;
+}
+
+.nbMainFrame{
+  position: relative;
+  padding:0px;
+  margin:10px 0px 10px 0px;
+  width:990px;
+  background-color:#FFFFFF;
+}
+
+.nbContentFrameDiv{
+	overflow:hidden;
+	top:50px;
+	width:990px;
+}
+
+
+.nbContentMain{
+	width:990px;
+}
+
+.nb_navMenu{
+	width:990px;
+	height:50px;
+	background-color:#2a2d59;
+}
+
+.nb_navMenu div{
+	position:relative;
+	float:left;
+	width:140px;
+	height:50px;
+	cursor:pointer;
+	background-repeat:repeat;
+}
+
+
+.nb_navMenu #nb_navMenu_1{
+	background-image:url('./button12.png');
+}
+
+.nb_navMenu #nb_navMenu_2{
+	background-image:url('./button21.png');
+}
+
+.nb_navMenu #nb_navMenu_3{
+	background-image:url('./button31.png');
+}
+#nb_part0_explain {
+	text-align: left;
+	#height: 100px;
+	#line-height: 25px;
+	font-size: 16px;
+	padding: 20px 40px;
+	font-family:"Arial","Microsoft YaHei","黑体","宋体","sans-serif";
+}
+
+#nb_part1_explain {
+	text-align: left;
+	#height: 100px;
+	#line-height: 25px;
+	font-size: 16px;
+	padding: 20px 40px;
+	font-family:"Arial","Microsoft YaHei","黑体","宋体","sans-serif";
+}
+.title-img {
+	height: 100%;
+}
+
+#nb_part1{
+	width:990px;
+	height:610px;
+	background-color:#FFFFFF;
+}
+
+.first-paragraph {
+	#text-indent: 32px;
+	font-size: 20px;
+	line-height: 25px;
+	font-weight: bold;
+}
+.second-paragraph {
+	margin-top: 10px;
+	#text-indent: 32px;
+}
+
+#nb_part2_explain {
+	text-align: left;
+	#height: 50px;
+	#line-height: 50px;
+	font-size: 16px;
+	padding: 20px 40px;
+	font-family:"Arial","Microsoft YaHei","黑体","宋体","sans-serif";
+	background-color: 
+}
+
+#nb_part2{
+	width:990px;
+	height:610px;
+	background-color:#FFFFFF;
+}
+
+#nb_part3_explain {
+	text-align: left;
+	#height: 50px;
+	#line-height: 50px;
+	font-size: 16px;
+	padding: 20px 40px;
+	font-family:"Arial","Microsoft YaHei","黑体","宋体","sans-serif";
+	background-color: 
+}
+
+#nb_part3{
+	width:990px;
+	height:610px;
+	background-color:#FFFFFF;
+}
+
+#bg {
+width: 100%;
+height: 20px;
+background-color: #eee;
+}
+
+
+/*数字新闻公用头*/
+.siteNav{ border-bottom:0px; border-top:0px; margin-bottom:0px; height: 100px;}
+.topUp .logo{ margin-left:27px;}
+.siteNav{ background-color: #2a2d59; color:#fff; height:100px;}
+.siteNav a{ color:#fff;}
+.siteNav a:hover{ background:#4393D5;}
+.siteNavBox{ border-right:0px; height: 100px; text-align: center;}
+.loginInfo{ background:url(http://file.caixin.com/file/datanews/images/line_shu.gif) no-repeat right 2px; border-right:0px; margin-top:10px;}
+.siteNav a, .siteNav span{ border-left:0px;  background:url(http://file.caixin.com/file/datanews/images/line_shu.gif) no-repeat left 2px;}
+
+
+
+
+
