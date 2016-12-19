@@ -16,7 +16,6 @@ author: "王成军"
 
 {% include toc title="Table" icon="file-text" %}
 
-![memory-preferential random walk model](http://oaf2qt3yk.bkt.clouddn.com/424396951922ff02ac9d2e88a9bc72cc.png)
 
 ## 模型设定
 <ul>
@@ -27,6 +26,8 @@ author: "王成军"
 <li>对于没有去过的地方也要一个概率，解决方法是令其概率为1，去过的地方的概率也加上1，变为：$1 + \lambda k_{\beta}$。 **因为没有去过的地方的$k_{\beta} = 0$，所以也可以表达为$1 + \lambda k_{\beta}$。</li>
 </ul>
 <p>去一个地方的概率还需要进一步归一化： $P_{\rightarrow \beta} = \frac{1 + \lambda k_{\beta}}{\sum_{\gamma = 1}^{m} ( 1 + \lambda k_{\beta})}$ 公式（1）</p>
+
+![memory-preferential random walk model](http://oaf2qt3yk.bkt.clouddn.com/424396951922ff02ac9d2e88a9bc72cc.png)
 
 ## 分析问题
 
