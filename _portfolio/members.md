@@ -3,7 +3,7 @@ title: "王成军"
 excerpt: "My name is Cheng-Jun Wang (aka 王成军/Frank), an assistant research fellow in the School of Journalism & Communication, Nanjing University."
 header:
   image: /assets/images/foo-bar-identity.jpg
-  teaser: /assets/images/bio-photo.jpg
+  teaser: /assets/images/head.jpg
 sidebar:
   - title: "role"
     image: http://placehold.it/350x250
