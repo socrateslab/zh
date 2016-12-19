@@ -134,7 +134,7 @@
     @include gallery(2.5 of 10);
 
     .archive__item-teaser {
-      max-height: 120px;
+      max-height: 250px;
     }
 
     .archive__item-excerpt {
@@ -164,7 +164,7 @@
     @include gallery(4 of 12);
 
     .feature__item-teaser {
-      max-height: 200px;
+      max-height: 250px;
       overflow: hidden;
     }
   }
