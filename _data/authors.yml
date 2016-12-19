@@ -1,11 +1,19 @@
 # Authors
 吴令飞:
   name        : "吴令飞"
-  email       : "cornelius@thewhip.com"
+  email       : ""
   bio         : "I ordered what?"
   avatar      : "/assets/images/bio-photo.jpg"
-  twitter     : "rhymeswithsackit"
-  google_plus : "CorneliusFiddlebone"
+  twitter     : ""
+  google_plus : ""
+
+王成军:
+  name        : "王成军"
+  email       : ""
+  bio         : "Follow your logic！"
+  avatar      : "/assets/images/bio-photo.jpg"
+  twitter     : ""
+  google_plus : ""
 
 Billy Rick:
   name        : "Billy Rick"
