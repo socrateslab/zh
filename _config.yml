@@ -18,7 +18,7 @@ teaser                   : "/assets/images/500x300.png" # path of fallback tease
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : "staticman" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  provider               : "custom" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
     shortname            : # "ChengjunWANG"  https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
