@@ -11,7 +11,7 @@ excerpt: "本文介绍了如何使用Python读取网络数据、计算网络效�
 modified: 2016-04-23T11:55:22-04:00
 comments: true
 author_profile: true
-author: "王成军"
+author: "闫小勇"
 ---
 
 {% include toc title="Table" icon="file-text" %}

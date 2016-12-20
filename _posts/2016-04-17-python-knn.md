@@ -11,7 +11,7 @@ excerpt: "NBA历史上与这些超级球星处于同一位置的球员都有谁�
 modified: 2016-04-17T11:55:22-04:00
 comments: true
 author_profile: true
-author: "王成军"
+author: "罗晨"
 ---
 
 {% include toc title="Table" icon="file-text" %}
