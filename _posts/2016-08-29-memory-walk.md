@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Memory-preferential random walk model"
+title: "记忆优先随机游走模型"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
