@@ -15,6 +15,7 @@ author_profile: true
 
 ![](http://oaf2qt3yk.bkt.clouddn.com/99328938ccd1f635c719b95ddeac4c70.png)
 
+
 网络科学使得幂律(power law)和无标度（scale-free）变得非常普及。那么究竟无标度的意义是什么呢？其实，无标度来源于统计物理的一个分支：相变理论（the theory of phase transition）。要理解无标度概念，我们需要了解<code>度分布</code>的moments(中文翻译为<em>矩</em>)。
 
 度分布的n阶矩被定义为：
