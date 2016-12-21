@@ -27,13 +27,15 @@ author_profile: true
 <li>n = 3的时候，三阶矩是$<k^3>$, 决定了度分布的偏度（skewness），测量了$p_k$围绕着 <k>的对称性。</li>
 </ul>
 
-![k std](http://oaf2qt3yk.bkt.clouddn.com/99328938ccd1f635c719b95ddeac4c70.png)
+![](http://oaf2qt3yk.bkt.clouddn.com/99328938ccd1f635c719b95ddeac4c70.png)
+
 <p>对于无标度网络而言，满足幂律分布：</p>
 <p>$p(k) = Ck^{-\gamma}$ （2）</p>
 <p>由公式（1）和（2）可以得到：</p>
 <p>$ <k^n> = \int_{k_{min}}^{k_{max}}k^np_kdk = C \frac{k_{max}^{n- \gamma +1} - k_{min}^{n - \gamma +1}}{n - \gamma + 1} $ （3）</p>
 <p>可以使用wolframalpha的积分计算器积分来进行简单验证，例如x^(n-r)dx从10到100积分 网页链接：<a href="http://www.wolframalpha.com/input/?i=integrate%20x%5E%28n-r%29%20dx%20from%2010%20to%20100">http://www.wolframalpha.com/input/?i=integrate+x%5E%28n-r%29+dx+from+10+to+100</a></p>
 <p>显然：</p>
+
 <ul>
 <li>当$n - \gamma +1 <= 0$时，随着$k_{max}增加，$$k_{max}^{n- \gamma +1} \rightarrow 0$。所有满足$n <= \gamma -1$的n阶矩都是有限的。</li>
 <li>当$n - \gamma +1 >0 $时，随着$k_{max}增加，$$k_{max}^{n- \gamma +1} \rightarrow \infty$。所有满足$n > \gamma -1$的n阶矩都是无极限的。</li>
