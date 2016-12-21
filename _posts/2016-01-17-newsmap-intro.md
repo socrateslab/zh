@@ -41,6 +41,7 @@ Highcharts基本组成部分如下图所示<br />
 <a href="http://www.hcharts.cn/api/index.php">Highcharts中文API</a></p>
 
 # 数据介绍
+
 ## 数据来源
 
 <blockquote>
@@ -50,6 +51,7 @@ Highcharts基本组成部分如下图所示<br />
 <p>GDELT项目涵盖了1979年至今的所有新闻数据，它每日对全球新闻报道进行自动抓取，并通过文本分析从不同维度提取信息。 GDELT的所有数据均可免费获得，链接为：<a href="http://data.gdeltproject.org/events/index.html">http://data.gdeltproject.org/events/index.html</a></p>
 
 ## 数据组成
+
 <p>通过上文链接可下载zip类型的gdelt数据压缩包，解压后为csv格式，每个csv文件内的数据均有58个字段（2013年3月以前的数据仅有57个字段，后文会详细说明），这58个字段分为EVENTID AND DATE ATTRIBUTES，ACTOR ATTRIBUTES，EVENT ACTION ATTRIBUTES，EVENT GEOGRAPHY，DATA MANAGEMENT FIELDS这五部分。</p>
 <ul>
 <li>EVENT AND DATE ATTRIBUTES </li>
@@ -149,24 +151,30 @@ Highcharts基本组成部分如下图所示<br />
 <li>引入echarts</li>
 </ul>
 <p>ECharts 3 开始不再强制使用 AMD 的方式按需引入，代码里也不再内置 AMD 加载器。因此引入方式简单了很多，只需要像普通的 JavaScript 库一样用 script 标签引入。</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;header&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;!-- 引入 ECharts 文件 --&gt;
-    &lt;script src="echarts.min.js"&gt;&lt;/script&gt;
-&lt;/header&gt;
-&lt;/html&gt;
-</code></pre>
+
+```html
+<!DOCTYPE html>
+<html>
+<header>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="echarts.min.js"></script>
+</header>
+</html>
+```
+
 <ul>
 <li>动态加载所需图表</li>
 </ul>
 <p>在绘图前我们需要为 ECharts 准备一个具备高宽的 dom 容器。</p>
-<pre><code>&lt;body&gt;
-    &lt;!-- 为 ECharts 准备一个具备大小（宽高）的Dom --&gt;
-    &lt;div id="main" style="width: 600px;height:400px;"&gt;&lt;/div&gt;
-&lt;/body&gt;
-</code></pre>
+
+```html
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+</body>
+```
+
 <p>然后就可以通过 echarts.init 方法初始化一个 echarts 实例并通过 setOption 方法生成相应类型的图表。</p>
 
 ## 网站布局设计
