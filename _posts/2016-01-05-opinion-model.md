@@ -30,7 +30,7 @@ author: "胡海波"
 
 ## 模型
 
-我们假定初始时社交网络中个体或节点的数量为$N$，不同的观点的数量为$I = 2$，个体的观点、思想或态度可以取离散值$i$ = 1, 2, ..., $I$，这些不同的观点是等价的、互斥的，每个人的初始观点都是基于一定的私人信息或生活体验形成的。首先我们假定网络中一部分个体为忠诚个体，其他的则为一般个体。在每一个时间步，我们随机选择一个个体，如果他是忠诚个体，不进行观点更新；如果他是一般个体，他将更新他的观点。当一般个体更新观点时，他以概率$P$选择媒体观点作为他的新观点，而以概率$1-P$随机选择他的一个好友并将其新观点设置为与该好友一致。在这个模型中，媒体和社交网络均会影响一个人的观点，一个可调的参数$P$可以控制大众媒体和社交网络的相对权重。最终这个动力学过程将达到稳态，其中一个或几个观点将会主导整个社交网络。
+我们假定初始时社交网络中个体或节点的数量为$N$，不同的观点的数量为$I \ge 2$，个体的观点、思想或态度可以取离散值$i$ = 1, 2, …, $I$，这些不同的观点是等价的、互斥的，每个人的初始观点都是基于一定的私人信息或生活体验形成的。首先我们假定网络中一部分个体为忠诚个体，其他的则为一般个体。在每一个时间步，我们随机选择一个个体，如果他是忠诚个体，不进行观点更新；如果他是一般个体，他将更新他的观点。当一般个体更新观点时，他以概率$P$选择媒体观点作为他的新观点，而以概率$1-P$随机选择他的一个好友并将其新观点设置为与该好友一致。在这个模型中，媒体和社交网络均会影响一个人的观点，一个可调的参数$P$可以控制大众媒体和社交网络的相对权重。最终这个动力学过程将达到稳态，其中一个或几个观点将会主导整个社交网络。
 
 ## 结果
 
@@ -38,31 +38,31 @@ author: "胡海波"
 
 对于原始的投票者模型，初始时不同的观点数为$I=2$，我们可以用1和2来表示这两种观点。我们假定媒体观点为$m=2$，并考虑某个时间步一次特定的更新。假设随机选择的个体$A$为要更新观点的个体，$A$度值为$k$的概率为$p_k$，接下来我们来讨论一次更新将$A$由观点2变为1和由1变为2的概率。
 
-对于观点由2变为1，已知$A$的度值$k$，在更新之前$A$的观点为2且为一般个体的概率为$q_{2,k} -{s_{2,k} } $。要将$A$的观点从2变为1，$A$需要受他的一个观点为1的好友$B$的影响。$A$被他的好友影响的概率为$1-P$，要得到一个随机选择的好友$B$其观点为1的概率，我们需要知道$A$的好友的度分布。令$P(k'|k)$为度值为$k$的个体其好友度值为$k'$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。在这种情况下，$P(k'|k) = k'p_{k'} / \sum\nolimits_{k'} {k'p_{k'}} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum\nolimits_j {jp_j q_{1,j} } /\sum\nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为 $$\begin{equation} p_{2 \to 1} (k) = p_k (q_{2,k} - {s_{2,k} } )(1 -P)\frac{{\sum\nolimits_j {jp_j q_{1,j}} }}{{\sum\nolimits_j {jp_j }}} \end{equation} $$ 类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} - {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} - s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为
+对于观点由2变为1，已知$A$的度值$k$，在更新之前$A$的观点为2且为一般个体的概率为$q_{2,k} -{s_{2,k} } $。要将$A$的观点从2变为1，$A$需要受他的一个观点为1的好友$B$的影响。$A$被他的好友影响的概率为$1-P$，要得到一个随机选择的好友$B$其观点为1的概率，我们需要知道$A$的好友的度分布。令$P(k’|k)$为度值为$k$的个体其好友度值为$k’$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。在这种情况下，$P(k’|k) = k’p_{k’} / \sum\nolimits_{k’} {k’p_{k’}} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum\nolimits_j {jp_j q_{1,j} } /\sum\nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为 $$\begin{equation} p_{2 \to 1} (k) = p_k (q_{2,k} – {s_{2,k} } )(1 -P)\frac{{\sum\nolimits_j {jp_j q_{1,j} } }}{{\sum\nolimits_j {jp_j }}} \end{equation} $$ 类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} – {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} – s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为 $$\begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P) {\frac{{\sum\nolimits_j {jp_j q_{2,j} } }}{{\sum\nolimits_j {jp_j }}}} + P} \right] \end{equation} $$
 
-    \begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P) {\frac{{\sum\nolimits_j {jp_j q_{2,j} } }}{{\sum\nolimits_j {jp_j }}}} + P} \right] \end{equation}
+当$I \ge 2$时，我们可以得到更一般的结论。
 
+当$i \ne m$时，状态更新将度为$k$的一个个体从观点非$i$变为$i$的概率为 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)\frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} \end{equation} $$ 将度为$k$的一个个体从观点$i$变为非$i$的概率为 $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
 
-当$I = 2$时，我们可以得到更一般的结论。
+令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义 $$\begin{equation} q_i^{\rm{w}} = \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} = \frac{{\sum\nolimits_j {jn_j q_{i,j} } }}{{N\left\langle k \right\rangle }} \end{equation} $$ 作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)q_i^{\rm{w}} = p_k (q_{\bar i,k} – s_{\bar i,k} )(1 – P)q_i^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)(1 – q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
 
-当$i \ne m$时，状态更新将度为$k$的一个个体从观点非$i$变为$i$的概率为 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 - q_{i,k} - \sum\nolimits_{j \ne i} {s_{j,k} } )(1 - P)\frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} \end{equation} $$ 将度为$k$的一个个体从观点$i$变为非$i$的概率为 $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)\left( {1 - \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
+$q_{i,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {\rm{d}}t =\left[ {(1 – \sum\nolimits_j {s_{j,k} } )(1 – P)q_i^{\rm{w}} – q_{i,k} + s_{i,k} } \right] {\rm{d}}t \end{equation} $$
 
-令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义 $$\begin{equation} q_i^{\rm{w}} = \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} = \frac{{\sum\nolimits_j {jn_j q_{i,j} } }}{{N\left\langle k \right\rangle }} \end{equation} $$ 作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 - q_{i,k} - \sum\nolimits_{j \ne i} {s_{j,k} } )(1 - P)q_i^{\rm{w}} = p_k (q_{\bar i,k} - s_{\bar i,k} )(1 - P)q_i^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)(1 - q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
+在稳态时， $$\begin{equation} \mathop {\lim }\limits_{t \to \infty } q_i^{\rm{w}} (t) = \hat q_i^{\rm{w}} = \frac{{s_i^{\rm{w}} }}{{P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$ $$\begin{equation} \hat q_i = s_i + \underbrace {(1 – s)(1 – P)\frac{{s_i^{\rm{w}} }}{{P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }}}_{{\rm{Internal \; interactions}}} \end{equation} $$ 其中$s$为忠诚个体的比例，$s_i$为观点为$i$的忠诚个体的比例。
 
-$q_{i,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {\rm{d}}t =\left[ {(1 - \sum\nolimits_j {s_{j,k} } )(1 - P)q_i^{\rm{w}} - q_{i,k} + s_{i,k} } \right] {\rm{d}}t \end{equation} $$
+当$i = m$时，利用前面的方法可以得到 $$\begin{equation} p_{m \to \bar m} (k) = p_k (q_{m,k} – s_{m,k} )(1 – P)(1 – q_m^{\rm{w}} ) = p_k (q_{m,k} – s_{m,k} )(1 – P)q_{\bar m}^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{\bar m \to m} (k) = p_k (1 – q_{m,k} – \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 – P)q_m^{\rm{w}} + P} \right] = p_k (q_{\bar m,k} – s_{\bar m,k} )\left[ {(1 – P)q_m^{\rm{w}} + P} \right]. \end{equation} $$
 
-在稳态时， $$\begin{equation} \mathop {\lim }\limits_{t \to \infty } q_i^{\rm{w}} (t) = \hat q_i^{\rm{w}} = \frac{{s_i^{\rm{w}} }}{{P + (1 - P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$ $$\begin{equation} \hat q_i = s_i + \underbrace {(1 - s)(1 - P)\frac{{s_i^{\rm{w}} }}{{P + (1 - P)\sum\nolimits_j {s_j^{\rm{w}} } }}}_{{\rm{Internal \; interactions}}} \end{equation} $$ 其中$s$为忠诚个体的比例，$s_i$为观点为$i$的忠诚个体的比例。
+$q_{m,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{m,k} = \left[ {\left( {{\rm{1 – }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 – P)q_m^{\rm{w}} + P} \right) – q_{m,k} + s_{m,k} } \right]{\rm{d}}t \end{equation} $$
 
-当$i = m$时，利用前面的方法可以得到 $$\begin{equation} p_{m \to \bar m} (k) = p_k (q_{m,k} - s_{m,k} )(1 - P)(1 - q_m^{\rm{w}} ) = p_k (q_{m,k} - s_{m,k} )(1 - P)q_{\bar m}^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{\bar m \to m} (k) = p_k (1 - q_{m,k} - \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 - P)q_m^{\rm{w}} + P} \right] = p_k (q_{\bar m,k} - s_{\bar m,k} )\left[ {(1 - P)q_m^{\rm{w}} + P} \right]. \end{equation} $$
+在稳态时， $$\begin{equation} \hat q_m^{\rm{w}} = \frac{{s_m^{\rm{w}} + (1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{{P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
 
-$q_{m,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{m,k} = \left[ {\left( {{\rm{1 - }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 - P)q_m^{\rm{w}} + P} \right) - q_{m,k} + s_{m,k} } \right]{\rm{d}}t \end{equation} $$
-
-在稳态时， $$\begin{equation} \hat q_m^{\rm{w}} = \frac{{s_m^{\rm{w}} + (1 - \sum\nolimits_j {s_j^{\rm{w}} } )P}}{{P + (1 - P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
-
-$$\begin{equation}\hat q_m = s_m + \frac{{(1 - s)(1 - P)s_m^{\rm{w}} }}{{P + (1 - P)\sum\nolimits_j {s_j^{\rm{w}} } }} + (1 - s)P + \frac{{(1 - s)(1 - P)(1 - \sum\nolimits_j {s_j^{\rm{w}} } )P}}{{P + (1 - P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
+$$\begin{equation}\hat q_m = s_m + \frac{{(1 – s)(1 – P)s_m^{\rm{w}} }}{{P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} + (1 – s)P + \frac{{(1 – s)(1 – P)(1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{{P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
 
 ## 结论
+
 我们发现，稳态时每种观点的比例与顽固个体的度值和比例以及媒体的影响权重相关。对于非媒体观点，其最终比例（方程10）一部分来自于顽固个体，另一部分则来自于顽固个体所导致的网络中内部的相互作用所产生的增量；对于媒体观点，其比例（方程15）除了上述两部分，另有第三部分来自于外部媒体对个体观点的影响。该第三部分又可分为两部分，一部分来自于个体间无相互作用时媒体对大众舆论的影响，另一部分则来自于媒体通过社交网络结构对个体观点所施加的影响，这表明媒体会通过社交网络放大其对个体的影响力，在此社交网络担当了社会放大器的角色。也就是说，媒体不仅可以直接通过广播的形式来改变人们的观点，也可以间接的通过社交网络中的同伴影响来达到同样的目的。
+
 尽管我们的模型只是研究了个体的观点受社交网络和媒体的影响发生变化从而导致了公共舆论的演化，但它可以成为很多包含内部和外部影响的经济或社会现象的一种隐喻，比如可以应用到产品采纳、创新扩散、品牌选择等不同场景。
+
 
 更多细节内容，请参阅下面的论文： <a href="http://link.springer.com/article/10.1007/s11403-015-0170-8">Social networks, mass media and public opinions</a>
