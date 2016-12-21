@@ -36,7 +36,7 @@ author: "王成军"
 
 可以采用python作为编程环境来实现这个过程。首先导入一下常用的科学计算、网络算法和绘图的包。
 
- ```python
+```python
 import numpy as np
 from scipy.sparse import *
 from scipy import *
