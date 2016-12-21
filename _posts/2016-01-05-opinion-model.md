@@ -38,13 +38,19 @@ author: "胡海波"
 
 对于原始的投票者模型，初始时不同的观点数为$I=2$，我们可以用1和2来表示这两种观点。我们假定媒体观点为$m=2$，并考虑某个时间步一次特定的更新。假设随机选择的个体$A$为要更新观点的个体，$A$度值为$k$的概率为$p_k$，接下来我们来讨论一次更新将$A$由观点2变为1和由1变为2的概率。
 
-对于观点由2变为1，已知$A$的度值$k$，在更新之前$A$的观点为2且为一般个体的概率为$q_{2,k} -{s_{2,k} } $。要将$A$的观点从2变为1，$A$需要受他的一个观点为1的好友$B$的影响。$A$被他的好友影响的概率为$1-P$，要得到一个随机选择的好友$B$其观点为1的概率，我们需要知道$A$的好友的度分布。令$P(k’|k)$为度值为$k$的个体其好友度值为$k’$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。在这种情况下，$P(k’|k) = k’p_{k’} / \sum\nolimits_{k’} {k’p_{k’}} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum\nolimits_j {jp_j q_{1,j} } /\sum\nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为 
+对于观点由2变为1，已知$A$的度值$k$，在更新之前$A$的观点为2且为一般个体的概率为$q_{2,k} -{s_{2,k} } $。要将$A$的观点从2变为1，$A$需要受他的一个观点为1的好友$B$的影响。$A$被他的好友影响的概率为$1-P$，要得到一个随机选择的好友$B$其观点为1的概率，我们需要知道$A$的好友的度分布。令$P(k’|k)$为度值为$k$的个体其好友度值为$k’$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。在这种情况下，$P(k’|k) = k’p_{k’} / \sum\nolimits_{k’} {k’p_{k’}} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum\nolimits_j {jp_j q_{1,j} } /\sum\nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为 $$\begin{equation} p_{2 \to 1} (k) = p_k (q_{2,k} – {s_{2,k} } )(1 -P)\frac{{\sum\nolimits_j {jp_j q_{1,j}}}}{{\sum\nolimits_j {jp_j }}} \end{equation} $$
 
-类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} – {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} – s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为 $$\begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P) {\frac{{\sum\nolimits_j {jp_j q_{2,j} } }}{{\sum\nolimits_j {jp_j }}}} + P} \right] \end{equation} $$
+类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} – {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} – s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为
+
+$$\begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P) {\frac{{\sum\nolimits_j {jp_j q_{2,j}} }}{{\sum\nolimits_j {jp_j }} }} + P} \right] \end{equation} $$
 
 当$I \ge 2$时，我们可以得到更一般的结论。
 
-当$i \ne m$时，状态更新将度为$k$的一个个体从观点非$i$变为$i$的概率为 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)\frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} \end{equation} $$ 将度为$k$的一个个体从观点$i$变为非$i$的概率为 $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
+当$i \ne m$时，状态更新将度为$k$的一个个体从观点非$i$变为$i$的概率为
+
+$$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)\frac{{\sum\nolimits_j {jp_j q_{i,j}} }}{{\sum\nolimits_j {jp_j} }} \end{equation} $$
+
+将度为$k$的一个个体从观点$i$变为非$i$的概率为 $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
 
 令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义 $$\begin{equation} q_i^{\rm{w}} = \frac{{\sum\nolimits_j {jp_j q_{i,j} } }}{{\sum\nolimits_j {jp_j } }} = \frac{{\sum\nolimits_j {jn_j q_{i,j} } }}{{N\left\langle k \right\rangle }} \end{equation} $$ 作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)q_i^{\rm{w}} = p_k (q_{\bar i,k} – s_{\bar i,k} )(1 – P)q_i^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)(1 – q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
 
