@@ -32,28 +32,35 @@ author: "王成军"
 
 这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）
 
+## 网络模拟
+
+可以采用python作为编程环境来实现这个过程。首先导入一下常用的科学计算、网络算法和绘图的包。
+
  ```python
 import numpy as np
 from scipy.sparse import *
 from scipy import *
-
 import random
 import matplotlib.pyplot as plt
 import pickle
 import networkx as nx
 from scipy.optimize import leastsq
 from rtree import index #必备包，为了让模型加速
+```
 
+之后我们来定义一个模型初始化的函数，输入L、d、r三个参数。
+
+```python
 def initiate(L,d,r):
-  #input: L range, d dimension, r radius
-  #generate nodes that carry coordinates
+  # input: L range, d dimension, r radius
+  # generate nodes that carry coordinates
   coordinate=np.ones(d)*L/2
   nodelist={1:{1:coordinate,3:1,4:0,5:0}}
-  #1: coordinate, 3: borning time, 4: In degree, 5: out degree
+  # 1: coordinate, 3: borning time, 4: In degree, 5: out degree
 
   # Create 2D index, Using Rtree to accelerate
   p = index.Property()
-  if d&gt;=2:
+  if d>=2:
       p.dimension = d
   else:
       p.dimension = 2
@@ -71,8 +78,10 @@ def initiate(L,d,r):
       limitt=np.r_[rectangle1,rectangle2]
   # nodelist: a list of nodes, idxnd: Rtree indices, limitt: Rectangle boundary
   return (nodelist,idxnd,limitt)
+```
+接下来，可以定义一个网络模型生长迭代的函数onestep。
 
-
+```python
 def onestep(nodelist,idxnd,L,network,limit,time,d,r):
   #计算几何图占方形区域面积
   aa=1
@@ -83,7 +92,7 @@ def onestep(nodelist,idxnd,L,network,limit,time,d,r):
   # And the average time interval between two random valid nodes
   # follow an exponential distribution, some time can generated virtually
   time+=random.expovariate(locallambda)
-  #Generate a random node within the valid area
+  # Generate a random node within the valid area
   newpoint=np.array([random.random()*(limit[d+v]-limit[v])+limit[v] for v in range(d)])
 
   #Search for neighbors
@@ -93,14 +102,14 @@ def onestep(nodelist,idxnd,L,network,limit,time,d,r):
       hits=list(idxnd.intersection(tuple(np.r_[newpoint,newpoint])))
   neighbors={}
   newedges=0;
-  if len(hits)&gt;0:
+  if len(hits)>0:
       for i in hits:
           node=nodelist[i]
           distance=np.linalg.norm(node[1]-newpoint)
-          if distance&lt;r:
+          if distance<r:
               ind=i
               neighbors[i]=ind
-  if len(neighbors)&gt;0:
+  if len(neighbors)>0:
       # Real adding nodes and links
       nodelist[len(nodelist)+1]={1:newpoint,3:time,4:0,5:len(neighbors)}
       for i in range(d):
@@ -122,8 +131,10 @@ def onestep(nodelist,idxnd,L,network,limit,time,d,r):
 
 ##  Basic implementation
 
+接下来可以按照给定的参数来进行模拟了。
+
  ```python
-L=10**10#Hypercube length
+L=10**10 # Hypercube length
 maxnode=10**5#The wanted number of nodes
 d=2#spatial dimension
 r=1#interaction area;
@@ -134,9 +145,9 @@ edges=[0];
 network={};
 
 time=1
-while len(ndlist)&lt;maxnode:
+while len(ndlist) < maxnode:
 ndlist,idx,newedge,network,limit,time=onestep(ndlist,idx,L,network,limit,time,d,r)
-if newedge&gt;0:
+if newedge>0:
     edges=np.r_[edges,edges[-1]+newedge];
 if np.remainder(t,1000)==0:
     print len(ndlist)
