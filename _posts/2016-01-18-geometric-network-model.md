@@ -133,6 +133,7 @@ def onestep(nodelist,idxnd,L,network,limit,time,d,r):
 
 接下来可以按照给定的参数来进行模拟了。
 
+
 ```python
 L=10**10 # Hypercube length
 maxnode=10**5#The wanted number of nodes
