@@ -155,4 +155,4 @@ t=t+1;
 ```
 
 ##  参考
-匹配生長隨機幾何圖模型 http://wiki.swarma.net/index.php/匹配生长随机几何图模型
+[匹配生長隨機幾何圖模型](http://wiki.swarma.net/index.php/匹配生长随机几何图模型) 
