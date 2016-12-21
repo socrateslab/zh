@@ -56,19 +56,45 @@ $$\begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P)
 
 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum \nolimits_{j \ne i} {s_{j,k} } )(1 – P)\frac{ {\sum \nolimits_j {jp_j q_{i,j}} }}{ {\sum \nolimits_j {jp_j} }} \end{equation} $$
 
-将度为$k$的一个个体从观点$i$变为非$i$的概率为 $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
+将度为$k$的一个个体从观点$i$变为非$i$的概率为
 
-令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义 $$\begin{equation} q_i^{\rm{w}} = \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }} = \frac{ {\sum\nolimits_j {jn_j q_{i,j} } }}{ {N\left\langle k \right\rangle }} \end{equation} $$ 作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此 $$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)q_i^{\rm{w}} = p_k (q_{\bar i,k} – s_{\bar i,k} )(1 – P)q_i^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)(1 – q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
+$$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
 
-$q_{i,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {\rm{d}}t =\left[ {(1 – \sum\nolimits_j {s_{j,k} } )(1 – P)q_i^{\rm{w}} – q_{i,k} + s_{i,k} } \right] {\rm{d}}t \end{equation} $$
+令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义
 
-在稳态时， $$\begin{equation} \mathop {\lim }\limits_{t \to \infty } q_i^{\rm{w}} (t) = \hat q_i^{\rm{w}} = \frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$ $$\begin{equation} \hat q_i = s_i + \underbrace {(1 – s)(1 – P)\frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }}}_{ {\rm{Internal \; interactions}}} \end{equation} $$ 其中$s$为忠诚个体的比例，$s_i$为观点为$i$的忠诚个体的比例。
+$$\begin{equation} q_i^{\rm{w}} = \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }} = \frac{ {\sum\nolimits_j {jn_j q_{i,j} } }}{ {N\left\langle k \right\rangle }} \end{equation} $$
 
-当$i = m$时，利用前面的方法可以得到 $$\begin{equation} p_{m \to \bar m} (k) = p_k (q_{m,k} – s_{m,k} )(1 – P)(1 – q_m^{\rm{w}} ) = p_k (q_{m,k} – s_{m,k} )(1 – P)q_{\bar m}^{\rm{w}} , \end{equation} $$ $$\begin{equation} p_{\bar m \to m} (k) = p_k (1 – q_{m,k} – \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 – P)q_m^{\rm{w}} + P} \right] = p_k (q_{\bar m,k} – s_{\bar m,k} )\left[ {(1 – P)q_m^{\rm{w}} + P} \right]. \end{equation} $$
+作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此
 
-$q_{m,k}$的演化方程为 $$\begin{equation} {\rm{d}}q_{m,k} = \left[ {\left( { {\rm{1 – }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 – P)q_m^{\rm{w}} + P} \right) – q_{m,k} + s_{m,k} } \right]{\rm{d}}t \end{equation} $$
+$$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)q_i^{\rm{w}} = p_k (q_{\bar i,k} – s_{\bar i,k} )(1 – P)q_i^{\rm{w}} , \end{equation} $$
 
-在稳态时， $$\begin{equation} \hat q_m^{\rm{w}} = \frac{ {s_m^{\rm{w}} + (1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
+$$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)(1 – q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
+
+$q_{i,k}$的演化方程为
+
+$$\begin{equation} {\rm{d}}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {\rm{d}}t =\left[ {(1 – \sum\nolimits_j {s_{j,k} } )(1 – P)q_i^{\rm{w}} – q_{i,k} + s_{i,k} } \right] {\rm{d}}t \end{equation} $$
+
+在稳态时，
+
+$$\begin{equation} \mathop {\lim }\limits_{t \to \infty } q_i^{\rm{w}} (t) = \hat q_i^{\rm{w}} = \frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
+
+$$\begin{equation} \hat q_i = s_i + \underbrace {(1 – s)(1 – P)\frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }}}_{ {\rm{Internal \; interactions}}} \end{equation} $$
+
+其中$s$为忠诚个体的比例，$s_i$为观点为$i$的忠诚个体的比例。
+
+当$i = m$时，利用前面的方法可以得到
+
+$$\begin{equation} p_{m \to \bar m} (k) = p_k (q_{m,k} – s_{m,k} )(1 – P)(1 – q_m^{\rm{w}} ) = p_k (q_{m,k} – s_{m,k} )(1 – P)q_{\bar m}^{\rm{w}} , \end{equation} $$
+
+$$\begin{equation} p_{\bar m \to m} (k) = p_k (1 – q_{m,k} – \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 – P)q_m^{\rm{w}} + P} \right] = p_k (q_{\bar m,k} – s_{\bar m,k} )\left[ {(1 – P)q_m^{\rm{w}} + P} \right]. \end{equation} $$
+
+$q_{m,k}$的演化方程为
+
+$$\begin{equation} {\rm{d}}q_{m,k} = \left[ {\left( { {\rm{1 – }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 – P)q_m^{\rm{w}} + P} \right) – q_{m,k} + s_{m,k} } \right]{\rm{d}}t \end{equation} $$
+
+在稳态时，
+
+$$\begin{equation} \hat q_m^{\rm{w}} = \frac{ {s_m^{\rm{w}} + (1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
 
 $$\begin{equation}\hat q_m = s_m + \frac{ {(1 – s)(1 – P)s_m^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} + (1 – s)P + \frac{ {(1 – s)(1 – P)(1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
 
