@@ -127,7 +127,7 @@ def onestep(nodelist,idxnd,L,network,limit,time,d,r):
           rectangle=np.r_[rectangle1,rectangle2];
           idxnd.insert(len(nodelist),rectangle)
   return (nodelist,idxnd,newedges,network,limit,time)
- ```
+```
 
 ##  Basic implementation
 
@@ -155,4 +155,4 @@ t=t+1;
 ```
 
 ##  参考
-[匹配生長隨機幾何圖模型](http://wiki.swarma.net/index.php/匹配生长随机几何图模型) 
+[匹配生長隨機幾何圖模型](http://wiki.swarma.net/index.php/匹配生长随机几何图模型)
