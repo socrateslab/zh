@@ -8,7 +8,7 @@ header:
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "当个体更新观点时，他以概率P选择媒体观点作为他的新观点，而以概率1−P随机选择他的一个好友并将其新观点设置为与该好友一致。最终这个动力学过程将达到稳态。"
-modified: 2016-01-02T11:55:22-04:00
+modified: 2016-01-05T11:55:22-04:00
 comments: true
 author_profile: true
 author: "胡海波"
