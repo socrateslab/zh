@@ -4,7 +4,7 @@ title: "小世界网络的输运效率"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-5.jpg
+  overlay_image: /assets/images/unsplash-image-13.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "Latora（2001）的主要贡献
