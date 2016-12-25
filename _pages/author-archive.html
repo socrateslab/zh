@@ -1,15 +1,15 @@
 ---
 layout: archive
-permalink: /author-list/
+permalink: /authors/
 title: "Posts by Authors"
 author_profile: true
 ---
 
 {% include group-by-array collection=site.posts field="author" %}
 
-{% for authorname in group_names %}
+{% for authorName in group_names %}
   {% assign posts = group_items[forloop.index0] %}
-  <h2 id="{{ authorname | slugify }}" class="archive__subtitle">{{ authorname }}</h2>
+  <h2 id="{{ authorName | slugify }}" class="archive__subtitle">{{ authorName }}</h2>
   {% for post in posts %}
     {% include archive-single.html %}
   {% endfor %}
