@@ -5,7 +5,7 @@ title: "Posts by Authors"
 author_profile: true
 ---
 
-{% include group-by-array collection=site.posts field="author" %}
+{% include group-by-array collection=site.posts field="page.author" %}
 
 {% for authorName in group_names %}
   {% assign posts = group_items[forloop.index0] %}
