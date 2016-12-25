@@ -1,15 +1,15 @@
 ---
 layout: archive
 permalink: /author-zero/
-title: "Posts by Authors"
+title: "Posts by Authors hh"
 author_profile: true
 ---
 
 {% include group-by-array collection=site.posts field="author" %}
 
 {% for author in group_names %}
-  {% assign posts = group_items[forloop.index0] %}
   <h1 id="{{ author | slugify }}" class="archive__subtitle">{{ author }}</h1>
+  {% assign posts = group_items[forloop.index0] %}
   {% for post in posts %}
     {% include archive-single.html %}
   {% endfor %}
