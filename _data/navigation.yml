@@ -1,12 +1,12 @@
 # main links
 main:
-   - title: "About"
+   - title: "关于"
      url: https://data-science-lab.github.io/about/
-   - title: "Archive"
+   - title: "文章"
      url: /year-archive/
-   - title: "Authors"
+   - title: "作者"
      url: /authors/
-   - title: "Editors"
+   - title: "编辑"
      url: /portfolio/
-   - title: "Wiki"
+   - title: "百科"
      url: https://github.com/data-science-lab/data-science-lab.github.io/wiki
