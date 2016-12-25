@@ -10,7 +10,4 @@ author_profile: true
 {% for authorName in group_names %}
   {% assign posts = group_items[forloop.index0] %}
   <h2 id="{{ authorName | slugify }}" class="archive__subtitle">{{ authorName }}</h2>
-  {% for post in posts %}
-    {% include archive-single.html %}
-  {% endfor %}
 {% endfor %}
