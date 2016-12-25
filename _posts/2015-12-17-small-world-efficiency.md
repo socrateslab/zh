@@ -7,7 +7,8 @@ header:
   overlay_image: /assets/images/unsplash-image-5.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "LDAvis 是一个交互式的主题模型可视化包，可以将主题模型建模后的结果，利用D3.js封装好的一个可视化模板，制作成一个网页交互版的结果分析工具。"
+excerpt: "Latora（2001）的主要贡献
+对于小世界网络的描述，可以简化为efficiency（记作E）一个变量即可，且efficiency本身有其物理意义。efficiency衡量了网络信息交换的效率。"
 modified: 2015-12-17T11:55:22-04:00
 comments: true
 categories:
