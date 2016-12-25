@@ -4,8 +4,6 @@ main:
      url: https://data-science-lab.github.io/about/
    - title: "Archive"
      url: /year-archive/
-   - title: "Authors"
-       url: /author-archive/
    - title: "Members"
      url: /portfolio/
    - title: "Wiki"
