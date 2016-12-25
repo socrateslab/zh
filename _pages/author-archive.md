@@ -13,14 +13,12 @@ author_profile: true
 ---
 
 [寻找人类传播行为可计算化的基因。]({{ "/" | absolute_url }}){: .btn .btn--success .btn--large}
-寻找人类传播行为可计算化的基因。{: .btn .btn--success .btn--large}
-[寻找人类传播行为可计算化的基因。]{: .btn .btn--success .btn--large}
 
 
 {% include group-by-array collection=site.posts field="author" %}
 
 {% for authorName in group_names offset:1 %}
-  {{ authorName }}{: .btn .btn--success .btn--large}
+  [{{ authorName }}](){: .btn .btn--success .btn--large}
   {% assign posts = group_items[forloop.index] %}
   {% for post in posts %}
     {% include archive-single.html %}
