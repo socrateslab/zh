@@ -56,14 +56,16 @@ https://groups.google.com/group/computational-communication
 申请成为编辑请发邮件至：computational.communication@gmail.com
 我们更欢迎你成为内容贡献者，网站编辑每个月需贡献不少于一篇文章，
 竞选主编需要贡献四篇文章以上，且需要编委会投票半数以上通过。
-作者编辑注意事项和工具
-
-具体如下：http://computational-communication.com/2015/11/test-markdown/
-latex online: codecogs.com/latex/eqneditor.php
-wolframalpha: http://www.wolframalpha.com/
 
 
-## 网站模板
+### 作者编辑注意事项和工具
+
+[latex online](http://codecogs.com/latex/eqneditor.php)
+
+[wolframalpha](http://www.wolframalpha.com/)
+
+
+### 网站模板
 
 新网站采用jekyll构建，选择了Minimal Mistakes模板。不再依赖于基于数据库的网站构建方法，也不再需要阿里云虚拟服务器的承载。整个网站采用markdown文件构成，便于管理，支持数学公式、程序代码高亮、用户留言、文章作者管理等学术网站必备功能。迁移至Github后，网站的响应速度虽有降低，但稳定性更强。
 
