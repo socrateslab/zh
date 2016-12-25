@@ -5,12 +5,12 @@ title: "Posts by Authors"
 author_profile: true
 ---
 
-test
+test test
 
 {% include group-by-array collection=site.posts field="author" %}
 
-{% for authorName in group_names.index %}
-  <h2 id="{{ authorName | slugify }}" class="archive__subtitle">{{ authorName }}</h2>
+{% for authorName in group_names %}
+  <h2 id="{{ authorName | slugify }}" class="archive__subtitle"><--->{{ authorName }}</h2>
   {% assign posts = group_items[forloop.index] %}
   {% for post in posts %}
     <h3 id = 'post_id'>{{ authorName }} | {{post.title}}</h3>
