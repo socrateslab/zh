@@ -5,7 +5,7 @@ excerpt: "Minimal Mistakes is a flexible two-column Jekyll theme."
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-9.jpg
+  overlay_image: /assets/images/unsplash-image-11.jpg
   cta_label: "Read More"
   cta_url: "/about"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
