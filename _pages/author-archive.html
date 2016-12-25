@@ -12,8 +12,6 @@ excerpt: "作者/文章索引"
 author_profile: true
 ---
 
-test test test
-
 {% include group-by-array collection=site.posts field="author" %}
 
 {% for authorName in group_names offset:1 %}
