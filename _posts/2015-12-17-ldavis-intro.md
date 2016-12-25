@@ -10,11 +10,14 @@ header:
 excerpt: "LDAvis 是一个交互式的主题模型可视化包，可以将主题模型建模后的结果，利用D3.js封装好的一个可视化模板，制作成一个网页交互版的结果分析工具。"
 modified: 2015-12-17T11:55:22-04:00
 comments: true
+categories:
+  - 可视化
+tags:
+- R
 author_profile: true
 author: "谈和"
 ---
 
-{% include toc title="Table" icon="file-text" %}
 
 <p><em>前言：本文话语极为啰嗦，因为想让更多技术背景不深的人也能看懂，所以望能谅解。</em></p>
 <p>LDA主题模型在2002年被David M. Blei、Andrew Y. Ng（是的，就是吴恩达老师）和Michael I. Jordan三位第一次提出，近几年随着社会化媒体的兴起，文本数据成为越来越重要的分析资料；海量的文本数据对社会科学研究者的分析能力提出了新的要求，于是LDA主题模型（Topic Model）作为一种能够从大量文本中提取出主题的概率模型，被越来越多的运用到主题发现、文档标记等社会科学研究中来。</p>
