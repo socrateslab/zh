@@ -1,6 +1,6 @@
 ---
 layout: archive
-permalink: /tags/
+permalink: /author-list/
 title: "Posts by Tags"
 author_profile: true
 ---
@@ -9,7 +9,7 @@ author_profile: true
 
 {% for tag in group_names %}
   {% assign posts = group_items[forloop.index0] %}
-  <h2 id="{{ author | slugify }}" class="archive__subtitle">{{ author }}</h2>
+  <h2 id="{{ tag | slugify }}" class="archive__subtitle">{{ tag }}</h2>
   {% for post in posts %}
     {% include archive-single.html %}
   {% endfor %}
