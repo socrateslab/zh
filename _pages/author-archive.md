@@ -12,8 +12,6 @@ excerpt: "作者/文章索引"
 author_profile: true
 ---
 
-[寻找人类传播行为可计算化的基因。]({{ "/" | absolute_url }}){: .btn .btn--success .btn--large}
-
 
 {% include group-by-array collection=site.posts field="author" %}
 
