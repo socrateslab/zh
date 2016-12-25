@@ -46,12 +46,13 @@ author_profile: true
 
  《计算传播学》小站求贤英雄帖:愿意成为管理员的同学请告诉我！成为创造者你可以学到更多；变成分享者，你会变得更强大!
 
-## 我们是一个社区
+## 联系我们
 
-现在的作者团队：http://computational-communication.com/community/
+现在的作者团队：http://computational-communication.com/members/
 
 凡对计算传播学感兴趣者，欢迎加入请加入谷歌邮件组：
 https://groups.google.com/group/computational-communication
+
 申请成为编辑请发邮件至：computational.communication@gmail.com
 我们更欢迎你成为内容贡献者，网站编辑每个月需贡献不少于一篇文章，
 竞选主编需要贡献四篇文章以上，且需要编委会投票半数以上通过。
