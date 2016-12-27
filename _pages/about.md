@@ -71,6 +71,13 @@ https://groups.google.com/group/computational-communication
 
 Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your personal site, blog, or portfolio on GitHub or self-hosting on your own server. As the name implies --- styling is purposely minimalistic to be enhanced and customized by you :smile:.
 
+- [x] **网站优化** @chengjun
+  - [x] 采用基于jekyll的Minimal Mistakes模板
+  - [x] 支持markdown（包括代码高亮）
+  - [x] 支持基于mathjax的数学公式
+- [x] <del>域名迁移</del>
+- [ ] 网站迁移
+
 ### Notable Features
 
 - Compatible with Jekyll 3.x and GitHub Pages
