@@ -34,6 +34,8 @@ Many collective human activities, including violence, have been shown to exhibit
 
 事件的规模采用死亡人员数量来衡量，主要因为死亡人数更容易核实。从累计概率分布来看具有明显长尾特征。根据图1，其中事件规模的幂指数$\alpha \sim 2.5$。
 
+值得注意的是在叛乱事件当中，有更多非常小的事件；而在战争当中（如西班牙内战和美国内战），有相对少的非常小的事件。这导致了叛乱更趋向于幂律分布，而内战更趋向于对数正态分布。如果用幂律来拟合两者的话，内战因为更趋近于正态，幂指数$\alpha$更小（约为1.7）。
+
 ## 事件的时间特征
 
 ![event_timing](http://oaf2qt3yk.bkt.clouddn.com/4cdcec77309bb63a0b788f604d76f22d.png)
@@ -48,6 +50,23 @@ Many collective human activities, including violence, have been shown to exhibit
 
 ![insurgency_model](http://oaf2qt3yk.bkt.clouddn.com/5ed94c5298fa1ccc0098a02a38aed152.png)
 
+在这个模型里有两种运行机制：
+
+1. Mechanism (1): ongoing group dynamics **within** the insurgent population (for example, as a result of internal interactions and/or the presence of an opposing entity such as a state army);
+2. Mechanism (2): group decision-making about **when to attack** based on competition for ``media attention``.
+
 根据上图，作者刻画叛乱的模型框架是从媒介报道展开的：
-1. 在时间点t媒体会广播叛乱事件。
-2. 媒体报道会
+1. 在时间点t媒体会广播叛乱事件。【机制2】
+2. 在时间点t媒体报道会改变群体的策略和自信水平【机制2】
+3. 在时间点t群体内部互动（联合或分裂）【机制1】
+4. 机制1构成群体重组，机制2决定自群体在时间点t的攻击决策
+5. 上述过程构成时间点t的叛乱事件数$n_x(t)$
+    - 数据分析：
+      - 规模为x的事件数量在时间维度上汇总 $\sum_t n_x (t)$
+      - 时间点t的事件数量在规模维度上汇总 $\sum_x n_x(t) $
+6. 在时间点t更新叛乱事件的新闻
+
+作者认为
+
+- 机制1导致了时间维度汇总的事件数量的分布（Figure2）；
+- 机制2导致了规模维度汇总的时间数量的分布（Figure3）。
