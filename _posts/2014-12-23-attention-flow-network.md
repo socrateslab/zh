@@ -16,11 +16,11 @@ author: "梁夏"
 
 A:Stackexchange.com是一个问答网站，在网站中你可以提问，也可以回答别人提出的问题。在Stackexchange.com上，超过半数的问题在十二分钟内会获得解答，其内容的实用性与Quora的趣味性形成鲜明对比，二者被誉为迄今为止世界上最成功的两个问答网站。
 
-![](~/10-14-16.jpg)
+![stacktime](http://oaf2qt3yk.bkt.clouddn.com/4a3bc373e5617d5b98ca604150f022ed.png)
 
 吴令飞博士的研究思路，是按照注意力路径，注意力空间和注意力动力学三个方面进行的：
 
-![](~/10-09-11.jpg)
+![stack_summary](http://oaf2qt3yk.bkt.clouddn.com/8f39988ca59218192935038a4db43920.png)
 
 ### 注意力路径（Path）
 
