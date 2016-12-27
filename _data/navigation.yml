@@ -8,5 +8,7 @@ main:
      url: /authors/
    - title: "编辑"
      url: /portfolio/
+   - title: "文献"
+     url: /readings/
    - title: "百科"
      url: https://github.com/data-science-lab/data-science-lab.github.io/wiki
