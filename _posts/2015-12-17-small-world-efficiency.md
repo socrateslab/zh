@@ -43,10 +43,11 @@ Latora V, Marchiori M.(2001)发表了题为“小世界的输运效率”的论�
 <li>1/L和C分别可以看做是在global和local尺度上对E的近似值</li>
 <li>对于Watts(1998)中给出的对图G的限制(unweightedness,sparseness,connectedness)可以摒弃，图G可以是带权的、非稀疏的、非连通的。</li>
 </ol>
+
 Latora给出了对任意一个节点数为N,边数为K的图G的考察方法，他们采用两个矩阵来描述它，一个是把图G作为unweighted graph求得的邻接矩阵$a_{ij}$，另一个是矩阵$l_{ij}$，简单的说就是一个权重矩阵，这里的权重可以是两个节点之间实际地理上的距离，也可以指Internet上两个路由器之间交换一个包的信息所花的时间。
 
 ##  最短带权重路径长度
-Latora所定义的两点之间的最短路径长度矩阵$d_{ij}$由$a_{ij}和l_{ij}$算出，它<em>更准确的表达</em>是任意两点i,j之间<strong>最短的带权路径长度</strong>，当无权重时，可以认为权重值为1。文中的原句为
+Latora所定义的两点之间的最短路径长度矩阵$d_{ij}$由 $a_{ij}$和$l_{ij}$算出，它<em>更准确的表达</em>是任意两点i,j之间<strong>最短的带权路径长度</strong>，当无权重时，可以认为权重值为1。文中的原句为
 
 <blockquote>
 The shortest path length $d_{ij}$ between two generic points i and j is the smallest sum of the physical distances throughout all the possible paths in the graph from i to j.

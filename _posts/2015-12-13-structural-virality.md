@@ -86,7 +86,13 @@ petition在任一扩散规模下均比其他三类信息表现出与更高的str
 
 作者根据先前的数据分析，尝试着构建一个简化的模型，适用于所观察到的经验数据，其总共构建了四个模型，其中主要的变量：
 
-$$\beta =a\;constant\;of\;infectiousness$$ $$\bar{k}=the\;average\;node\;degree$$ $$\sigma ^{2}=the\;degree\;variance$$ $$r=\bar{k}\beta $$
+$$\beta =a\;constant\;of\;infectiousness$$
+
+$$\bar{k}=the\;average\;node\;degree$$
+
+$$\sigma ^{2}=the\;degree\;variance$$
+
+$$r=\bar{k}\beta $$
 
 <strong>Model 1</strong>
 
