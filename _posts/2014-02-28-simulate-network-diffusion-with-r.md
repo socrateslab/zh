@@ -1,11 +1,11 @@
 ---
-title: 使用R模拟网络扩散
+title: "使用R模拟网络扩散"
 comments: true
 categories:
-- network
+  - network
 tags:
-- 信息扩散
-- R
+  - 信息扩散
+  - R
 modified: 2014-02-28T11:55:22-04:00
 author:"王成军"
 ---

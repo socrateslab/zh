@@ -2,10 +2,10 @@
 title: "探寻社交网络中的关系: 统计网络模型初探"
 comments: true
 categories:
-- network
+  - network
 tags:
-- 网络
-- 计算传播学
+  - 网络
+  - 计算传播学
 
 modified: 2013-08-09T11:55:22-04:00
 author:"王成军"
