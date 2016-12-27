@@ -10,13 +10,13 @@ author:"王成军"
 演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。
 
 ```python
+%matplotlib inline
 import re
 import sys
 import random
 import numpy as np
 from numpy import delete
 from numpy import linalg as LA
-%matplotlib inline
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 from urlparse import urlparse
