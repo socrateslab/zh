@@ -46,7 +46,7 @@ $$PR(A)=\left( \frac{PR(B)}{L(B)}+ \frac{PR(C)}{L(C)}+ \frac{PR(D)}{L(D)}+\,\cdo
 
 所以，這個等式如下：
 
-$${PageRank}(p_i) = \frac{1-d}{N} + d \sum_{p_j \in M(p_i)} \frac{{PageRank} (p_j)}{L(p_j)}$$
+$${PageRank}(p_i) = \frac{1-d}{N} + d \sum_{p_j \in M(p_i)} \frac{ PageRank (p_j)}{L(p_j)}$$
 
 $p_1$, $p_2$, ..., $p_N$是被研究的頁面，$M(p_i)$是鏈入$p_i$頁面的集合，$L(p_j)$ 是 $p_j$ 鏈出頁面的數量，而N是所有頁面的數量。
 
