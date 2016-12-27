@@ -5,7 +5,7 @@ tags:
   - networkx
   - python
 modified: 2014-10-31T11:55:22-04:00
-author:"王成军"
+author: "王成军"
 ---
 
 ## 问题

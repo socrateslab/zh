@@ -1,8 +1,8 @@
 ---
 layout: single
+title: "译稿勘误:有向三元组的类型"
 tags:
   - book
-title: "译稿勘误:有向三元组的类型"
 modified: 2014-08-11T11:55:22-04:00
 author:"王成军"
 ---
