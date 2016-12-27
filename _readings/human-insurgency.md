@@ -56,6 +56,7 @@ Many collective human activities, including violence, have been shown to exhibit
 2. Mechanism (2): group decision-making about **when to attack** based on competition for ``media attention``.
 
 根据上图，作者刻画叛乱的模型框架是从媒介报道展开的：
+
 1. 在时间点t媒体会广播叛乱事件。【机制2】
 2. 在时间点t媒体报道会改变群体的策略和自信水平【机制2】
 3. 在时间点t群体内部互动（联合或分裂）【机制1】
