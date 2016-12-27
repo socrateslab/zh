@@ -5,6 +5,9 @@ permalink: /readings/
 author_profile: true
 ---
 
-{% for post in site.readings %}
-  {% include archive-single.html %}
-{% endfor %}
+
+<div class="grid__wrapper">
+  {% for post in site.readings %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+</div>

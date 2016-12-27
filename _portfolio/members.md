@@ -32,4 +32,3 @@ My name is Cheng-Jun Wang (aka 王成军/Frank), an assistant research fellow in
 - Ph.D (City University of Hong Kong)
 - MA (Peking University)
 - BA (Lanzhou University).
-R stupid commenters should isn't a business model bringing a tote bag to a knife fight.
