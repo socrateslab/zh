@@ -113,6 +113,7 @@ include:
   - _pages
   - _portfolio
   - _readings
+  - _recipes
   - _jekylls
 exclude:
   - "*.sublime-project"
@@ -236,7 +237,7 @@ compress_html:
 
 # Collections
 collections:
-  docs:
+  recipes:
     output: true
     permalink: /:collection/:path/
   readings:
@@ -269,10 +270,10 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _docs
+  # _recipes
   - scope:
       path: ""
-      type: docs
+      type: recipes
     values:
       layout: single
       read_time: false
