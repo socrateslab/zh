@@ -1,6 +1,5 @@
 ---
 title: "QAP检验：计算两个网络的关联"
-date: 2013-08-04 00:40
 comments: true
 categories:
 - network
@@ -8,6 +7,7 @@ tags:
 - chengjun
 - statnet
 - r
+modified: 2013-08-04T11:55:22-04:00
 ---
 
 

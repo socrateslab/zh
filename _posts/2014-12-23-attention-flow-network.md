@@ -1,10 +1,9 @@
 ---
-date: 2014-12-23 10:05
-status: public
 title: 注意力流网络分析的三个维度
 tags:
 - 流网络
 - 注意力
+modified: 2014-12-23T11:55:22-04:00
 author:"梁夏"
 ---
 

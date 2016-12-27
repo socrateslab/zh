@@ -1,14 +1,14 @@
 ---
 Title: 网络残缺度：共同好友间可否两步到达？
-date: 2014-05-05 20:38
 comments: true
-category: 
+category:
 - 社会网络
 tags:
-- chengjun
 - 关系
 - 嵌入度
 - 残缺度
+modified: 2016-06-26T11:55:22-04:00
+author:"王成军"
 ---
 
 

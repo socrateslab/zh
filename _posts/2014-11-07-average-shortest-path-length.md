@@ -1,11 +1,9 @@
 ---
-date: 2014-11-07 14:53
-status: public
 title: 使用networkx计算平均最短路径长度
 tags:
 - networkx
 - python
-
+modified: 2014-10-31T11:55:22-04:00
 author:"王成军"
 ---
 

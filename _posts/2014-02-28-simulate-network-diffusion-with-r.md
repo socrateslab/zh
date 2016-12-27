@@ -1,14 +1,13 @@
 ---
 title: 使用R模拟网络扩散
-date: 2014-02-28 10:41
 comments: true
 categories:
 - network
 tags:
-- chengjun
 - 信息扩散
 - R
-status: public
+modified: 2014-02-28T11:55:22-04:00
+author:"王成军"
 ---
 
 与普通的扩散研究不同，网络扩散开始考虑网络结构对于扩散过程的影响。
