@@ -112,6 +112,8 @@ include:
   - .htaccess
   - _pages
   - _portfolio
+  - _readings
+  - _jekyll
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
