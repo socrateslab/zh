@@ -113,9 +113,9 @@ import networkx as nx
 # 从一个叫做seq的list中随机选择m个不重复元素
 def random_subset(seq,m):
   targets=set()
-  while len(targets)&lt;m:
-  x=random.choice(seq)
-  targets.add(x)
+  while len(targets)<m:
+    x=random.choice(seq)
+    targets.add(x)
   return targets
 
 # 优先链接模型，n为节点数量，m为连边数量
@@ -124,10 +124,10 @@ def BA(n, m):
   targets=list(range(m)) #第m+1节点进来的时候，把之前的m个节点都当做是连边的终点（数字序号即节点名称）
   repeated_nodes=[] #包含了所有节点的一个list，每个节点重复出现的次数等于它的度
   source=m #第m+1个节点作为连边的起点，其名称是m，因为数字序号从0开始计算
-  while source&lt;n:
-    G.add_edges_from(zip([source]&lt;em>m,targets)) #起点给每一个终点一条连边
+  while source<n:
+    G.add_edges_from(zip([source]<em>m,targets)) #起点给每一个终点一条连边
     repeated_nodes.extend(targets) #抢到边的终点产生一个分身，包含到repeated_nodes里
-    repeated_nodes.extend([source]&lt;/em>m) #给出m条的新节点产生m个分身，包含到repeated_nodes里
+    repeated_nodes.extend([source]</em>m) #给出m条的新节点产生m个分身，包含到repeated_nodes里
     targets = random_subset(repeated_nodes,m) #进入下一轮，在repeated_nodes里随机选择m个节点作为新的终点，分身越多的节点被选中概率越大
     source += 1 #进入下一轮，在当前最大数值的节点序号上+1，引入一个新的节点作为起点
   return G
@@ -199,7 +199,7 @@ def ranG(n, m):
   targets=list(range(m))
   unique_nodes=set()
   source=m
-  while source&lt;n:
+  while source<n:
     G.add_edges_from(zip([source]*m,targets))
     unique_nodes.update(targets)
     unique_nodes.add(source)
@@ -281,15 +281,16 @@ $$
 def weighted_choice_sub(weights):
   rnd = random.random() * sum(weights)
   for i, w in enumerate(weights):
-  rnd -= w
-  if rnd &lt; 0:
-  return i
+    rnd -= w
+    if rnd < 0:
+      return i
 
 # 带权重的随机选择函数, gamma为度k的指数，gamma=1即为BA网络，gmma=0为随机网络，gamma=-1为反BA网络
 def weightedDegreeSelection(nodeOccurance,m,gamma):
   c = collections.Counter(nodeOccurance)
   w = np.array(c.values())**float(gamma)
-  s = [c.keys()[j] for j in [weighted_choice_sub(w) for i in range(m)]]
+  wcs = [weighted_choice_sub(w) for i in range(m)]
+  s = [c.keys()[j] for j in wcs]
   return s
 
 # 反BA机制
@@ -299,9 +300,9 @@ def rBA(n, m):
   repeated_nodes=[]
   source=m
   while source < n:
-    G.add_edges_from(zip([source]&lt;em>m,targets))
+    G.add_edges_from(zip([source]<em>m,targets))
     repeated_nodes.extend(targets)
-    repeated_nodes.extend([source]&lt;/em>m)
+    repeated_nodes.extend([source]</em>m)
     targets = weightedDegreeSelection(repeated_nodes,m,-1)
     source += 1
   return G
