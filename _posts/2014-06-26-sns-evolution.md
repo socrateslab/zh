@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 从概念到真实:SNS的形式蜕变
+title: "从概念到真实:SNS的形式蜕变"
 comments: true
 categories:
   - 《数字媒体阅读报告》
