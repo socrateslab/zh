@@ -239,10 +239,10 @@ collections:
   docs:
     output: true
     permalink: /:collection/:path/
-  recipes:
+  readings:
     output: true
     permalink: /:collection/:path/
-  pets:
+  jekyll:
     output: true
     permalink: /:collection/:path/
   portfolio:
@@ -284,7 +284,7 @@ defaults:
   # _recipes
   - scope:
       path: ""
-      type: recipes
+      type: readings
     values:
       layout: single
       author_profile: true
@@ -293,7 +293,7 @@ defaults:
   # _pets
   - scope:
       path: ""
-      type: pets
+      type: jekyll
     values:
       layout: single
       author_profile: true
