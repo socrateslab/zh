@@ -2,7 +2,7 @@
 title: 使用R模拟网络扩散
 date: 2014-02-28 10:41
 comments: true
-categories: 
+categories:
 - network
 tags:
 - chengjun
@@ -29,13 +29,13 @@ $$\frac{dI}{dt}=\beta SI$$
 
 $$\frac{dI}{dt}=\beta I(1-I)$$
 
-解这个微分方程，我们可以得到累计增长曲线的表达式。有趣的是，这是一个logistic增长，具有明显的S型曲线（S-shaped curve）特征。该模型在初期跨越临界点之后增长较快，后期则变得缓慢。 因而可以用来描述和拟合创新扩散过程（diffusion of innovations）。 
+解这个微分方程，我们可以得到累计增长曲线的表达式。有趣的是，这是一个logistic增长，具有明显的S型曲线（S-shaped curve）特征。该模型在初期跨越临界点之后增长较快，后期则变得缓慢。 因而可以用来描述和拟合创新扩散过程（diffusion of innovations）。
 
 当然，对疾病传播而言，SI模型是非常初级的（naive），主要因为受感染的个体以一定的概率恢复健康，或者继续进入可以被感染状态(S，据此扩展为SIS模型)或者转为免疫状态（R,据此扩展为SIR模型）。 免疫表示为R，用$\gamma$代表免疫概率（removal or recovery rate)。对于信息扩散而言，这种考虑暂时是不需要的。
 
 第一步，生成网络。
 
-```r
+```python
 require(igraph)
 # generate a social graph
 size = 50
@@ -59,35 +59,35 @@ g = barabasi.game(size) ; plot(g)
 
 第二步，随机选取一个或n个种子。
 
-```r
+```python
 #  initiate the diffusers
 seeds_num = 1
 set.seed(2014); diffusers = sample(V(g),seeds_num) ; diffusers
 infected =list()
 infected[[1]]= diffusers
-```	
+```
 
 第三步，在这个简单的例子中，每个节点的传染能力是0.5，即与其相连的节点以0.5的概率被其感染。在R中的实现是通过抛硬币的方式来实现的。
 
-```r
+```python
 # for example, set percolation probability = 0.5
 coins = c(0,1)
 n = length(coins)
 sample(coins, 1, replace=TRUE, prob=rep(1/n, n))
-```	
+```
 
 显然，这很容易扩展到更一般的情况，比如节点的平均感染能力是0.128，那么可以这么写：
 
-```r
+```python
 p = 0.128
 coins = c(rep(1, p*1000), rep(0,(1-p)*1000))
 n = length(coins)
 sample(coins, 1, replace=TRUE, prob=rep(1/n, n))
 ```
-	
+
 当然最重要的一步是要能按照“时间”更新网络节点被感染的信息。
 
-```r
+```python
 # function for updating the diffusers
 update_diffusers = function(diffusers){
   nearest_neighbors = neighborhood(g, 1, diffusers)
@@ -105,14 +105,14 @@ update_diffusers = function(diffusers){
   diffusers = unique(c(diffusers, new_infected))
   return(diffusers)
   }
-```	
+```
 
 完成了以上三步。准备好了吗，现在开始开启扩散过程！
-	
-```r
+
+```python
 ## Start the contagion!
 i = 1
-while(length(infected[[i]]) < size){ 
+while(length(infected[[i]]) < size){
   infected[[i+1]] = sort(update_diffusers(infected[[i]]))
   cat(length(infected[[i+1]]), "\n")
   i = i + 1
@@ -121,14 +121,14 @@ while(length(infected[[i]]) < size){
 
 先看看S曲线吧：
 
-```r
+```python
 # "growth_curve"
 num_cum = unlist(lapply(1:i, function(x) length(infected［x］) ))
 p_cum = num_cum/max(num_cum)
 time = 1:i
 
-png(file = "./temporal_growth_curve.png", 
-	width=5, height=5, 
+png(file = "./temporal_growth_curve.png",
+	width=5, height=5,
 	units="in", res=300)
 plot(p_cum~time, type = "b")
 dev.off()
@@ -138,18 +138,18 @@ dev.off()
 
 为了可视化这个扩散的过程，我们用红色来标记被感染者。
 
-```r
+```python
 # generate a palette
 E(g)$color = "blueviolet"
 V(g)$color = "white"
-set.seed(2014); layout.old = layout.fruchterman.reingold(g) 
+set.seed(2014); layout.old = layout.fruchterman.reingold(g)
 V(g)$color[V(g)%in%diffusers] = "red"
 plot(g, layout =layout.old)
 ```
 
 使用谢益辉开发的animation的R包可视化。
 
-```r
+```python
 library(animation)
 
 saveGIF({
@@ -180,7 +180,7 @@ saveGIF({
 
 如同在Netlogo里一样，我们可以把网络扩散与增长曲线同时展示出来：
 
-```r
+```python
 saveGIF({
   ani.options(interval = 0.5, convert = shQuote("C:/Program Files/ImageMagick-6.8.8-Q16/convert.exe"))
   # start the plot

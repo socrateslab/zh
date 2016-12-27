@@ -2,7 +2,7 @@
 title: "QAP检验：计算两个网络的关联"
 date: 2013-08-04 00:40
 comments: true
-categories: 
+categories:
 - network
 tags:
 - chengjun
@@ -21,13 +21,13 @@ tags:
     library(statnet)  
     # 首先随机生成3个由10个节点构成的有向网络
     g=array(dim=c(3,10,10))
-    g[1,,] = rgraph(10) 
+    g[1,,] = rgraph(10)
     g[2,,] = rgraph(10,tprob=g[1,,]*0.8) # 设置g1和g2两个网络强相关
     g[3,,] = 1; g[3,1,2] = 0 # g3接近于一个派系（clique）
     # 绘制这3个网络
     par(mfrow=c(1,3))
 	for(i in 1:3) {
-    	gplot(g[i,,],usecurv=TRUE, mode = "fruchtermanreingold", 
+    	gplot(g[i,,],usecurv=TRUE, mode = "fruchtermanreingold",
           	  vertex.sides=3:8)}
     #计算网络的相关矩阵
     gcor(g)
@@ -36,7 +36,7 @@ tags:
 在通常使用皮尔逊相关系数的时候，可以用t统计量对总体相关系数为0的原假设进行检验。但在计算网络的相关系数（graph correlations）时，经典的零假设检验方法往往会带来偏差，因而并不适用。通常使用非参数检验的方法，比如QAP(Quadratic Assignment Procedure)检验。
 
 矩阵的随机排列（Random matrix permutations）是QAP检验的关键部分，在子软件包sna中主要通过rmperm来进行。通过矩阵的随机排列，可以对网络中的节点编号（而不是链接！！）进行随机置换（relabelling）或重新“洗牌”（reshuffling），并得到**一组**（比如1000个）重连后的网络。因为只是置换节点，这种操作只是重新标记节点的编号（relabelling）。
-    
+
     # R程序11-9：矩阵的随机置换方法
     j = rgraph(5) # 随机生成一个网络
     j  #看一下这个网络的矩阵形式
