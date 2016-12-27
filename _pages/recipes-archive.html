@@ -5,6 +5,11 @@ permalink: /recipes/
 author_profile: false
 ---
 
-{% for post in site.recipes %}
-  {% include archive-single.html %}
-{% endfor %}
+
+
+
+<div class="grid__wrapper">
+  {% for post in site.recipes %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+</div>
