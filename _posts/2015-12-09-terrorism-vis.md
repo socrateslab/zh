@@ -44,7 +44,7 @@ author: "王成军"
 
 ## 恐怖袭击视频
 
-<embed src="http://player.youku.com/player.php/sid/XMTI1MzE5NDQ4NA==/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"><br /></embed>
+<embed src="http://player.youku.com/player.php/sid/XMTI1MzE5NDQ4NA==/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"><br />
 
 
 ## 政治稳定性与恐怖袭击视频
