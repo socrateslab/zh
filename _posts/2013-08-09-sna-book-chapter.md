@@ -5,7 +5,6 @@ comments: true
 categories:
 - network
 tags:
-- chengjun
 - 网络
 - 计算传播学
 author："王成军"
