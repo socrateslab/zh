@@ -22,7 +22,7 @@ author: "王成军"
 {% include toc title="Table" icon="file-text" %}
 
 
-<img src="http://chengjun.qiniudn.com/ashoka-globe.PNG" alt="" /> 效果见<a href="http://computational-communication.com/globe/ashoka.html">这里</a>
+<img src="http://chengjun.qiniudn.com/ashoka-globe.PNG" alt="" /> 效果见<a href="http://chengjun.github.io/globe/ashoka.html">这里</a>
 
 ## WebGL Globe
 
@@ -129,4 +129,4 @@ with open('./ashoka_locations.json', 'w') as outfile:
  #('Indonesia', 123), ('Mexico', 153), ('United States', 160), ('Brazil', 286), ('India', 303)]
 ```
 
-效果见<a href="http://computational-communication.com/globe/ashoka.html">这里</a>
+效果见<a href="http://chengjun.github.io/globe/ashoka.html">这里</a>
