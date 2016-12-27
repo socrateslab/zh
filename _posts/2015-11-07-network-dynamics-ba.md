@@ -270,7 +270,7 @@ $$
 p_k \approx \frac{1}{1 + 2m} \frac{(m-1)^{m-1}}{(k-1)^{k-1}}e^{k-m},  (27)
 $$
 
-特别地，当 m = 2时， p_k = (k-1)^(1-k) * e^(k-2) *1/5。
+特别地，当 m = 2时， $p_k = 0.2*(k-1)^{1-k}  e^{k-2} $。
 
 ![reverse_ba](http://oaf2qt3yk.bkt.clouddn.com/a93cbd5d9eec5aabd9fd41309151fa99.png)
 
