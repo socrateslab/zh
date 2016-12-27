@@ -16,22 +16,23 @@ tags:
 
 我们使用sna这个R软件包来计算网络相关系数（并调用qaptest命令）。通过安装和使用statnet这个R软件包，就会自动加载sna等子软件包。另外，statnet当中还集成了其他的几个相关的R软件包，包括进行动态网络建模的tergm子软件包。
 
-    # R程序11-8：计算网络的皮尔逊相关系数
-    install.packages("statnet")
-    library(statnet)  
-    # 首先随机生成3个由10个节点构成的有向网络
-    g=array(dim=c(3,10,10))
-    g[1,,] = rgraph(10)
-    g[2,,] = rgraph(10,tprob=g[1,,]*0.8) # 设置g1和g2两个网络强相关
-    g[3,,] = 1; g[3,1,2] = 0 # g3接近于一个派系（clique）
-    # 绘制这3个网络
-    par(mfrow=c(1,3))
-	for(i in 1:3) {
-    	gplot(g[i,,],usecurv=TRUE, mode = "fruchtermanreingold",
-          	  vertex.sides=3:8)}
-    #计算网络的相关矩阵
-    gcor(g)
-
+```python
+# R程序11-8：计算网络的皮尔逊相关系数
+install.packages("statnet")
+library(statnet)  
+# 首先随机生成3个由10个节点构成的有向网络
+g=array(dim=c(3,10,10))
+g[1,,] = rgraph(10)
+g[2,,] = rgraph(10,tprob=g[1,,]*0.8) # 设置g1和g2两个网络强相关
+g[3,,] = 1; g[3,1,2] = 0 # g3接近于一个派系（clique）
+# 绘制这3个网络
+par(mfrow=c(1,3))
+for(i in 1:3) {
+	gplot(g[i,,],usecurv=TRUE, mode = "fruchtermanreingold",
+      	  vertex.sides=3:8)}
+#计算网络的相关矩阵
+gcor(g)
+```
 
 在通常使用皮尔逊相关系数的时候，可以用t统计量对总体相关系数为0的原假设进行检验。但在计算网络的相关系数（graph correlations）时，经典的零假设检验方法往往会带来偏差，因而并不适用。通常使用非参数检验的方法，比如QAP(Quadratic Assignment Procedure)检验。
 

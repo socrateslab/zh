@@ -1,19 +1,19 @@
 ---
-url: 2014-11-07-average-shortest-path-length
 date: 2014-11-07 14:53
 status: public
 title: 使用networkx计算平均最短路径长度
 tags:
-- chengjun
 - networkx
 - python
+
+author:"王成军"
 ---
 
-##问题
+## 问题
 小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？
 
 
-##平均最短路径长度的定义
+## 平均最短路径长度的定义
 给定一个网络G(n, e), n是节点数量，e是链接数量。对于网络中的任意一对节点source s和target t，我们可以计算它们之间的最短距离$d_{s, t}$。将这些距离相加除以$n(n-1)$，就可以得到网络的平均最短路径长度。公式如下[^1]：
 
  $$
@@ -21,8 +21,10 @@ tags:
  $$
 
 
-##代码
+## 代码
+
 首先，生成一个实例网络。
+
 ```python
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -36,7 +38,8 @@ plt.figure()
 nx.draw(G, pos)
 ```
 
-![](~/15-09-27.jpg)
+![avrage—nx-path](http://oaf2qt3yk.bkt.clouddn.com/5336451cfec4520b87dd8d05751b00d3.png)
+
 这样我们生成了一个较为典型的星形有向扩散网络。
 
 来看一下节点之间的最短路径长度：
@@ -52,25 +55,28 @@ nx.average_shortest_path_length(G) # 网络平均最短距离0.181
 
 ```python
 nx.all_pairs_shortest_path_length(G)
-Out[29]: 
-{1: {1: 0, 2: 1, 3: 2, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1},
- 2: {2: 0, 3: 1, 4: 1},
- 3: {3: 0},
- 4: {4: 0},
- 5: {5: 0},
- 6: {6: 0, 7: 1},
- 7: {7: 0},
- 8: {8: 0},
- 9: {9: 0}}
 ```
+
+    Out[29]:
+    {1: {1: 0, 2: 1, 3: 2, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1},
+     2: {2: 0, 3: 1, 4: 1},
+     3: {3: 0},
+     4: {4: 0},
+     5: {5: 0},
+     6: {6: 0, 7: 1},
+     7: {7: 0},
+     8: {8: 0},
+     9: {9: 0}}
+
+
 由上述结果，可知道对于类似节点3和4之间距离的问题，networkx就是认为不存在的。所以没有列出，测试一下：
 
 ```python
-nx.shortest_path_length(G, source = 1, target =2) 
+nx.shortest_path_length(G, source = 1, target =2)
 # 1
-nx.shortest_path_length(G, source = 1, target =3) 
+nx.shortest_path_length(G, source = 1, target =3)
 # 2
-nx.shortest_path_length(G, source = 3, target =4) 
+nx.shortest_path_length(G, source = 3, target =4)
 #error: NetworkXNoPath: No path between 4 and 3.
 ```
 因为有些节点之间距离不存在而不被计算（被认为是0而非无穷大），所以产生了节点数量的平方大于最短距离之和的情况，进而平均最短距离小于1这种反直觉的情况在有向网络中出现了。
@@ -84,5 +90,5 @@ nx.average_shortest_path_length(UG) #1.93
 
 对于这种星形扩散网络，很多节点对之间的最短路径并不存在，应该被计算为无穷大，而不是0，所以对于这种网络计算平均最短路径长度没有太大的意义了。与其如此，不如计算所有节点对当中，不存在最短路径长度的比例。
 
-##参考
+## 参考
 [^1]: http://networkx.lanl.gov/reference/generated/networkx.algorithms.shortest_paths.generic.average_shortest_path_length.html

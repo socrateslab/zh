@@ -1,11 +1,10 @@
 ---
+title: 演员网络中的度相关：随机洗牌的影响
 date: 2015-09-30 11:09
-status: public
 tags:
-  - 成军
   - 网络
   - 度相关
-title: 演员网络中的度相关：随机洗牌的影响
+author:"王成军"
 ---
 
 演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。
@@ -33,7 +32,7 @@ def flushPrint(variable):
     sys.stdout.write('\r')
     sys.stdout.write('%s' % variable)
     sys.stdout.flush()
-    
+
 W = defaultdict(int) # user mobility in real and virtual world
 n = 0 # counter
 with open ('/Users/chengjun/bigdata/actor.dat.gz.txt') as f:
@@ -136,7 +135,7 @@ def plotHeatMap(mat, title):
     plt.title(title)
     plt.colorbar()
     plt.tight_layout()
-    
+
 def shuffleNetwork(Graph):
     g = Graph
     H = g.copy()
@@ -145,10 +144,10 @@ def shuffleNetwork(Graph):
     #Your statements here
     nx.double_edge_swap(H,nswap=500000, max_tries=400000000)
     stop = timeit.default_timer()
-    print stop - start 
+    print stop - start
     maxd = np.max(g.degree().values())
     nkk = getNKK(g, maxd)    
-    nrk = getNKK(H, maxd) 
+    nrk = getNKK(H, maxd)
     rkk = nkk/nrk
     return nkk, nrk, rkk
 ```
@@ -170,9 +169,9 @@ plotHeatMap(nrk, 'Reshuffled')
 plt.tight_layout()
 ```
 
-![](~/11-57-11.jpg)
+![k1k2](http://oaf2qt3yk.bkt.clouddn.com/798b31bd2c2455f772e774af87461cad.png)
 
-当然了，我们可以考虑另一种情况，即一个节点的度为k，它的邻居的平均度是<knn>, 那么他们之间是什么关系呢？
+当然了，我们可以考虑另一种情况，即一个节点的度为k，它的邻居的平均度是$<k_{nn}>$, 那么他们之间是什么关系呢？
 
 ```python
 def degreeCor(g,ax,lab,mar):
@@ -188,8 +187,9 @@ def degreeCor(g,ax,lab,mar):
     ax.legend(loc=1,fontsize=10, numpoints=1)
     ax.set_xscale('log'); ax.set_yscale('log')
     ax.set_ylabel(r'<knn(k)> ')
-    ax.set_xlabel('k') 
+    ax.set_xlabel('k')
 ```
+
 显然，如下图所示，经过彻底洗牌之后的网络不再具有同质性。
 
 ```python
@@ -207,4 +207,4 @@ ax = fig.add_subplot(1,2,2)
 degreeCor(H,ax,'shuffled','gv')
 ```
 
-![](~/11-58-04.jpg)
+![correlation_shuffling](http://oaf2qt3yk.bkt.clouddn.com/4d1f2ea9918c3492acb9d60e5132bf1a.png)

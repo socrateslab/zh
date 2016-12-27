@@ -8,12 +8,8 @@ tags:
 - chengjun
 - 网络
 - 计算传播学
+author："王成军"
 ---
-
-
-王成军
-
-香港城市大学媒体与传播系
 
 在上一章当中，我们对于网络的基本知识进行了介绍，这些知识构建起了网络科学的基础，同时也孕育着巨大的潜能。社会科学追求理论的建构，但疏于思考理论层次的丰富性。以社会学为例，一度在宏大理论和抽象实证主义之间摇摆（参见米尔斯所著《社会学的想象力》）。大数据时代的到来，再一次使得少数人开始对理论的认识产生动摇，以为只要把握住数据就足够了。这与可计算性社会科学都是相互矛盾的。可计算性社会科学研究社会现实，紧紧抓住数据，但是绝不束缚于数据。
 
@@ -612,7 +608,7 @@ mcmc.diagnostics(m1)
 >
 > Snijders, T. A. (2002). Markov chain Monte Carlo estimation of exponential random graph models. Journal of Social Structure, 3(2), 1-40.
 >
-> Wasserman, S., & Pattison, P. (1996). Logit models and logistic regressions for social networks: I. An introduction to Markov graphs and p*. Psychometrika, 61(3), 401-425. 
+> Wasserman, S., & Pattison, P. (1996). Logit models and logistic regressions for social networks: I. An introduction to Markov graphs and p*. Psychometrika, 61(3), 401-425.
 >
 > Watts, D. J., & Strogatz, S. H. (1998). Collective dynamics of ‘small-world’networks. Nature, 393(6684), 440-442.
 >
