@@ -6,7 +6,8 @@ comments: true
 categories:
   - group dynamics
 tags:
-  -
+  - human insurgency
+excerpt: ""
 author_profile: true
 author: "王成军"
 ---
