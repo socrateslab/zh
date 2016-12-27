@@ -1,8 +1,8 @@
 ---
-title: 使用networkx计算平均最短路径长度
+title: "使用networkx计算平均最短路径长度"
 tags:
-- networkx
-- python
+  - networkx
+  - python
 modified: 2014-10-31T11:55:22-04:00
 author:"王成军"
 ---

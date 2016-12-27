@@ -1,12 +1,11 @@
 ---
 title: 从概念到真实:SNS的形式蜕变
-date: 2011-03-02 00:02
 comments: true
 categories:
-- 《数字媒体阅读报告》
+  - 《数字媒体阅读报告》
 tags:
-- 互联网
-- SNS
+  - 互联网
+  - SNS
 modified: 2014-06-26T11:55:22-04:00
 author:"王成军"
 ---
