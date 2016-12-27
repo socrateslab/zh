@@ -30,28 +30,28 @@ Latora V, Marchiori M.(2001)发表了题为“小世界的输运效率”的论�
 
 复杂系统都可以使用网络模型的描述，因此刻画网络的结构属性便成了许多研究的工作重点。在Watts等（1998）年的论文当中，他们使用了<strong>平均路径长度</strong>和<strong>聚集系数</strong>这两个量来刻画小世界网络的结构属性。他们定义了图G，记其节点数为N，边数为K。给出了图G需要满足的三个条件：
 
-<ul>
-<li>图G的边没有权重（unweighted）</li>
-<li>图G是稀疏的（sparse），满足 $K &lt;&lt; N(N-1)/2$</li>
-<li>图G是连通的（connected） </li>
-</ul>
+
+- 图G的边没有权重（unweighted）
+- 图G是稀疏的（sparse），满足 $K << N(N-1)/2$
+- 图G是连通的（connected）
+
+
 对于这样的图，其节点的度（degree）的平均值为$$k = \frac{2K}{N}$$ 其平均路径长度L定义为 $$L = \frac{1}{N(N-1)} \sum_{i\neq j}^{ }d_{ij}$$ 其聚集系数C定义为 $$C = \frac{1}{N} \sum_{i}^{ }C_{i}$$
 
 ##  Latora（2001）的主要贡献
 <ol>
-<li>对于小世界网络的描述，可以简化为efficiency（记作E）一个变量即可，且efficiency本身有其物理意义</li>
-<li>1/L和C分别可以看做是在global和local尺度上对E的近似值</li>
-<li>对于Watts(1998)中给出的对图G的限制(unweightedness,sparseness,connectedness)可以摒弃，图G可以是带权的、非稀疏的、非连通的。</li>
+- 对于小世界网络的描述，可以简化为efficiency（记作E）一个变量即可，且efficiency本身有其物理意义
+- 1/L和C分别可以看做是在global和local尺度上对E的近似值
+- 对于Watts(1998)中给出的对图G的限制(unweightedness,sparseness,connectedness)可以摒弃，图G可以是带权的、非稀疏的、非连通的。
 </ol>
 Latora给出了对任意一个节点数为N,边数为K的图G的考察方法，他们采用两个矩阵来描述它，一个是把图G作为unweighted graph求得的邻接矩阵$a_{ij}$，另一个是矩阵$l_{ij}$，简单的说就是一个权重矩阵，这里的权重可以是两个节点之间实际地理上的距离，也可以指Internet上两个路由器之间交换一个包的信息所花的时间。
 
 ##  最短带权重路径长度
 Latora所定义的两点之间的最短路径长度矩阵$d_{ij}$由$a_{ij}和l_{ij}$算出，它<em>更准确的表达</em>是任意两点i,j之间<strong>最短的带权路径长度</strong>，当无权重时，可以认为权重值为1。文中的原句为
 
-<blockquote>
-The shortest path length $d_{ij}$ between two generic points i and j is the smallest sum of the physical distances throughout all the possible paths in the graph from i to j.
+  The shortest path length $d_{ij}$ between two generic points i and j is the smallest sum of the physical distances throughout all the possible paths in the graph from i to j.
 
-</blockquote>
+
 边的权重必须是数值类型的，最短带权重路径长度距离是最小的边的权重之和。（Edge weight attributes must be numerical. Distances are calculated as sums of weighted edges traversed. 参见networkx对single_source_dijkstra_path的介绍 ）
 
 由于任意两点之间不一定都存在连边，所以$$d_{ij} \geq l_{ij},\forall i,j$$当i和j之间存在一条边时，取等号。

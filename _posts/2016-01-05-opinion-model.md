@@ -26,7 +26,7 @@ author: "胡海波"
 
 一个众所周知的也是经常研究的舆论动力学模型是投票者模型（Voter model），该模型由Clifford和Sudbury在上世纪70年代提出，最初是用来研究物种竞争；几年以后他们引入的这个动力系统被Holley和Liggett命名为投票者模型。在这个模型中，每个个体被赋予一个二元状态或观点，比如赞成或反对，在一个基本的时间步里，随机的选择一个个体和他的一个邻居，然后第一个个体将新的观点设置为跟邻居一致。之后几十年，投票者模型得到了广泛的研究，最初的二元状态被扩展到了多元状态，网络框架由规则栅格也变成了复杂网络。该模型一个关键的假设是，邻居个体持有某观点的越多，那么该个体也将越可能持有该观点，因此在该模型中，个体本质上是根据某种版本的多数者规则或模仿规则来改变自己的观点的。经济学的研究表明，在某些情况下，模仿规则确实是最佳策略，这个模型看起来很简单，但实证研究表明它确实可以解释某些情况下人们观点的变化。
 
-在一本伊朗的旅游指南《Lonely Planet Iran》中有一段话：If you make your travel decisions based on what your friends and family say, you’ll probably never make it to Iran，这说明，在社交网络中存在某些忠实个体或顽固个体，他们的观点不会受好友圈的影响。实际上，这类个体在不同的背景下广泛存在，如商业中的忠实用户，社会学中对某些有争议的话题的态度，政治中的党派和国家之间的纷争以及宗教中的教派纷争，实证研究也表明这类个体在社会中的确存在。我们也将这类个体引入到模型中。在社会中顽固个体或忠实个体可以代表有影响力的人物或意见领袖，他们可以影响他们的好友，但是好友圈或媒体均不能对他们产生影响。
+在一本伊朗的旅游指南《Lonely Planet Iran》中有一段话：If you make your travel decisions based on what your friends and family say, you' ll probably never make it to Iran，这说明，在社交网络中存在某些忠实个体或顽固个体，他们的观点不会受好友圈的影响。实际上，这类个体在不同的背景下广泛存在，如商业中的忠实用户，社会学中对某些有争议的话题的态度，政治中的党派和国家之间的纷争以及宗教中的教派纷争，实证研究也表明这类个体在社会中的确存在。我们也将这类个体引入到模型中。在社会中顽固个体或忠实个体可以代表有影响力的人物或意见领袖，他们可以影响他们的好友，但是好友圈或媒体均不能对他们产生影响。
 
 ## 模型
 
@@ -40,63 +40,64 @@ author: "胡海波"
 
 对于观点由2变为1，已知$A$的度值$k$，在更新之前$A$的观点为2且为一般个体的概率为$q_{2,k} -{s_{2,k} } $。要将$A$的观点从2变为1，$A$需要受他的一个观点为1的好友$B$的影响。$A$被他的好友影响的概率为$1-P$，要得到一个随机选择的好友$B$其观点为1的概率，我们需要知道$A$的好友的度分布。
 
-令$P(k’\mid k)$为度值为$k$的个体其好友度值为$k’$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。
+令$P(k' \mid k)$为度值为$k$的个体其好友度值为$k'$的条件概率，为了能得到闭合的解析表达式，我们假定社交网络是度不相关网络，即一条边连接的两个节点他们的度值没有相关性。
 
-在这种情况下，$P(k’\mid k) = k’p_{k’} / \sum\nolimits_{k’} {k’p_{k’}} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum \nolimits_j {jp_j q_{1,j} } /\sum \nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为
+在这种情况下，$P(k' \mid k) = k' p_{k' } / \sum\nolimits_{k' } {k' p_{k' }} $，因此$A$的好友的度分布，即$B$的度值为$j$的概率为$jp_j /\sum\nolimits_j {jp_j } $。随机选择的一位好友$B$其观点为1的概率为$\sum \nolimits_j {jp_j q_{1,j} } /\sum \nolimits_j {jp_j } $。因此，在一个时间步内，状态更新将度为$k$的一个个体从观点2变为1的概率为
 
-$$\begin{equation} p_{2 \to 1} (k) = p_k (q_{2,k} – {s_{2,k} } )(1 -P)\frac{ {\sum \nolimits_j {jp_j q_{1,j}}}}{ {\sum \nolimits_j {jp_j }}} \end{equation} $$
 
-类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} – {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} – s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为：
+$$p_{2 \to 1}(k) = p_k (q_{2,k}-{s_{2,k} } )(1 -P)\frac{ {\sum \nolimits_j {jp_j q_{1,j}}}}{ {\sum \nolimits_j {jp_j }}} $$
 
-$$\begin{equation} p_{1 \to 2} (k) = p_k (q_{1,k} – s_{1,k} )\left[ {(1 – P) {\frac{ {\sum \nolimits_j {jp_j q_{2,j}} }}{ {\sum\nolimits_j {jp_j }} }} + P} \right] \end{equation} $$
+类似的，对于观点由1变为2，已知$A$的度值$k$，状态更新之前$A$的观点为1且为一般个体的概率为$q_{1,k} - {s_{1,k}} $。要将$A$的观点从1变为2，$A$需要受他的一个观点为2的好友$B$的影响或受媒体的影响。受到媒体的影响从而将$A$的观点由1变为2的概率为$p_k (q_{1,k} - s_{1,k} )P$，因此在一个时间步内，状态更新将度为$k$的一个个体从观点1变为2的概率为：
+
+$$p_{1 \to 2} (k) = p_k (q_{1,k} - s_{1,k} )\left[ {(1 - P) {\frac{ {\sum \nolimits_j {jp_j q_{2,j}} }}{ {\sum\nolimits_j {jp_j }} }} + P} \right] $$
 
 当$I \ge 2$时，我们可以得到更一般的结论。
 
 当$i \ne m$时，状态更新将度为$k$的一个个体从观点非$i$变为$i$的概率为
 
-$$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum \nolimits_{j \ne i} {s_{j,k} } )(1 – P)\frac{ {\sum \nolimits_j {jp_j q_{i,j}} }}{ {\sum \nolimits_j {jp_j} }} \end{equation} $$
+$$p_{\bar i \to i} (k) = p_k (1 - q_{i,k} - \sum \nolimits_{j \ne i} {s_{j,k} } )(1 - P)\frac{ {\sum \nolimits_j {jp_j q_{i,j}} }}{ {\sum \nolimits_j {jp_j} }}  $$
 
 将度为$k$的一个个体从观点$i$变为非$i$的概率为
 
-$$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)\left( {1 – \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }}} \right) + P} \right] \end{equation} $$
+$$p_{i \to \bar i} (k) = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)\left( {1 - \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }}} \right) + P} \right]  $$
 
 令$\left\langle k \right\rangle$为网络的平均度，$n_k = Np_k$为度值为$k$的个体的数量，我们可以定义
 
-$$\begin{equation} q_i^{\rm{w}} = \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }} = \frac{ {\sum\nolimits_j {jn_j q_{i,j} } }}{ {N\left\langle k \right\rangle }} \end{equation} $$
+
+$$q_i^{w} = \frac{ {\sum\nolimits_j {jp_j q_{i,j} } }}{ {\sum\nolimits_j {jp_j } }} = \frac{ {\sum\nolimits_j {jn_j q_{i,j} } }}{ {N\left\langle k \right\rangle }}  $$
 
 作为观点$i$的加权比例。该比例表示观点为$i$的个体他们总的度值占所有节点总度值的比例，因此
 
-$$\begin{equation} p_{\bar i \to i} (k) = p_k (1 – q_{i,k} – \sum\nolimits_{j \ne i} {s_{j,k} } )(1 – P)q_i^{\rm{w}} = p_k (q_{\bar i,k} – s_{\bar i,k} )(1 – P)q_i^{\rm{w}} , \end{equation} $$
+$$p_{\bar i \to i} (k) = p_k (1 - q_{i,k} - \sum\nolimits_{j \ne i} {s_{j,k} } )(1 - P)q_i^{w} = p_k (q_{\bar i,k} - s_{\bar i,k} )(1 - P)q_i^{w} ,  $$
 
-$$\begin{equation} p_{i \to \bar i} (k) = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)(1 – q_i^{\rm{w}} ) + P} \right] = p_k (q_{i,k} – s_{i,k} )\left[ {(1 – P)q_{\bar i}^{\rm{w}} + P} \right] \end{equation} $$
+$$p_{i \to \bar i} (k) = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)(1 - q_i^{w} ) + P} \right] = p_k (q_{i,k} - s_{i,k} )\left[ {(1 - P)q_{\bar i}^{w} + P} \right]  $$
 
 $q_{i,k}$的演化方程为
 
-$$\begin{equation} {\rm{d}}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {\rm{d}}t =\left[ {(1 – \sum\nolimits_j {s_{j,k} } )(1 – P)q_i^{\rm{w}} – q_{i,k} + s_{i,k} } \right] {\rm{d}}t \end{equation} $$
+$${d}q_{i,k} =\left[ (p_{\bar i \to i} (k)-p_{i \to \bar i} (k))/p_k \right] {d}t =\left[ {(1 - \sum\nolimits_j {s_{j,k} } )(1 - P)q_i^{w} - q_{i,k} + s_{i,k} } \right] {d}t  $$
 
 在稳态时，
+$$ \lim_{t \to \infty } q_i^{w} (t) = \hat q_i^{w} = \frac{ {s_i^{w} }}{ {P + (1 - P)\sum\nolimits_j {s_j^{w} } }}  $$
 
-$$\begin{equation} \mathop {\lim }\limits_{t \to \infty } q_i^{\rm{w}} (t) = \hat q_i^{\rm{w}} = \frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
-
-$$\begin{equation} \hat q_i = s_i + \underbrace {(1 – s)(1 – P)\frac{ {s_i^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }}}_{ {\rm{Internal \; interactions}}} \end{equation} $$
+$$\hat q_i = s_i + \underbrace {(1 - s)(1 - P)\frac{ {s_i^{w} }}{ {P + (1 - P)\sum\nolimits_j {s_j^{w} } }}}_{ {\rm{Internal \; interactions}}}  $$
 
 其中$s$为忠诚个体的比例，$s_i$为观点为$i$的忠诚个体的比例。
 
 当$i = m$时，利用前面的方法可以得到
 
-$$\begin{equation} p_{m \to \bar m} (k) = p_k (q_{m,k} – s_{m,k} )(1 – P)(1 – q_m^{\rm{w}} ) = p_k (q_{m,k} – s_{m,k} )(1 – P)q_{\bar m}^{\rm{w}} , \end{equation} $$
+$$p_{m \to \bar m} (k) = p_k (q_{m,k} - s_{m,k} )(1 - P)(1 - q_m^{w} ) = p_k (q_{m,k} - s_{m,k} )(1 - P)q_{\bar m}^{w} ,  $$
 
-$$\begin{equation} p_{\bar m \to m} (k) = p_k (1 – q_{m,k} – \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 – P)q_m^{\rm{w}} + P} \right] = p_k (q_{\bar m,k} – s_{\bar m,k} )\left[ {(1 – P)q_m^{\rm{w}} + P} \right]. \end{equation} $$
+$$p_{\bar m \to m} (k) = p_k (1 - q_{m,k} - \sum\nolimits_{j \ne m} {s_{j,k} } )\left[ {(1 - P)q_m^{w} + P} \right] = p_k (q_{\bar m,k} - s_{\bar m,k} )\left[ {(1 - P)q_m^{w} + P} \right].  $$
 
 $q_{m,k}$的演化方程为
 
-$$\begin{equation} {\rm{d}}q_{m,k} = \left[ {\left( { {\rm{1 – }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 – P)q_m^{\rm{w}} + P} \right) – q_{m,k} + s_{m,k} } \right]{\rm{d}}t \end{equation} $$
+$${d}q_{m,k} = \left[ {\left( { {\rm{1 - }}\sum\nolimits_j {s_{j,k} } } \right)\left( {(1 - P)q_m^{w} + P} \right) - q_{m,k} + s_{m,k} } \right]{d}t  $$
 
 在稳态时，
 
-$$\begin{equation} \hat q_m^{\rm{w}} = \frac{ {s_m^{\rm{w}} + (1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
+$$\hat q_m^{w} = \frac{ {s_m^{w} + (1 - \sum\nolimits_j {s_j^{w} } )P}}{ {P + (1 - P)\sum\nolimits_j {s_j^{w} } }}  $$
 
-$$\begin{equation}\hat q_m = s_m + \frac{ {(1 – s)(1 – P)s_m^{\rm{w}} }}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} + (1 – s)P + \frac{ {(1 – s)(1 – P)(1 – \sum\nolimits_j {s_j^{\rm{w}} } )P}}{ {P + (1 – P)\sum\nolimits_j {s_j^{\rm{w}} } }} \end{equation} $$
+$$\hat q_m = s_m + \frac{ {(1 - s)(1 - P)s_m^{w} }}{ {P + (1 - P)\sum\nolimits_j {s_j^{w} } }} + (1 - s)P + \frac{ {(1 - s)(1 - P)(1 - \sum\nolimits_j {s_j^{w} } )P}}{ {P + (1 - P)\sum\nolimits_j {s_j^{w} } }}  $$
 
 ## 结论
 

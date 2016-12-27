@@ -39,8 +39,8 @@ $ <k^n> = \int_{k_{min}}^{k_{max}}k^np_kdk = C \frac{k_{max}^{n- \gamma +1} - k_
 显然：
 
 
-- 当$n - \gamma +1 <= 0$时，随着$k_{max}增加，$$k_{max}^{n- \gamma +1} \rightarrow 0$。所有满足$n <= \gamma -1$的n阶矩都是有限的。
-- 当$n - \gamma +1 >0 $时，随着$k_{max}增加，$$k_{max}^{n- \gamma +1} \rightarrow \infty$。所有满足$n > \gamma -1$的n阶矩都是无极限的。
+- 当$n - \gamma +1 <= 0$时，随着$k_{max}$增加，$k_{max}^{n- \gamma +1} \rightarrow 0$。所有满足$n <= \gamma -1$的n阶矩都是有限的。
+- 当$n - \gamma +1 >0 $时，随着$k_{max}$增加，$k_{max}^{n- \gamma +1} \rightarrow \infty$。所有满足$n > \gamma -1$的n阶矩都是无极限的。
 
 对于无标度网络而言，一般幂参数$2 < \gamma < 3$，所以：
 
@@ -58,6 +58,4 @@ $ <k^n> = \int_{k_{min}}^{k_{max}}k^np_kdk = C \frac{k_{max}^{n- \gamma +1} - k_
 
 ![scaling-figure](http://oaf2qt3yk.bkt.clouddn.com/ea83d63f0b263cda033be431ea85bf79.png)
 
-<blockquote>
-一言以蔽之，在无标度的意义是，在网络中随机抽取一个节点的度可以显著的不同于平均度$<k^{}>$
-</blockquote>
+一言以蔽之，在无标度的意义是，在网络中随机抽取一个节点的度可以显著的不同于平均度$<k>$。
