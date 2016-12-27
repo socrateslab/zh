@@ -1,5 +1,5 @@
 ---
-Title: 网络残缺度：共同好友间可否两步到达？
+Title: "网络残缺度：共同好友间可否两步到达？"
 comments: true
 category:
 - 社会网络
