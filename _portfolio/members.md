@@ -2,8 +2,12 @@
 title: "王成军"
 excerpt: "My name is Cheng-Jun Wang (aka 王成军/Frank), an assistant research fellow in the School of Journalism & Communication, Nanjing University."
 header:
-  image: /assets/images/foo-bar-identity.jpg
+  overlay_color: "#000"
+  overlay_filter: "0.5"
+  overlay_image: /assets/images/foo-bar-identity.jpg
   teaser: /assets/images/author/chengjun.jpg
+  caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
+excerpt: "My name is Cheng-Jun Wang (aka 王成军/Frank), an assistant research fellow in the School of Journalism & Communication, Nanjing University. I am the director of the Ogilvy Data Science Lab. Currently, I am also a research member of Computational Communication Collaboratory and the Web Mining Lab. In 2014, I founded the website of computational communication."
 sidebar:
   - title: "role"
     image: "/assets/images/author/chengjun.jpg"
@@ -25,10 +29,3 @@ gallery:
 
 
 {% include gallery caption="This is a sample gallery to go along with this case study." %}
-
-## About Me
-My name is Cheng-Jun Wang (aka 王成军/Frank), an assistant research fellow in the School of Journalism & Communication, Nanjing University. I am the director of the Ogilvy Data Science Lab. Currently, I am also a research member of Computational Communication Collaboratory and the Web Mining Lab. In 2014, I founded the website of computational communication.
-
-- Ph.D (City University of Hong Kong)
-- MA (Peking University)
-- BA (Lanzhou University).
