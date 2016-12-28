@@ -2,6 +2,7 @@
 layout: single
 title: "新闻在注意力场中的逃逸"
 header:
+  teaser: "unsplash-gallery-image-4-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-9.jpg
