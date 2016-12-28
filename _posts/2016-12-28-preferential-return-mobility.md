@@ -33,7 +33,7 @@ Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi
 原文链接：[http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html](http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html)
 
 
-# Background
+# 引言
 之前的研究发现，动物（如信天翁、猴子等）的移动轨迹可以用列维飞行来进行近似。列维飞行是一种随机游走，它的每一段飞行（step size），记为 $\Delta r$ ，符合幂律分布。
 $$ P(\Delta r) \sim \Delta r^{(1+\beta)} $$
 
@@ -56,7 +56,6 @@ $$ P(\Delta r) \sim \Delta r^{(1+\beta)} $$
 # 研究发现
 
 ## 跳跃距离$\Delta r$的分布
-
 
 我们测量了用户依次经过的地点之间的距离，记为$\Delta r$。
 
@@ -82,8 +81,15 @@ Question: 如何计算$R_g$？回转半径如何理解？
 >  pip install bandicoot
 
 ```python
-def radius_of_gyration(positions, user):
+from collections import Counter
+import math
+
+def radius_of_gyration(positions):
     """
+    position : tuple
+        A tuple (lat, lon) with the latitude and longitude of the antenna,
+        encoded as floating point numbers.
+
     Returns the radius of gyration, the *equivalent distance* of the mass from
     the center of gravity, for all visited places. [GON2008]_
 
@@ -93,8 +99,7 @@ def radius_of_gyration(positions, user):
         Understanding individual human mobility patterns. Nature, 453(7196),
         779-782.
     """
-    d = Counter(p._get_location(user) for p in positions
-                if p._get_location(user) is not None)
+    d = Counter(positions)
     sum_weights = sum(d.values())
     positions = list(d.keys())  # Unique positions
 
@@ -114,8 +119,64 @@ def radius_of_gyration(positions, user):
         r += float(t) / sum_weights * \
             great_circle_distance(barycenter, pos) ** 2
     return math.sqrt(r)
+
+def great_circle_distance(pt1, pt2):
+    """
+    Return the great-circle distance in kilometers between two points,
+    defined by a tuple (lat, lon).
+    Examples
+    --------
+    >>> brussels = (50.8503, 4.3517)
+    >>> paris = (48.8566, 2.3522)
+    >>> great_circle_distance(brussels, paris)
+    263.9754164080347
+    """
+    r = 6371.
+
+    delta_latitude = math.radians(pt1[0] - pt2[0])
+    delta_longitude = math.radians(pt1[1] - pt2[1])
+    latitude1 = math.radians(pt1[0])
+    latitude2 = math.radians(pt2[0])
+
+    a = math.sin(delta_latitude / 2) ** 2 + math.cos(latitude1) * math.cos(latitude2) * math.sin(delta_longitude / 2) ** 2
+    return r * 2. * math.asin(math.sqrt(a))
 ```
 
+给定positions数据如下：
+
+    postions = [(42.366944, -71.083611),
+     (42.386722, -71.138778),
+     (42.3604, -71.087374),
+     (42.353917, -71.105),
+     (42.36, -71.12),
+     (42.375, -71.1),
+     (42.345, -71.09),
+     (42.39, -71.105),
+     (42.38, -71.09),
+     (42.304917, -71.147374),
+     (42.373917, -70.067374),
+     (42.313917, -71.037374),
+     (42.40944, -71.1),
+     (42.41, -71.073),
+     (42.44, -71.15),
+     (42.48, -71.23),
+     (42.35, -71.05),
+     (42.33, -71.11),
+     (42.36, -71.25),
+     (42.413, -71.143),
+     (42.373917, -71.215),
+     (43.37, -71.085),
+     (43.39, -71.11),
+     (42.29, -71.13),
+     (42.31, -71.16),
+     (42.313, -71.135),
+     (42.297, -71.155)]
+
+```python
+radius_of_gyration(positions)
+```
+
+得到的结果是34.4
 
 ## 回转半径${r_g}$ 和时间 t的关系
 
