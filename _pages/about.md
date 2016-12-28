@@ -58,9 +58,8 @@ https://groups.google.com/group/computational-communication
 
 ### 作者编辑注意事项和工具
 
-[latex online](http://codecogs.com/latex/eqneditor.php)
+- [latex online](http://codecogs.com/latex/eqneditor.php)
 
-[wolframalpha](http://www.wolframalpha.com/)
 
 
 ### 网站模板
