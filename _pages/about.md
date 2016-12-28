@@ -1,7 +1,7 @@
 ---
 layout: single
 permalink: /about/
-excerpt: "Minimal Mistakes is a flexible two-column Jekyll theme."
+title:"我们的愿景"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
