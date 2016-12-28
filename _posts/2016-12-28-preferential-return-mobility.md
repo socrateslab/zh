@@ -184,10 +184,10 @@ The longer we observe a user, the higher the chance that she/he will travel to a
 观测的时间越长，一个人越有可能去他没去过的地方
 
 We measured the time dependence of the radius of gyration for users whose gyration radius would be considered
+
 - small ($r_g(T)$ <= 3 km),
 - medium (20 < $r_g(T)$ <= 30 km) or
-- large ($r_g(T)$
-> 100 km)
+- large ($r_g(T)$ > 100 km)
 
 at the end of our observation period (T = 6 months).
 The results indicate that
@@ -196,7 +196,7 @@ the time dependence of the average radius of gyration of mobile phone users is b
 ***but also*** one that may appear similar to a saturation process
 (Fig. 2a and Supplementary Fig. 4).
 
-## Relationship Between $P(\Delta r | r_g)$ and $\Delta r$
+## $P(\Delta r | r_g)$ 和 $\Delta r$的关系
 
 图2b显示，$r_g$较小的用户，通常在小范围内活动，而那些具有大的$r_g$的人，则更倾向于选择许多小和几个更大的跳跃大小(jump size)的组合。
 
@@ -247,7 +247,7 @@ we ranked each location on the basis of the number of times an individual was re
 
 > We find that the probability of finding a user at a location with a given rank L is well approximated by $P(L) \sim 1/L$, independent of the number of locations visited by the user (Fig. 2d).
 
-## Preferential Return
+## 优先返回（Preferential Return）
 
 人们大部分时间只会在很少的几个地方
 
