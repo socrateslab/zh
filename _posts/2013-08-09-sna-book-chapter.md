@@ -1,6 +1,8 @@
 ---
 layout: single
 title: "探寻社交网络中的关系: 统计网络模型初探"
+header:
+  teaser: "unsplash-gallery-image-4-th.jpg"
 comments: true
 categories:
   - network
