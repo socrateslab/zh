@@ -11,6 +11,7 @@ excerpt: "中国新闻地图是一个以可视化的方式反映中国新闻在�
 modified: 2016-01-17T11:55:22-04:00
 comments: true
 author_profile: true
+author: "刘磊"
 ---
 
 {% include toc title="Table" icon="file-text" %}
