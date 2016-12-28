@@ -1,7 +1,7 @@
 ---
 layout: single
+title: "我们的愿景"
 permalink: /about/
-title:"我们的愿景"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
