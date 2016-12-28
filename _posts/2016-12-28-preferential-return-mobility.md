@@ -1,11 +1,11 @@
 ---
 layout: single
-title: "Understanding individual human mobility patterns"
+title: "理解人类个体移动的模式"
 header:
   teaser: "/assets/images/unsplash-gallery-image-4-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-20.jpg
+  overlay_image: /assets/images/unsplash-image-23.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "我们发现，与之前普遍采用的列维飞行和随机游走模型预测出来的随机轨迹相反，人类的实际移动轨迹显示出高度的时间和空间上的规律性，每个个体的特征可以用一个与时间无关的特征移动距离和一个显著的回到几个经常光顾的地方的概率。在校正行进距离的差异和每个轨迹固有的各向异性之后，个体行进模式转变成单个空间概率分布，表明尽管他们的旅行历史具有多样性，人类的移动轨迹遵循简单的可再现模式。"
