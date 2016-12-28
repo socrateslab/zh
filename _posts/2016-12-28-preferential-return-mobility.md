@@ -77,6 +77,46 @@ $$P(r_g)=(r_g+r_g^0)^{-\beta_r}exp(-r_g/\kappa)$$
 
 Question: 如何计算$R_g$？回转半径如何理解？
 
+[MIT Human dynamics](https://www.media.mit.edu/research/groups/human-dynamics)实验室开发了一个名为bandicoot的工具可以比较方便的使用。[http://bandicoot.mit.edu/demo/](http://bandicoot.mit.edu/demo/)，详细代码见[github](https://github.com/yvesalexandre/bandicoot)。
+
+>  pip install bandicoot
+
+```python
+def radius_of_gyration(positions, user):
+    """
+    Returns the radius of gyration, the *equivalent distance* of the mass from
+    the center of gravity, for all visited places. [GON2008]_
+
+    References
+    ----------
+    .. [GON2008] Gonzalez, M. C., Hidalgo, C. A., & Barabasi, A. L. (2008).
+        Understanding individual human mobility patterns. Nature, 453(7196),
+        779-782.
+    """
+    d = Counter(p._get_location(user) for p in positions
+                if p._get_location(user) is not None)
+    sum_weights = sum(d.values())
+    positions = list(d.keys())  # Unique positions
+
+    if len(positions) == 0:
+        return None
+
+    barycenter = [0, 0]
+    for pos, t in d.items():
+        barycenter[0] += pos[0] * t
+        barycenter[1] += pos[1] * t
+
+    barycenter[0] /= sum_weights
+    barycenter[1] /= sum_weights
+
+    r = 0.
+    for pos, t in d.items():
+        r += float(t) / sum_weights * \
+            great_circle_distance(barycenter, pos) ** 2
+    return math.sqrt(r)
+```
+
+
 ## 回转半径${r_g}$ 和时间 t的关系
 
 The longer we observe a user, the higher the chance that she/he will travel to areas not visited before.
