@@ -8,7 +8,7 @@ sidebar:
   - title: "role"
     image: "/assets/images/author/chengjun.jpg"
     image_alt: "logo"
-    text: "管理员"
+    text: "网站管理员"
   - title: "Responsibilities"
     text: "网站维护"
 gallery:
