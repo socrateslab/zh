@@ -22,7 +22,7 @@ Billy Rick:
   uri         : "http://www.jianshu.com/users/2e2954a2be81/latest_articles"
   email       : ""
   bio         : "I ordered what?"
-  avatar      : "/assets/images/bio-photo.jpg"
+  avatar      : "/assets/images/author/lingfei.jpg"
   twitter     : ""
   google_plus : ""
 
@@ -31,7 +31,7 @@ Billy Rick:
   uri         : "http://chengjun.github.io"
   email       : ""
   bio         : "Follow your logic！"
-  avatar      : "/assets/images/bio-photo.jpg"
+  avatar      : "/assets/images/author/chengjun.jpg"
   google_plus : ""
 
 张昕之:
@@ -86,7 +86,7 @@ Billy Rick:
   name        : "陈志聪"
   email       : ""
   bio         : "I ordered what?"
-  avatar      : "/assets/images/bio-photo.jpg"
+  avatar      : "/assets/images/author/zhicong.jpg"
   twitter     : ""
   google_plus : ""
 
@@ -94,7 +94,7 @@ Billy Rick:
   name        : "秦强"
   email       : ""
   bio         : "I ordered what?"
-  avatar      : "/assets/images/bio-photo.jpg"
+  avatar      : "/assets/images/author/qinqiang.jpg"
   twitter     : ""
   google_plus : ""
 
