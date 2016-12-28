@@ -17,9 +17,6 @@ author_profile: true
 
 {% include toc title="Table" icon="file-text" %}
 
-
-## 我们的愿景
-
 [寻找人类传播行为可计算化的基因。]({{ "/" | absolute_url }}){: .btn .btn--success .btn--large}
 
 
