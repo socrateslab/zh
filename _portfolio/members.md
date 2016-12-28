@@ -6,7 +6,7 @@ header:
   teaser: /assets/images/author/chengjun.jpg
 sidebar:
   - title: "role"
-    image: http://placehold.it/350x250
+    image: "/assets/images/author/chengjun.jpg"
     image_alt: "logo"
     text: "管理员"
   - title: "Responsibilities"
