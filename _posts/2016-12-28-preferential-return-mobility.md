@@ -178,9 +178,13 @@ radius_of_gyration(positions)
 
 得到的结果是34.4
 
+![mobility_rg](http://oaf2qt3yk.bkt.clouddn.com/4a2e5de1c9bc276c15f710f5ae3fcc47.png)
+
+这是本文发现的人类个体移动的最重要的行为模式。
+
+
 ## 回转半径${r_g}$ 和时间 t的关系
 
-The longer we observe a user, the higher the chance that she/he will travel to areas not visited before.
 观测的时间越长，一个人越有可能去他没去过的地方
 
 We measured the time dependence of the radius of gyration for users whose gyration radius would be considered
