@@ -64,6 +64,7 @@ $$ P(\Delta r) = (\Delta r + \Delta r_0)^{-\beta}exp(-\Delta r/\kappa) (1)$$
 Equation (1) suggests that human motion follows a truncated Levy flight
 
 However, the observed shape of $P(\Delta r)$ could be explained by three distinct hypotheses:
+
 - first, each individual follows a Levy trajectory with jump size distribution given by equation (1) (hypothesis A);
 - second, the observed distribution captures a population-based heterogeneity, corresponding to the inherent differences between individuals (hypothesis B);
 - third, a population-based heterogeneity coexists with individual Levy trajectories (hypothesis C); hence, equation (1) represents a convolution of hypotheses A and B.
@@ -200,20 +201,20 @@ the time dependence of the average radius of gyration of mobile phone users is b
 ***but also*** one that may appear similar to a saturation process
 (Fig. 2a and Supplementary Fig. 4).
 
-## $P(\Delta r | r_g)$ 和 $\Delta r$的关系
+## $P(\Delta r \mid r_g)$ 和 $\Delta r$的关系
 
 图2b显示，$r_g$较小的用户，通常在小范围内活动，而那些具有大的$r_g$的人，则更倾向于选择许多小和几个更大的跳跃大小(jump size)的组合。
 
 使用$r_g$ 进行重新标准化（rescale）以后，多条曲线合并成了一条直线，这表面，可能有一个单一的跳跃距离（jump size）分布，能够拟合所有人的行为数据。
 
 
-$$P(\Delta r | r_g) \sim r_g^{-\alpha} F(\Delta r | r_g)$$
+$$P(\Delta r \mid r_g) \sim r_g^{-\alpha} F(\Delta r \mid r_g)$$
 
 $\alpha \approx 1.2 \pm 0.1$ 而 F(x)是一个 不依赖于$r_g$的函数。这个F(x)函数在x<1时是幂律的$F(x) \sim x^{-a}$，x >1时急剧下降
 
 因此，个体用户的旅行模式可以通过基于$r_g$的特征距离的Levy飞行来近似。然而，最重要的是，个体轨迹的范围受到$r_g$范围的限制;因此，作为列维飞行的明显而反常性质的来源的那种大尺度飞行（地理空间上的跨越）在统计上好像消失了。
 
-这表明，我们所观察到的$P(\Delta r)$ 的分布实际上是对个体轨迹的统计$P(\Delta r | r_g)$ 和群体的异质性$P(r_g)$之间的卷积，也就是说，假设C成立。
+这表明，我们所观察到的$P(\Delta r)$ 的分布实际上是对个体轨迹的统计$P(\Delta r \mid r_g)$ 和群体的异质性$P(r_g)$之间的卷积，也就是说，假设C成立。
 
 计算t小时后第一次观测到某人出现在某地的概率$F_{pt}(t)$
 
