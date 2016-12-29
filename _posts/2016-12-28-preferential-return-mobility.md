@@ -204,87 +204,39 @@ the time dependence of the average radius of gyration of mobile phone users is b
 
 图2b显示，$r_g$较小的用户，通常在小范围内活动，而那些具有大的$r_g$的人，则更倾向于选择许多小和几个更大的跳跃大小(jump size)的组合。
 
->As the inset of Fig. 2b shows, users with small $r_g$ travel
-mostly over small distances, whereas those with large $r_g$ tend to
-display a combination of many small and a few larger jump sizes.
+使用$r_g$ 进行重新标准化（rescale）以后，多条曲线合并成了一条直线，这表面，可能有一个单一的跳跃距离（jump size）分布，能够拟合所有人的行为数据。
 
-对坐标轴进行rescale以后，多条曲线合并成了一条直线，这表面，可能有一个单一的jump size分布，能够拟合所有人。
-
-> Once we rescaled the distributions with $r_g$ (Fig. 2b), we found that the
-data collapsed into a single curve, suggesting that a single jump size distribution characterizes all users.
 
 $$P(\Delta r | r_g) \sim r_g^{-\alpha} F(\Delta r | r_g)$$
 
-where $\alpha \approx 1.2 \pm 0.1$ and F(x) is an $r_g$-independent function with asymptotic behaviour, that is,
-$F(x) \sim x^{-a}$ for x < 1 and F(x) rapidly decreases for x >> 1 这个F函数在x<1时是幂律的，x >1时急剧下降）
+$\alpha \approx 1.2 \pm 0.1$ 而 F(x)是一个 不依赖于$r_g$的函数。这个F(x)函数在x<1时是幂律的$F(x) \sim x^{-a}$，x >1时急剧下降
 
 因此，个体用户的旅行模式可以通过基于$r_g$的特征距离的Levy飞行来近似。然而，最重要的是，个体轨迹的范围受到$r_g$范围的限制;因此，作为列维飞行的明显而反常性质的来源的那种大尺度飞行（地理空间上的跨越）在统计上好像消失了。
 
-> Therefore, the travel patterns of individual users may be approximated by a Levy flight up to a distance characterized by rg.
-Most important, however, is the fact that the individual trajectories are bounded beyond rg;
-thus, large displacements, which are the source of the distinct and anomalous nature of Levy flights, are statistically absent.
-
 这表明，我们所观察到的$P(\Delta r)$ 的分布实际上是对个体轨迹的统计$P(\Delta r | r_g)$ 和群体的异质性$P(r_g)$之间的卷积，也就是说，假设C成立。
 
-> This indicates that the observed jump size distribution $P(\Delta r)$ is in fact
-the convolution between the statistics of individual trajectories $P(\Delta r | r_g)$ and
-the population heterogeneity P(rg), consistent with hypothesis C.
+计算t小时后第一次观测到某人出现在某地的概率$F_{pt}(t)$
 
-计算t小时后第一次观测到某人出现在某地的概率
-
-> To uncover the mechanism stabilizing $r_g$, we measured the return probability for each individual $F_{pt}(t)$
-(first passage time probability)
-defined as the probability that a user returns to the position where he/she was first observed after t hours (Fig. 2c).
+> first passage time probability, defined as the probability that a user returns to the position where he/she was first observed after t hours.
 
 人们的返回概率（return probability）往往会在24h、48h、72h后出现峰值
 
-> In contrast, we found that the return probability is characterized by several peaks at 24 h, 48 h and 72 h,
-capturing a strong tendency of humans to return to locations they visited before,
-describing the recurrence and temporal periodicity inherent to human mobility
-
 将地点（location）按照被访问次数排序（rank），通过记录个体（individual）所在的附近地区（vicinity），发现符合Zipf分布。
 
-> To explore if individuals return to the same location over and over,
-we ranked each location on the basis of the number of times an individual was recorded in its vicinity
-
-一个人去的地方的排名（rank），记为L的概率P可以用1/L来预测，而与用户去的地方的数量无关（对于去5个、10个、30个、50个地方的用户，他们的幂指数都是一样的）
-
-> We find that the probability of finding a user at a location with a given rank L is well approximated by $P(L) \sim 1/L$, independent of the number of locations visited by the user (Fig. 2d).
+一个人去的地方的排名L的概率P(L)可以近似使用1/L来表达，而与用户去的地方的数量无关（对于去5个、10个、30个、50个地方的用户，他们的幂指数都是一样的），即$P(L) \sim 1/L$,
 
 ## 优先返回（Preferential Return）
 
-人们大部分时间只会在很少的几个地方
-
-> Therefore, people devote most of their time to a few locations,
-although spending their remaining time in 5 to 50 places, visited with diminished regularity.
-
-Therefore, the observed logarithmic saturation of $r_g(t)$ is rooted in the high degree of regularity in the daily travel patterns of individuals,
-captured by the high return probabilities (Fig. 2b) to a few highly frequented locations (Fig. 2d).
-因此，之前观察到的$r_g$的对数饱和度是根据个人的日常旅行模式的高度规律性，由高回报概率捕获到几个高度常见的地点
+人们大部分时间只会在很少的几个地方。因此，之前观察到的$r_g(t)$的对数饱和度是根据个人的日常旅行模式的高度规律性，由高回报概率捕获到几个高度常见的地点
 
 每个用户可以被分配到由家庭和工作场所定义的明确定义的区域，在那里她或他大部分时间都能被找到。
 
-> each user can be assigned to a well defined area, defined by home and workplace,
-where she or he can be found most of the time.
 
-我们的结果表明：
+这些结果表明：
+
 - 在银行纸币测量中观察到的Levy统计数据捕获了等式(2)中所示的- 群体异质性与个体用户的运动的卷积。
 - 个人显示出显着的规律性，因为他们回到几个经常访问的地方，如家庭或工作。
 - 这种规律性不适用于钞票：票据总是遵循其当前所有者的轨迹; 也就是说，美元钞票弥漫（是散播开的），但人类没有。
 
 
-> Taken together, our results suggest that
-the Levy statistics observed in bank note measurements capture a convolution of the population heterogeneity shown in equation (2) and the motion of individual users.
-Individuals display significant regularity, because they return to a few highly frequented locations, such as home or work.
-This regularity does not apply to the bank notes: a bill always follows the trajectory of its current owner; that is, dollar bills diffuse, but humans do not.
-
-总而言之，个体轨迹可以由相同的、与$r_g$独立的二维概率分布表征，这表明个体轨迹的关键统计特征在重新缩放之后在很大程度上是不可区分的。因此，我们的结果确立了agent-based modelling的基本假设，要求我们将对用户的数量要与给定区域的人口密度成比例，并向每个用户分配取自观察到的$P(r_g）$分布的$r_g$。使用预测的各向异性重新缩放，结合密度函数，其形状提供为Supplementary Table 1，
-我们可以获得在任何位置找到用户的可能性。鉴于空间接近度和社会联系之间的已知相关性，我们的结果可以帮助量化空间在网络发展和进化中的作用，并增进我们对扩散过程的理解。
-
-
-> The fact that individual trajectories are characterized by the same rg-independent two-dimensional probability distribution
-suggests that key statistical characteristics of individual trajectories are largely indistinguishable after rescaling.
-Therefore, our results establish the basic ingredients of realistic agent-based models,
-requiring us to place users in number proportional with the population density of a given region and assign each user an rg taken from the observed P(rg) distribution.
-Using the predicted anisotropic rescaling, combined with the density function, the shape of which is provided as Supplementary Table 1,
-we can obtain the likelihood of finding a user in any location. Given the known correlations between spatial proximity and social links, our results could help quantify the role of space in network development and evolution and improve our understanding of diffusion processes.
+总而言之，个体轨迹可以由相同的、与$r_g$独立的二维概率分布表征，这表明个体轨迹的关键统计特征在重新缩放之后在很大程度上是不可区分的。因此，我们的结果确立了agent-based modelling的基本假设，要求我们将对用户的数量要与给定区域的人口密度成比例，并向每个用户分配取自观察到的$P(r_g）$分布的$r_g$。使用预测的各向异性重新缩放，结合密度函数，其形状提供为Supplementary Table 1，我们可以获得在任何位置找到用户的可能性。鉴于空间接近度和社会联系之间的已知相关性，我们的结果可以帮助量化空间在网络发展和进化中的作用，并增进我们对扩散过程的理解。
