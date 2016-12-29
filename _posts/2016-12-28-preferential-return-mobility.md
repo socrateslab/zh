@@ -22,15 +22,11 @@ categories:
 {% include toc title="Table" icon="file-text" %}
 
 
-Understanding individual human mobility patterns
-
-Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi
+Understanding individual human mobility patterns.Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Nature.<sup>1</sup> [链接](http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html)
 
 # 摘要
 
 我们发现，与之前普遍采用的列维飞行和随机游走模型预测出来的随机轨迹相反，人类的实际移动轨迹显示出高度的时间和空间上的规律性，每个个体的特征可以用一个与时间无关的特征移动距离和一个显著的回到几个经常光顾的地方的概率。在校正行进距离的差异和每个轨迹固有的各向异性之后，个体行进模式转变成单个空间概率分布，表明尽管他们的旅行历史具有多样性，人类的移动轨迹遵循简单的可再现模式。
-
-原文链接：[http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html](http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html)
 
 
 # 引言
@@ -59,23 +55,23 @@ $$ P(\Delta r) \sim \Delta r^{(1+\beta)} $$
 
 我们测量了用户依次经过的地点之间的距离，记为$\Delta r$。
 
-$$ P(\Delta r) = (\Delta r + \Delta r_0)^{-\beta}exp(-\Delta r/\kappa) (1)$$
+$$ P(\Delta r) = (\Delta r + \Delta r_0)^{-\beta}exp(-\Delta r/\kappa)   (1)$$
 
-Equation (1) suggests that human motion follows a truncated Levy flight
 
-However, the observed shape of $P(\Delta r)$ could be explained by three distinct hypotheses:
 
-- first, each individual follows a Levy trajectory with jump size distribution given by equation (1) (hypothesis A);
-- second, the observed distribution captures a population-based heterogeneity, corresponding to the inherent differences between individuals (hypothesis B);
-- third, a population-based heterogeneity coexists with individual Levy trajectories (hypothesis C); hence, equation (1) represents a convolution of hypotheses A and B.
+以上公式表明人类移动遵循一个截尾的列维飞行（truncated Levy flight）模式。但是观察到的$P(\Delta r)$的形状可以被三种不同的假设解释：
+
+1. 每个用户遵循一个跳跃距离的分布为公式1的列维飞行（假设A）
+2. 观察到的分布所反映的是群体层面的异质性，这种异质性是由个体之间所固有的差异造成的（假设B)
+3. 基于群体的异质性与个体层面的列维轨迹共存（假设C),这样公式1代表了假设A和B的卷积。
 
 ## 回转半径$r_g$的分布
 
-To distinguish between hypotheses A, B and C, we calculated **the radius of gyration** for each user (see Supplementary Information IV)
+为了区分三个假设，作者计算了每一个用户移动行为的回转半径（**the radius of gyration**, $r_g$）。结果发现：
 
 $$P(r_g)=(r_g+r_g^0)^{-\beta_r}exp(-r_g/\kappa)$$
 
-Question: 如何计算$R_g$？回转半径如何理解？
+问题: 如何计算$R_g$？回转半径如何理解？
 
 [MIT Human dynamics](https://www.media.mit.edu/research/groups/human-dynamics)实验室开发了一个名为bandicoot的工具可以比较方便的使用。[http://bandicoot.mit.edu/demo/](http://bandicoot.mit.edu/demo/)，详细代码见[github](https://github.com/yvesalexandre/bandicoot)。
 
@@ -240,4 +236,7 @@ $\alpha \approx 1.2 \pm 0.1$ 而 F(x)是一个 不依赖于$r_g$的函数。这�
 - 这种规律性不适用于钞票：票据总是遵循其当前所有者的轨迹; 也就是说，美元钞票弥漫（是散播开的），但人类没有。
 
 
-总而言之，个体轨迹可以由相同的、与$r_g$独立的二维概率分布表征，这表明个体轨迹的关键统计特征在重新缩放之后在很大程度上是不可区分的。因此，我们的结果确立了agent-based modelling的基本假设，要求我们将对用户的数量要与给定区域的人口密度成比例，并向每个用户分配取自观察到的$P(r_g）$分布的$r_g$。使用预测的各向异性重新缩放，结合密度函数，其形状提供为Supplementary Table 1，我们可以获得在任何位置找到用户的可能性。鉴于空间接近度和社会联系之间的已知相关性，我们的结果可以帮助量化空间在网络发展和进化中的作用，并增进我们对扩散过程的理解。
+总而言之，个体轨迹可以由相同的、与$r_g$独立的二维概率分布表征，这表明个体轨迹的关键统计特征在重新缩放之后在很大程度上是不可区分的。因此，我们的结果确立了多主体建模的基本假设，要求用户数量要与给定区域的人口密度成比例，并向每个用户分配取自观察到的$P(r_g）$分布的$r_g$。使用预测的各向异性重新缩放，结合密度函数，其形状提供为附件表1，我们可以获得在任何位置找到用户的可能性。鉴于空间接近度和社会联系之间的已知相关性，我们的结果可以帮助量化空间在网络发展和进化中的作用，并增进我们对扩散过程的理解。
+
+# 参考文献
+1. Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Understanding individual human mobility patterns. Nature
