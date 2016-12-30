@@ -175,6 +175,61 @@ radius_of_gyration(positions)
 
 得到的结果是34.4
 
+```python
+import folium, jinja2, vincent
+from IPython.display import IFrame
+from IPython.core.display import HTML
+map_osm = folium.Map(location=center, zoom_start=8)
+from folium.plugins import MarkerCluster
+
+popups = ['{}'.format(loc) for loc in positions]
+map_osm.add_children(MarkerCluster(locations=positions, popups=popups))
+```
+
+![folium_positons_full](http://oaf2qt3yk.bkt.clouddn.com/4c99676ad00cc08334701dc32ef52ce5.png)
+
+```python
+from folium import plugins
+map_osm.add_children(plugins.HeatMap(positions))
+```
+
+![folium_heatmap_full](http://oaf2qt3yk.bkt.clouddn.com/dfd013c0c89d8da8082709a1b436b852.png)
+
+如果room in的话，可以看到更精细化的聚集情况，如下图：
+
+![folium_heatmap](http://oaf2qt3yk.bkt.clouddn.com/ed9da18e350878b67d06af055aa952c4.png)
+
+上图所展现的是个体移动分布的热力图。我们也可以采用一个半径为回转半径的圆形来标示点的分布情况。
+
+```python
+map_2 = folium.Map(location=center,
+                   #tiles='Stamen Toner',
+                   zoom_start=8)
+
+for loc in positions:
+    folium.Marker(loc, popup = None).add_to(map_2)   
+
+folium.CircleMarker(center,
+                    radius=rg*1000,
+                    # 1 pixcel is 1 meter. /
+                    # see https://github.com/python-visualization/folium/issues/415
+                    popup='radius of gyration',
+                    color='red',
+                    fill_color='red',
+                   ).add_to(map_2)
+
+from folium import plugins
+
+map_2.add_children(plugins.HeatMap(positions))
+```
+
+![folium_cirle_rg](http://oaf2qt3yk.bkt.clouddn.com/45ea8fc260d08c877673b60733a01c42.png)
+
+上图红色所标示的即为回转半径所覆盖的范围。
+
+
+## 行为模式
+
 ![mobility_rg](http://oaf2qt3yk.bkt.clouddn.com/4a2e5de1c9bc276c15f710f5ae3fcc47.png)
 
 这是本文发现的人类个体移动的最重要的行为模式。
