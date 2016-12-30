@@ -188,6 +188,8 @@ map_osm.add_children(MarkerCluster(locations=positions, popups=popups))
 
 ![folium_positons_full](http://oaf2qt3yk.bkt.clouddn.com/4c99676ad00cc08334701dc32ef52ce5.png)
 
+我们还可以展现的是个体移动分布的热力图。
+
 ```python
 from folium import plugins
 map_osm.add_children(plugins.HeatMap(positions))
@@ -199,7 +201,7 @@ map_osm.add_children(plugins.HeatMap(positions))
 
 ![folium_heatmap](http://oaf2qt3yk.bkt.clouddn.com/ed9da18e350878b67d06af055aa952c4.png)
 
-上图所展现的是个体移动分布的热力图。我们也可以采用一个半径为回转半径的圆形来标示点的分布情况。
+我们也可以采用一个半径为回转半径的圆形来标示点的分布情况。
 
 ```python
 map_2 = folium.Map(location=center,
