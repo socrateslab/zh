@@ -279,9 +279,9 @@ for user in users:
 
 ![user_100000170](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100000170.png)
 
-![user_100001528](https://raw.githubusercontent.com/zhicongchen/datalab/tree/master/beijingmobile/user_100001528.png)
+![user_100001528](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100001528.png)
 
-![user_100002313](https://raw.githubusercontent.com/zhicongchen/datalab/tree/master/beijingmobile/user_100002313.png)
+![user_100002313](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100002313.png)
 
 源代码见Github：https://github.com/zhicongchen/datalab/tree/master/beijingmobile/one_user.ipynb
 ## 行为模式
