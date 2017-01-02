@@ -277,14 +277,13 @@ for user in users:
 
 绘制出来的图如下（以三个用户为例）：
 
-![user_100000170](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100000170.png)
+![user_100000170](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100000170.png)
 
-![user_100001528](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100001528.png)
+![user_100001528](https://raw.githubusercontent.com/zhicongchen/datalab/tree/master/beijingmobile/user_100001528.png)
 
-![user_100002313](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100002313.png)
+![user_100002313](https://raw.githubusercontent.com/zhicongchen/datalab/tree/master/beijingmobile/user_100002313.png)
 
-源代码见Github：https://github.com/zhicongchen/datalab/tree/master/beijingmobile/
-
+源代码见Github：https://github.com/zhicongchen/datalab/tree/master/beijingmobile/one_user.ipynb
 ## 行为模式
 
 ![mobility_rg](http://oaf2qt3yk.bkt.clouddn.com/4a2e5de1c9bc276c15f710f5ae3fcc47.png)
