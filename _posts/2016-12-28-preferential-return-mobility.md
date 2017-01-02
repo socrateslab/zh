@@ -229,6 +229,61 @@ map_2.add_children(plugins.HeatMap(positions))
 
 上图红色所标示的即为回转半径所覆盖的范围。
 
+### 使用北京移动数据的计算结果
+
+选取了以下的用户的移动数据
+- user_100000170.dat
+- user_100001528.dat
+- user_100002313.dat
+- user_100300253.dat
+- user_100300348.dat
+- user_100300895.dat
+- user_102940566.dat
+
+dat数据文件为csv格式：
+user_id,access_mode_id,logic_area_name,lac,ci,longtitude,latitude,busi_name,busi_type_name,app_name,app_type_name,start_time,up_pack,down_pack,up_flow,down_flow,site_name,site_channel,cont_app_id,cont_classify_id,cont_type_id,acce_url
+
+使用pandas获取其中的['longtitude', 'latitude']两个属性，
+
+```python
+for user in users:
+    one_user = pd.read_csv('./data/' + user + '.dat')
+    positions = []
+    for point in one_user[['longtitude', 'latitude']].as_matrix():
+        if np.isnan(point[0]) != 1:
+            positions.append((point[0], point[1]))
+
+    radius, center = radius_of_gyration(positions)
+
+    from matplotlib.patches import Circle
+
+    xs, ys = np.array(positions).T
+    # transformation of X, Y
+    # the origin of coordinates was transformed from (116,39.6) to (0,0)
+    # the step size of coordinates measured by kilometers(km)
+    xs = (xs-116)*(111*cos(40 * pi / 180))
+    ys = (ys-39.6)*111
+    c = [(center[0]-116)*(111*cos(40 * pi / 180)), (center[1]-39.6)*111]
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(xs, ys)
+    ax.scatter(c[0], c[1], color='red')
+    circle = Circle(xy = c, radius = radius, alpha=0.1)
+    ax.add_patch(circle)
+    ax.set_title(user)
+    plt.savefig(user+'.png', dpi=200)
+```
+
+绘制出来的图如下（以三个用户为例）：
+
+![user_100000170](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100000170.png)
+
+![user_100001528](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100001528.png)
+
+![user_100002313](https://github.com/zhicongchen/datalab/tree/master/beijingmobile/user_100002313.png)
+
+源代码见Github：https://github.com/zhicongchen/datalab/tree/master/beijingmobile/
 
 ## 行为模式
 
