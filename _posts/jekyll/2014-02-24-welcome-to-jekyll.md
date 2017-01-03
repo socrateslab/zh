@@ -46,7 +46,6 @@ Jekyll also offers powerful support for code snippets:
 
 效果如下：
 
-
 ```ruby
 def print_hi(name)
   puts "Hi, #{name}"
