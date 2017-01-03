@@ -55,6 +55,7 @@ https://groups.google.com/group/computational-communication
 我们更欢迎你成为内容贡献者，网站编辑每个月需贡献不少于一篇文章，
 竞选主编需要贡献四篇文章以上，且需要编委会投票半数以上通过。
 
+
 ![](http://computational-communication.com/assets/images/pengui.gif)
 
 
