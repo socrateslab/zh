@@ -4,7 +4,7 @@ excerpt: "Post displaying the various ways of highlighting code in Markdown."
 modified: 2016-09-09T09:55:10-04:00
 header:
   teaser: "assets/images/markup-syntax-highlighting-teaser.jpg"
-tags: 
+tags:
   - code
   - syntax highlighting
 ---
@@ -83,7 +83,7 @@ Indentation matters. Be sure the indent of the code block aligns with the first 
 
 1. Do step 1.
 2. Now do this:
-   
+
    ```ruby
    def print_hi(name)
      puts "Hi, #{name}"
@@ -91,7 +91,7 @@ Indentation matters. Be sure the indent of the code block aligns with the first 
    print_hi('Tom')
    #=> prints 'Hi, Tom' to STDOUT.
    ```
-        
+
 3. Now you can do this.
 
 ### GitHub Gist Embed
