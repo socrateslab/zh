@@ -86,7 +86,6 @@ markdown-preview-enhanced可以很方便的预览数学公式，比如 $x = y^2$
 $E = MC^2$
 
 
-
 ### Atom的图片上传插件
 
 结果就发现阿里巴巴程序员knightli的两个atom插件：qiniu-uploader和markdown-assistant。设置好七牛的账号既可以非常方便地使用图床了。赞。
