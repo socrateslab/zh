@@ -19,12 +19,11 @@ tags:
 
 You'll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
 
-You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
-
 To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter.
 
 Take a look at the source for this post to get an idea about how it works.
 
+You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated. 不鼓励在本机的环境下进行以上操作，因为有很多bug。
 
 # 二、关于Markdown
 
@@ -62,9 +61,8 @@ markdown可以较好地支持参考文献功能。例如：It is intended only f
 
 实现以上效果的方式如下：
 
-```jekyll
+```
 It is intended only for human readers.[^1]
-
 [^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
 ```
 
