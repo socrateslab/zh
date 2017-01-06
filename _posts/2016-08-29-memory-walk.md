@@ -2,6 +2,7 @@
 layout: single
 title: "记忆优先随机游走模型"
 header:
+  teaser: "/assets/images/unsplash-gallery-image-1-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-8.jpg
