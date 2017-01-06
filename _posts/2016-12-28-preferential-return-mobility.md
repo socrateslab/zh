@@ -24,6 +24,7 @@ categories:
 
 Understanding individual human mobility patterns.Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Nature.<sup>1</sup> [链接](http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html)
 
+
 # 摘要
 
 与之前普遍采用的列维飞行和随机游走模型预测出来的随机轨迹相反，人类的实际移动轨迹显示出高度的时间和空间上的规律性，每个个体的特征可以用一个与时间无关的特征移动距离和一个显著的回到几个经常光顾的地方的概率。在校正行进距离的差异和每个轨迹固有的各向异性之后，个体行进模式转变成单个空间概率分布，表明尽管他们的旅行历史具有多样性，人类的移动轨迹遵循简单的可再现模式。
