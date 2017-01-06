@@ -22,7 +22,9 @@ categories:
 {% include toc title="Table" icon="file-text" %}
 
 
-Understanding individual human mobility patterns.Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Nature.<sup>1</sup> [链接](http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html)
+Understanding individual human mobility patterns.Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Nature [^1]
+
+[^1]: <http://www.nature.com/nature/journal/v453/n7196/abs/nature06958.html>
 
 
 # 摘要
@@ -351,4 +353,3 @@ $\alpha \approx 1.2 \pm 0.1$ 而 F(x)是一个 不依赖于$r_g$的函数。这�
 总而言之，个体轨迹可以由相同的、与$r_g$独立的二维概率分布表征，这表明个体轨迹的关键统计特征在重新缩放之后在很大程度上是不可区分的。因此，我们的结果确立了多主体建模的基本假设，要求用户数量要与给定区域的人口密度成比例，并向每个用户分配取自观察到的$P(r_g）$分布的$r_g$。使用预测的各向异性重新缩放，结合密度函数，其形状提供为附件表1，我们可以获得在任何位置找到用户的可能性。鉴于空间接近度和社会联系之间的已知相关性，我们的结果可以帮助量化空间在网络发展和进化中的作用，并增进我们对扩散过程的理解。
 
 # 参考文献
-1. Marta C. Gonzalez, Cesar A. Hidalgo & Albert-Laszlo Barabasi. 2009 Understanding individual human mobility patterns. Nature
