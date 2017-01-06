@@ -236,15 +236,7 @@ map_2.add_children(plugins.HeatMap(positions))
 
 选取了以下的用户的移动数据
 - user_100000170.dat
-- user_100001528.dat
-- user_100002313.dat
-- user_100300253.dat
-- user_100300348.dat
-- user_100300895.dat
-- user_102940566.dat
 
-dat数据文件为csv格式：
-user_id,access_mode_id,logic_area_name,lac,ci,longtitude,latitude,busi_name,busi_type_name,app_name,app_type_name,start_time,up_pack,down_pack,up_flow,down_flow,site_name,site_channel,cont_app_id,cont_classify_id,cont_type_id,acce_url
 
 使用pandas获取其中的['longtitude', 'latitude']两个属性，
 
@@ -282,9 +274,6 @@ for user in users:
 
 ![user_100000170](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100000170.png)
 
-![user_100001528](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100001528.png)
-
-![user_100002313](https://raw.githubusercontent.com/zhicongchen/datalab/master/beijingmobile/user_100002313.png)
 
 源代码见Github：https://github.com/zhicongchen/datalab/tree/master/beijingmobile/one_user.ipynb
 ## 行为模式
