@@ -17,7 +17,6 @@ author: "王成军"
 
 {% include toc title="Table" icon="file-text" %}
 
-
 ## 模型设定
 <ul>
 <li>有有限个地点，数量为$M$（真实的或者虚拟的），有有限个个体，数量记为$N$。</li>
