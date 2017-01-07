@@ -79,11 +79,9 @@ Many collective human activities, including violence, have been shown to exhibit
   - 群体力量$s$按时间进行平均的分布即叛乱事件的规模$x$分布。
   - 以上过程导致一个稳定的幂律分布，幂指数围绕2.5左右摇摆。[^finance] [^book]
 
-[^finance]: APAR. D'HULST, & G. J. RODGERS. (2011). Exact solution of a model for crowding and information transmission in financial
+[^finance]: APAR. D'HULST, & G. J. RODGERS. (2011). Exact solution of a model for crowding and information transmission in financial markets. International Journal of Theoretical & Applied Finance, 03(4), 303-320.
 
-[^book]: markets. International Journal of Theoretical & Applied Finance, 03(4), 303-320.
-
-26. Financial market complexity / Neil F. Johnson, Paul Jefferies, Pak Ming Hui. Oxford University Press, 2003.
+[^book]: Financial market complexity / Neil F. Johnson, Paul Jefferies, Pak Ming Hui. Oxford University Press, 2003.
   
 ![](http://oaf2qt3yk.bkt.clouddn.com/schema_regime.PNG)  
 
