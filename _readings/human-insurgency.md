@@ -13,7 +13,7 @@ author: "王成军"
 
 {% include toc title="Table" icon="file-text" %}
 
-Juan Camilo Bohorquez, Sean Gourley, Alexander R. Dixon, Michael Spagat & **Neil F. Johnson** (2009) ``Common ecology quantifies human insurgency``. Nature
+Juan Camilo Bohorquez, Sean Gourley, Alexander R. Dixon, Michael Spagat & **Neil F. Johnson** (2009) doi: 10.1038/nature08631 ``Common ecology quantifies human insurgency``. Nature
 
 
 - [x] this is a complete item
@@ -84,6 +84,8 @@ Many collective human activities, including violence, have been shown to exhibit
 [^book]: Financial market complexity / Neil F. Johnson, Paul Jefferies, Pak Ming Hui. Oxford University Press, 2003.
   
 ![](http://oaf2qt3yk.bkt.clouddn.com/schema_regime.PNG)  
+
+[Supplementary Figure 2](http://www.nature.com/nature/journal/v462/n7275/extref/nature08631-s1.pdf)
 
 
 
