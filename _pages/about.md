@@ -77,7 +77,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
   - [x] 支持markdown（包括代码高亮）
   - [x] 支持基于mathjax的数学公式
 - [x] <del>域名迁移</del>
-- [x]<del>网站迁移</del>
+- [x] <del>网站迁移</del>
 
 
 
