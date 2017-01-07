@@ -78,6 +78,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 
 ![](http://computational-communication.com/assets/images/pengui.gif)
 
+**不要温和地走进黑夜**
 
 > 不要温和地走进黑夜，
 不要让黄昏时的暮气消解了激情，
