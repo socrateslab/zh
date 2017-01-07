@@ -66,7 +66,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 
 ## 联系我们
 
-愿意成为管理员的同学：成为创造者你可以学到更多；变成分享者，你会变得更强大!
+成为创造者你可以学到更多；变成分享者，你会变得更强大!
 
 - 现在的作者团队：http://computational-communication.com/authors/
 - 凡对计算传播学感兴趣者，欢迎加入请加入谷歌邮件组：https://groups.google.com/group/computational-communication
