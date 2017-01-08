@@ -43,7 +43,7 @@ The relative regularization rates obtained by comparing Old versus Modern Englis
 
 ![irregular_verbs_time](http://oaf2qt3yk.bkt.clouddn.com/45a6eda1d8d1c859f2461d9a46669c03.png)
 
-we can estimate actual **half-lives** of the irregular verbs in different frequency bins. Irregular verbs that occur with a frequency between $10^6$ and $10^5$ have a half-life of about 300 years, whereas those with a frequency between $10^4$ and $10^3$ have a half-life of 2,000 years.
+We can estimate actual **half-lives** of the irregular verbs in different frequency bins. Irregular verbs that occur with a frequency between $10^6$ and $10^5$ have a half-life of about 300 years, whereas those with a frequency between $10^4$ and $10^3$ have a half-life of 2,000 years.
 
 If we fit half-life versus frequency with a straight line in a log–log plot, we obtain a slope of 0.50, which again suggests that the half-life of irregular verbs is proportional to approximately the
 square root of their frequency (Fig. 2b).
