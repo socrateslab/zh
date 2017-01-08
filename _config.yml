@@ -17,6 +17,7 @@ repository               : "data-science-lab/data-science-lab.github.io" # GitHu
 teaser                   : "/assets/images/500x300.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
+theme                    : minimal-mistakes-jekyll
 comments:
   provider               : "custom" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
