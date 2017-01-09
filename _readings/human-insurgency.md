@@ -50,8 +50,8 @@ Many collective human activities, including violence, have been shown to exhibit
 
 在这个模型里有两种运行机制：
 
-1. Mechanism (1): ongoing group dynamics **within** the insurgent population (for example, as a result of internal interactions and/or the presence of an opposing entity such as a state army);
-2. Mechanism (2): group decision-making about **when to attack** based on competition for ``media attention``.
+1. Grouping Mechanism (1): ongoing group dynamics **within** the insurgent population (for example, as a result of internal interactions and/or the presence of an opposing entity such as a state army);
+2. Timing Mechanism (2): group decision-making about **when to attack** based on competition for ``media attention``.
 
 根据上图，作者刻画叛乱的模型框架是从媒介报道展开的：
 
@@ -60,6 +60,7 @@ Many collective human activities, including violence, have been shown to exhibit
 3. 在时间点t群体内部互动（联合或分裂）【机制1】
 4. 机制1构成群体重组，机制2决定自群体在时间点t的攻击决策
 5. 上述过程构成时间点t的叛乱事件数$n_x(t)$
+
     - 数据分析：
       - 时间点t的事件数量在规模维度上汇总 $\sum_x n_x(t) $, 【size-aggregated】
       - 规模为x的事件数量在时间维度上汇总 $\sum_t n_x (t)$, 【time-aggregated】
@@ -71,10 +72,12 @@ Many collective human activities, including violence, have been shown to exhibit
 - 机制2导致了规模维度汇总的时间数量的分布（Figure3）【time-aggregated】。
 
 首先，就机制1而言，叛乱群体内部的互动包括了分裂(fragmentation, $v_{frag}$)与合并（coalesce, $v_{coal}$）两类。
+
   - 一个群体分裂的概率一般比较小，约为1%。
   - 当两个力量为$s_1$和$s_2$的两个群体合并的时候，他们的力量变为$s_1 + s_2$。
 
 然后，从平均的角度来看机制2：
+
   - 假设所有组参与叛乱的概率相等；
   - 群体力量$s$按时间进行平均的分布即叛乱事件的规模$x$分布。
   - 以上过程导致一个稳定的幂律分布，幂指数围绕2.5左右摇摆。[^finance] [^book]
@@ -82,13 +85,38 @@ Many collective human activities, including violence, have been shown to exhibit
 [^finance]: APAR. D'HULST, & G. J. RODGERS. (2011). Exact solution of a model for crowding and information transmission in financial markets. International Journal of Theoretical & Applied Finance, 03(4), 303-320.
 
 [^book]: Financial market complexity / Neil F. Johnson, Paul Jefferies, Pak Ming Hui. Oxford University Press, 2003.
-  
+
 ![](http://oaf2qt3yk.bkt.clouddn.com/schema_regime.PNG)  
 
 [Supplementary Figure 2](http://www.nature.com/nature/journal/v462/n7275/extref/nature08631-s1.pdf)
 
+The model is simply a modified version of the well-known and well-studied `El Farol problem of Brian Arthur` in which potential bar-goers compete for space in a crowded bar on successive days, making decisions about whether to act (i.e. attend the bar) or not based on common limited knowledge about the past (see Ref. [33][^book] for details).
+
+[netlogo program of El Farol](http://ccl.northwestern.edu/netlogo/models/ElFarol)
+
+> The El Farol bar problem is a problem in game theory. Based on a bar in Santa Fe, New Mexico, it was created in 1994 by W. Brian Arthur. [^arthur] The problem was formulated and solved dynamically six years earlier by B. A. Huberman and T. Hogg in "The Ecology of Computation", Studies in Computer Science and Artificial Intelligence, North Holland publisher, page 99. 1988. The problem is as follows: There is a particular, finite population of people. Every Thursday night, all of these people want to go to the El Farol Bar. However, the El Farol is quite small, and it's no fun to go there if it's too crowded.
+
+[^arthur]: Arthur, W. Brian (1994). "Inductive Reasoning and Bounded Rationality" (PDF). American Economic Review. 84: 406–411.
+
+ So much so, in fact, that the preferences of the population can be described as follows:
+
+- If **less** than 60% of the population go to the bar, they'll all have a better time than if they stayed at home.
+- If **more** than 60% of the population go to the bar, they'll all have a worse time than if they stayed at home.
+
+Unfortunately, it is necessary for everyone to decide at the same time whether they will go to the bar or not. They cannot wait and see how many others go on a particular Thursday before deciding to go themselves on that Thursday.
+
+关于这个模型的详细内容见[http://lanl.arxiv.org/pdf/physics/0605035v1](http://lanl.arxiv.org/pdf/physics/0605035v1)，第21页。
+
+### 模型细节
+
+可以在不同的近似水平上写出来模型演化的动力学方程。某一次反叛军队的攻击情况可以分割表达为可以表达为{$l_1, l_2, .., l_N$}。其中，$l_N$是攻击强度为s的攻击单位的数量（the
+number of attack units of attack strength s）。如果所有的叛军一起发动了攻击，那么可以表达为{0,0,..,1}，即所有的N个人一起参与了攻击，其他攻击规模的数量都为0。显然，存在：
+
+$$\sum_{i=1}^N il_i = N$$
+
+随着时间的演变，会出现分割叛军规模的不同实现形式。
+
+
 
 
 # 参考文献
-
-
