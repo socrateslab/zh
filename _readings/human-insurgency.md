@@ -109,7 +109,7 @@ Unfortunately, it is necessary for everyone to decide at the same time whether t
 
 ### 模型细节
 
-可以在不同的近似水平上写出来模型演化的动力学方程。某一次反叛军队的攻击情况可以分割表达为可以表达为{$l_1, l_2, .., l_N$}。其中，$l_N$是攻击强度为s的攻击单位的数量（the
+可以在不同的近似水平上写出来模型演化的动力学方程。某一次反叛军队的攻击情况可以分割表达为{$l_1, l_2, .., l_N$}。其中，$l_N$是攻击强度为s的攻击单位的数量（the
 number of attack units of attack strength s）。如果所有的叛军一起发动了攻击，那么可以表达为{0,0,..,1}，即所有的N个人一起参与了攻击，其他攻击规模的数量都为0。显然，存在：
 
 $$\sum_{i=1}^N il_i = N$$
