@@ -8,9 +8,15 @@ tags:
   - update
 ---
 
+{% include toc title="Table" icon="file-text" %}
+
+
+这个网站使用Jekyll构建。Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll's GitHub repo][jekyll-gh].
+
+
 # 一、关于Jekyll
 
-这个网站使用Jekyll构建。Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll's GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
 [jekyll-docs]: http://jekyllrb.com/docs/home
 [jekyll-gh]:   https://github.com/jekyll/jekyll
@@ -23,7 +29,6 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 Take a look at the source for this post to get an idea about how it works.
 
-You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated. 不鼓励在本机的环境下进行以上操作，因为有很多bug。
 
 # 二、关于Markdown
 
@@ -66,7 +71,7 @@ It is intended only for human readers.[^1]
 [^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
 ```
 
-# 三、使用Atom编辑markdown文件
+# 三、使用Atom编辑
 
 使用**Atom**来编写markdown非常不错，按ctr+shift+m就可以进入预览模式，我想markdownpad可以抛弃掉了。这个软件更流畅，非常棒！因为我经常要写github的博客，使用atom时最容易的形式。减少了甚多负担，非常的自由，如果它具有上传功能就好了。
 
@@ -108,5 +113,30 @@ $E = MC^2$
 如果你需要修改的html文件的话，可以很方便地使用atom-html-preview插件。
 
 ![atom-html-preview](http://oaf2qt3yk.bkt.clouddn.com/d832f904c15079ed7f38816a5407c1b6.png)
+
+
+# 四、在本地环境下生成网站
+
+You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+
+不鼓励在本机的环境下进行以上操作，因为有很多bug。我在实现的时候需要修改Gemfile：
+
+```ruby
+source "https://rubygems.org"
+
+gem "jekyll", "~> 3.3.0"
+gem "minimal-mistakes-jekyll"
+```
+
+安装bundle，安装rvm，安装ruby，安装gem，安装jekyll，以及各种依赖的插件。
+
+然后在terminal当中，cd到所在的文件夹，运行以下代码：
+
+```
+bundle instal
+jekyll serve
+```
+
+![jekyll serve](http://oaf2qt3yk.bkt.clouddn.com/fe2b840333344b91d83519f8d563eefa.png)
 
 # 参考文献
