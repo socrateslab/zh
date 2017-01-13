@@ -40,9 +40,10 @@ Many collective human activities, including violence, have been shown to exhibit
 
 横轴是每天发生暴乱事件的数量$n$, 纵轴是每天叛乱事件数量n的概率分布$p(n)$。其实，它衡量的是单位事件数量的分布，即有多少天发生了n件叛乱事件。
 
-显然有些事件的timing是幂律分布（如Iraq days 0-180），有些是对数正态分布（如Colombia days 0-500、Iraq 540+）。
+显然有些事件的timing是**幂律分布**（如Iraq days 0-180），有些是对数正态分布（如Colombia days 0-500、Iraq 540+）。与随机情况相比，作者所提出的模型更好的拟合了真实数据。
+{: .notice--info}
 
-与随机情况相比，作者所提出的模型更好的拟合了真实数据。
+
 
 ## 媒介驱动的群体动力学模型
 

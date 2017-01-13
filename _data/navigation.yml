@@ -1,7 +1,7 @@
 # main links
 main:
    - title: "关于"
-     url: https://data-science-lab.github.io/about/
+     url: /about/
    - title: "文章"
      url: /year-archive/
    - title: "作者"
