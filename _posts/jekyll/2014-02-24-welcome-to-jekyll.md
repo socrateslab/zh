@@ -72,7 +72,7 @@ It is intended only for human readers.[^1]
 [^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
 ```
 
-### notice
+### 提示
 
 A notice displays information that explains nearby content. Often used to call attention to a particular detail.
 
