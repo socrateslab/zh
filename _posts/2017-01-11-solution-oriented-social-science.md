@@ -21,6 +21,7 @@ categories:
 
 {% include toc title="Table" icon="file-text" %}
 
+
 Duncan J. Watts. Should social science be more solution-oriented? Nature Human Behaviour. 1, 0015 (2017) doi:10.1038/s41562-016-0015[^watts2017]
 
 [^watts2017]: Duncan J. Watts Should social science be more solution-oriented? Nature Human Behaviour. 1, 0015 (2017) doi:10.1038/s41562-016-0015
