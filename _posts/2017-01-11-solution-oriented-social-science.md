@@ -5,7 +5,7 @@ header:
   teaser: "/assets/images/unsplash-gallery-image-1-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-27.jpg
+  overlay_image: /assets/images/unsplash-image-28.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "I argue that one way for social science to make progress is to adopt a more solution-oriented approach, starting first with a practical problem and then asking what theories (and methods) must be brought to bear to solve it."
