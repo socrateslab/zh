@@ -26,7 +26,8 @@ Duncan J. Watts. Should social science be more solution-oriented? Nature Human B
 
 [^watts2017]: Duncan J. Watts Should social science be more solution-oriented? Nature Human Behaviour. 1, 0015 (2017) doi:10.1038/s41562-016-0015
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=784553&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=784553&auto=0&height=66"> </iframe>
+
 
 Over the past 100 years, social science has generated a tremendous number of theories on the topics of individual and collective human behaviour. However, it has been much less successful at reconciling the innumerable inconsistencies and contradictions among these competing explanations, a situation that has not been resolved by recent advances in ‘computational social science’. In this Perspective, I argue that this ‘incoherency problem’ has been perpetuated by an historical emphasis in social science on the advancement of theories over the solution of practical problems. I argue that one way for social science to make progress is to adopt a more solution-oriented approach, starting first with a practical problem and then asking what theories (and methods) must be brought to bear to solve it. Finally, I conclude with a few suggestions regarding the sort of problems on which progress might be made and how we might organize ourselves to solve them.
 
