@@ -1,12 +1,15 @@
 ---
 title: "秦强"
-excerpt: ""
+excerpt: "南京大学新闻传播学院硕士"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-18.jpg
   teaser: /assets/images/author/qinqiang.jpg
-  excerpt: ""
+sidebar:
+  - title: "秦强"
+    image: "/assets/images/author/qinqiang.jpg"
+    image_alt: "logo"
 author: "秦强"
 ---
 

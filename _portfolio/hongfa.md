@@ -1,16 +1,16 @@
 ---
-title: "陈志聪"
-excerpt: "南京大学新闻传播学院硕士"
+title: "易红发"
+excerpt: "复旦大学新闻学院硕士"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-18.jpg
-  teaser: /assets/images/author/zhicong.jpg
+  teaser: /assets/images/head3.png
 sidebar:
-  - title: "陈志聪"
-    image: "/assets/images/author/zhicong.jpg"
+  - title: "易红发"
+    image: "/assets/images/header3.jpg"
     image_alt: "logo"
-author: "陈志聪"
+author: "易红发"
 ---
 
 <ul>
