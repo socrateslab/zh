@@ -16,7 +16,7 @@ author_profile: true
 {% include group-by-array collection=site.posts field="author" %}
 
 {% for authorName in group_names offset:1 %}
-  [{{ authorName }}](){: .btn .btn--success .btn--large}
+  [{{ authorName }}](#{{ authorName }}){: .btn .btn--success .btn--large}
   {% assign posts = group_items[forloop.index] %}
   {% for post in posts %}
     {% include archive-single.html %}
