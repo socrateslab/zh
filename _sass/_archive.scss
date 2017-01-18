@@ -135,7 +135,8 @@
     @include gallery(2.5 of 10);
 
     .archive__item-teaser {
-      max-height: 250px;
+      max-height: 150px;
+      max-width: 150px;
     }
 
     .archive__item-excerpt {
