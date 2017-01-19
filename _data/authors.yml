@@ -28,10 +28,11 @@ Billy Rick:
 
 王成军:
   name        : "王成军"
-  uri         : "http://chengjun.github.io"
+  uri         : "/tweets/"
   email       : ""
   bio         : "Follow your logic！"
   avatar      : "/assets/images/author/chengjun.jpg"
+  twitter     : "ChengJunWang"
   google_plus : ""
 
 张昕之:
