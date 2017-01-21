@@ -5,10 +5,10 @@ header:
   teaser: "/assets/images/unsplash-gallery-image-1-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-30.jpg
+  overlay_image: /assets/images/unsplash-image-29.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "in spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science."
+excerpt: "In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science."
 modified: 2017-01-21 19:49:48
 comments: true
 author: "Duncan J. Watts"
