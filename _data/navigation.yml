@@ -10,5 +10,7 @@ main:
      url: /portfolio/
    - title: "文献"
      url: /readings/
+   - title: "工具"
+     url: /tools/
    - title: "百科"
      url: https://github.com/data-science-lab/data-science-lab.github.io/wiki
