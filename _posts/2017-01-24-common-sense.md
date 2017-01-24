@@ -5,7 +5,7 @@ header:
   teaser: "/assets/images/unsplash-gallery-image-4-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-15.jpg
+  overlay_image: /assets/images/unsplash-image-30.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "Sociologists rely on common sense more than they realize. Moreover, this unacknowledged reliance causes serious problems for their explanations of social action, that is, for why people do what they do."
