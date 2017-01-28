@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "12行Python代码应付微信拜年"
+title: "12行Python代码回复微信拜年"
 header:
   teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
