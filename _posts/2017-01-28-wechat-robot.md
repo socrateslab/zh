@@ -2,13 +2,13 @@
 layout: single
 title: "12行Python代码回复微信拜年"
 header:
-  teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
+  teaser: "/assets/images/unsplash-gallery-image-3-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-30.jpg
+  overlay_image: /assets/images/unsplash-image-8.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "On the other hand a single high impact paper is worth many low impact papers, so from a career perspective it’s not necessarily a waste of time to devote a year or two to getting something into a top journal."
+excerpt: "今天上午在朋友圈读到了[《12行Python代码，自在随心应付微信拜年群发》](https://zhuanlan.zhihu.com/p/25034403)一文，非常简单，主要是借助于两个python的包 itchat和pillow，可以使用pip安装。"
 modified: 2017-01-28 12:49:48
 comments: true
 author: "王成军"
