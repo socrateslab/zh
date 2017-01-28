@@ -54,6 +54,11 @@ itchat.run()
 
 如果我们在terminal中运行，只需要把以上程序保存下来，比如我放在Users/chengjun/github/wechat/index.py，只需要在terminal中运行下图代码即可。
 
+```terminal
+cd gitub/wechat
+python index.py
+```
+
 ![mac-itchat](http://oaf2qt3yk.bkt.clouddn.com/809147ac86ad5ee6d338c3c01706dceb.png)
 
 生成二维码后，扫描二维码即可登录，亲测有效。
