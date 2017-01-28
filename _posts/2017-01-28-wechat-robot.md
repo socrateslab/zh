@@ -22,7 +22,7 @@ categories:
 
 [itchat](https://github.com/littlecodersh/ItChat)是 `A complete and graceful API for Wechat`. 微信个人号接口、微信机器人及命令行微信，三十行即可自定义个人号机器人。[http://itchat.readthedocs.io ](http://itchat.readthedocs.io )
 
-我在Mac上运行以下代码，因为是Python2.7版本，所以朱明了utf8编码。
+我在Mac上运行以下代码，因为是Python2.7版本，所以注明明了utf8编码。
 
 ```python
 # -*- coding:utf-8 -*-
