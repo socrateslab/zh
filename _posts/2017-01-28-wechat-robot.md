@@ -55,7 +55,7 @@ itchat.run()
 如果我们在terminal中运行，只需要把以上程序保存下来，比如我放在Users/chengjun/github/wechat/index.py，只需要在terminal中运行下图代码即可。
 
 ```terminal
-cd gitub/wechat
+cd github/wechat
 python index.py
 ```
 
