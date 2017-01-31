@@ -27,7 +27,7 @@ gallery:
 author: "王成军"
 ---
 
-Cheng-Jun Wang, Ph.D of City University of Hong Kong. He is currently an assistant research fellow in the School of Journalism and Communication, Nanjing University. He is also the director of Ogilvy Data Science Lab, Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology, and Journal of Social and Personal Relationships.
+Cheng-Jun Wang, Ph.D of City University of Hong Kong. He is currently an assistant research fellow in the School of Journalism and Communication, Nanjing University. He is also the director of Ogilvy Data Science Lab, Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology.
 
 <ul>
 {% for p in site.posts %}
