@@ -99,15 +99,29 @@ Collaboration ensures funding flows and career advancement (Abramo et al. 2014, 
     - while enhancing creativity, also make skepticism “more likely to occur and more challenging to manage
     - Initial collaborative success prompts growth in the size and diversity of the team, but these changes endanger the conditions that prompted success in the first place, producing yet more tensions in collaborative work.
 - `free riding`: Some coauthors do not do much (or any) of the work but are still included as coauthors.
+- `potential exploitation`
+- `inequality`
+
 
 ## TYPES OF COLLABORATION
+-  Collaborative research that reinforces and consolidates known areas of expertise is, arguably, an `extension of sole-authored research`.
+- `domain-spanning collaborations`that aims to complement and extend.
+- A mentoring style of collaboration
+- International collaboration, Collaboration across scientific domains (`interdisciplinary collaborations`), Cross-university collaboration
+
+> Put simply, integrative work can be more or less innovative, depending on the relationship between the integrated entities (Carnabuci & Bruggerman 2009, p. 608).
+
+Research in this vein finds that benefits are most pronounced when collaboration occurs across subfields (Leahey & Moody 2014), departments (Bikard et al. 2015, p. 23), and disciplines (Leahey et al. 2015), especially those that are more cognitively distant (Larivie` re et al. 2015a, Uzzi et al. 2013)
 
 ## IMPACT ON CONTRIBUTORS
+
 ## MULTIPLE METHODS AND MEASURES
+
 ## RESEARCH INTEGRITY
 
 
 # CONCLUSION
+
 SELECTION BIAS
 
 
