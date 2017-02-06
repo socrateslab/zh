@@ -126,7 +126,7 @@ Lee Y N, Walsh J P, Wang J. `Creativity in scientific teams`: Unpacking novelty 
 
 ![novelty](http://oaf2qt3yk.bkt.clouddn.com/59bfc683329e40cf1135f12788c3f214.png)
 
-To read：
+### To read：
 
 - Milojevic S. 2014. Principles of scientific research team formation and evolution. PNAS 111:3984–89
 - Guimerà R, Uzzi B, Spiro J, et al. Team Assembly Mechanisms Determine Collaboration Network Structure and Team Performance. Science, 2005, 308(5722):697-702.
