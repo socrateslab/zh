@@ -107,7 +107,7 @@ the collaborator distribution, $F_C$, is related to team size distribution as fo
 
 Therefore, the following analytical function can be fit to the empirical team size distribution to obtain its decomposition:
 
-$$F(k) = F_{P1}(k) + F_{P2}(k) + F_{PL} $$
+$$F(k) = F_{P1}(k) + F_{P2}(k) + F_{PL}(k) $$
 
 and
 
