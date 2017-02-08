@@ -29,6 +29,7 @@ In most fields, teams have grown significantly in recent decades. We show that t
 This model accurately reproduces the evolution of empirical team size distribution over the period of 50 y.
 
 The modeling reveals that there are `two modes of knowledge production`.
+
 - The first and more fundamental mode employs relatively small, `“core” teams`. Core teams form by a Poisson process and produce a Poisson distribution of team sizes in which larger teams are exceedingly rare.
 - The second mode employs `“extended” teams`, which started as core teams, but subsequently accumulated new members proportional to the past productivity of their members. Given time, this mode gives rise to a power-law tail of large teams (10–1,000 members), which features in many fields today.
 
@@ -101,9 +102,27 @@ the collaborator distribution, $F_C$, is related to team size distribution as fo
 
 # Analytical Decomposition of Team Size Distributions
 
+- standard core and “core +1” teams are well described by `Poisson functions`, $F_{P1}(k)$ and $F_{P2}(k)$
+- extended teams is well described by a `power-law function with a low-end exponential cutoff`, $F_{PL}$.
 
+Therefore, the following analytical function can be fit to the empirical team size distribution to obtain its decomposition:
+
+$$F(k) = F_{P1}(k) + F_{P2}(k) + F_{PL} $$
+
+and
+
+$$F(k)= \left\{\begin{matrix}
+n_1 \frac{\lambda_1^k e^{-\lambda_1}}{k!}&,  k = 1\\
+n_1 \frac{\lambda_1^k e^{-\lambda_1}}{k!} + n_2 \frac{\lambda_2^k e^{-\lambda_2}}{(k-1)!} + n_3 e^{-\beta / (k-1)} k^{-\alpha} &, k > 1
+\end{matrix}\right.   [1]$$
+
+# Application of Analytical Decomposition for Describing Trends in Team Evolution
+
+![team_evolution_trends](http://oaf2qt3yk.bkt.clouddn.com/9e9528c9291ac925019eb190c6ec17a3.png)
 
 ### To read：
+
+Peterson GJ, Pressé S, Dill KA (2010) Nonuniversal power law scaling in the probability distribution of scientific citations. Proc Natl Acad Sci USA 107(37):16023–16027.
 
 Guimerà R, Uzzi B, Spiro J, et al. Team Assembly Mechanisms Determine Collaboration Network Structure and Team Performance. Science, 2005, 308(5722):697-702.
 {: .notice--info}
