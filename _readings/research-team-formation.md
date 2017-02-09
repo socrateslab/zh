@@ -72,6 +72,7 @@ Data: 150,000 articles published in the field of astronomy since the 1960s. [^MI
 - In simulation, we assume a fixed probability $p_{ext} = 0.3$ for an article to require an extended team (a constant which does not change over time).
 
 **Additional requirements**
+
 > there is an excess of two-author papers over single-author papers, especially from authors who have just started publishing.
 
 - some fraction of lead authors will form their core teams by adding an additional member to the number drawn from a Poisson distribution. We call such teams “core +1 teams,” as opposed to “standard core teams.”
