@@ -21,7 +21,7 @@ categories:
 {% include toc title="Table" icon="file-text" %}
 
 
-Cohen, S., Hamilton, J. T., & Turner, F.  Computational journalism.          Communications of the Acm, 54(10), 66-71.
+Cohen, S., Hamilton, J. T., & Turner, F.  Computational journalism.          Communications of the Acm, 2011,54(10), 66-71.
 
 # key insights
 - the public-interest journalism on which democracy depends is under enormous financial and technological pressure.
