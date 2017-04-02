@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/unsplash-image-34.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "熟悉计算社会科学研究范式并掌握基本的计算技能，是传播学者进入计算计算传播学领域的基本条件。基于此，南京大学新闻与传播学院、百度、社会媒体处理专业委员会以及香港城市大学互联网挖掘实验室拟共同举办2017年计算传播学工作坊暨年会（南京，9月22-9月24日），包括一天半工作坊 + 一天会议。"
+excerpt: "熟悉计算社会科学研究范式并掌握基本的计算技能，是传播学者进入计算计算传播学领域的基本条件。基于此，南京大学新闻与传播学院、百度、社会媒体处理专业委员会以及香港城市大学互联网挖掘实验室拟共同举办2017年计算传播学年会暨工作坊（南京，9月22-9月24日），包括一天半工作坊 + 一天会议。"
 modified: 2017-03-22 19:49:48
 comments: true
 author: "计算传播学年会"
@@ -19,7 +19,7 @@ categories:
 ---
 
 
-## 2017 Annual Conference andWorkshop of Computational Communication
+## 2017 Annual Conference and Workshop of Computational Communication
 
 计算社会科学研究范式对传播学研究产生了重要影响。在线人类行为踪迹（DigitalTraces）以及计算方法的广泛应用，为传播学探索人类信息传播行为模式提供了重要契机，也催生了“计算传播学”这一新兴研究领域。该领域主要关注人类传播行为的可计算性基础，以传播网络分析、传播文本挖掘、数据科学等为主要分析工具，（以非介入的方式）大规模地收集并分析人类传播行为数据，挖掘人类传播行为背后的模式和法则，分析模式背后的生成机制与基本原理，可以被广泛地应用于数据新闻、计算广告、新闻推荐系统等场景。
 
@@ -51,7 +51,7 @@ categories:
 
 # 会议征文
 
-参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com)。工作坊组委会将以邮件形式通知工作坊入选者。
+参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com) 。 工作坊组委会将以邮件形式通知工作坊入选者。
 
 
 
