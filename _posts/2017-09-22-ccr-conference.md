@@ -9,11 +9,13 @@ header:
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "熟悉计算社会科学研究范式并掌握基本的计算技能，是传播学者进入计算计算传播学领域的基本条件。基于此，南京大学新闻与传播学院、百度、社会媒体处理专业委员会以及香港城市大学互联网挖掘实验室拟共同举办2017年计算传播学工作坊暨年会（南京，9月22-9月24日），包括一天半工作坊 + 一天会议。"
-modified: 2017-09-22 19:49:48
+modified: 2017-03-22 19:49:48
 comments: true
 author: "计算传播学年会"
 tags:
   - 计算传播学
+categories:
+  - css
 ---
 
 
