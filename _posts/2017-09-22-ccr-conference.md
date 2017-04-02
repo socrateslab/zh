@@ -51,7 +51,7 @@ categories:
 
 # 会议征文
 
-参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com) 。工作坊组委会将以邮件形式通知工作坊入选者。
+参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com)。工作坊组委会将以邮件形式通知工作坊入选者。
 
 
 
