@@ -14,8 +14,6 @@ comments: true
 author: "计算传播学年会"
 tags:
   - 计算传播学
-categories:
-  - 计算社会科学
 ---
 
 
