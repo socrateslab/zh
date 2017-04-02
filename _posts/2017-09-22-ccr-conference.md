@@ -5,10 +5,10 @@ header:
   teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-30.jpg
+  overlay_image: /assets/images/unsplash-image-34.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: ""
+excerpt: "熟悉计算社会科学研究范式并掌握基本的计算技能，是传播学者进入计算计算传播学领域的基本条件。基于此，南京大学新闻与传播学院、百度、社会媒体处理专业委员会以及香港城市大学互联网挖掘实验室拟共同举办2017年计算传播学工作坊暨年会（南京，9月22-9月24日），包括一天半工作坊 + 一天会议。"
 modified: 2017-09-22 19:49:48
 comments: true
 author: "计算传播学年会"
@@ -51,11 +51,11 @@ categories:
 
 # 会议征文
 
-参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^Poster与报名表模板]，发送至computational.communication@gmail.com。工作坊组委会将以邮件形式通知工作坊入选者。
+参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至computational.communication@gmail.com。工作坊组委会将以邮件形式通知工作坊入选者。
 
 
 
-[^Poster与报名表模板]: Poster与报名表模板 https://pan.baidu.com/s/1c2oubfi
+[^download]: Poster与报名表模板 https://pan.baidu.com/s/1c2oubfi
 
 ### 时间
 
@@ -66,15 +66,15 @@ categories:
 
 ### 费用
 
-●  工作坊优先接收提交研究海报的学员，免除学费。
-●  如有剩余名额，将继续接收学员，学费1000元。
-●  工作坊期间差旅费自理。
+- 工作坊优先接收提交研究海报的学员，免除学费。
+- 如有剩余名额，将继续接收学员，学费1000元。
+- 工作坊期间差旅费自理。
 
 # 主办单位
 
-●   南京大学新闻与传播学院
-●   百度
-●   中文信息学会社会媒体处理专业委员会
-●   香港城市大学互联网挖掘实验室
+-  南京大学新闻与传播学院
+-  百度
+-  中文信息学会社会媒体处理专业委员会
+-  香港城市大学互联网挖掘实验室
 
 ## 会议附件
