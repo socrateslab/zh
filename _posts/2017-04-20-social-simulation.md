@@ -66,6 +66,8 @@ N = 100   # total population size
 A = 65    # initial number of believers A
 B = N - A # initial number of believers A
 ```
+
+```python
 t = 0
 MAX_TIME = 100
 while t < MAX_TIME:
@@ -75,6 +77,8 @@ while t < MAX_TIME:
 
     # advance time to next iteration
     t = t + 1  
+```
+
 So let's calculate **variation** based on the population switching trait based on a comparison between payoffs. For example if B has higher payoff then A then we should get something like this:
 
 ### $$\Delta_{A \rightarrow B} = A (Payoff_{A \rightarrow B} - Payoff_{B \rightarrow A})$$
