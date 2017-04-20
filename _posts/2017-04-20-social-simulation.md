@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "FIntroduction to Simulation with Python"
+title: "Introduction to Social Simulation with Python"
 header:
   teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
