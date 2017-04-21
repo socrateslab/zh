@@ -13,7 +13,7 @@ modified: 2017-04-20 19:49:48
 comments: true
 author: "Xavier Rubio-Campillo"
 tags:
-  - power law
+  - culture dynamics
 categories:
   - Python
 ---
