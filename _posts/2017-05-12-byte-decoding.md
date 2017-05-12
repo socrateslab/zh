@@ -26,7 +26,9 @@ categories:
 
 > It seems that there's something very wrong with the input file. There are encoding errors throughout. One thing you could do, is to read the CSV file as a binary, decode the binary string and replace the erroneous characters.
 
-在复旦上课的过程中，葆华老师发现一个抓取的微博公众号数据没有办法很好地使用pandas读取，我们尝试了各种encoding的策略都不可以。这个文本文件在mac环境中可以采用mac自带的文本编辑软件可以打开，但使用sublime却无法打开，采用visual studio code编辑器指定gbk或者gb18030都可以正确打开，这使得我意识到这个数据本身就是一个gb18030编码的数据，只是因为存在各种不规则的的东西使得解码变得很苦难。
+在复旦大学上课的过程中，葆华老师发现一个微信公众号数据没有办法很好地使用pandas读取，我们尝试了各种encoding的策略都没有成功。
+
+这个文本文件在mac环境中可以采用mac自带的文本编辑软件可以打开，但使用sublime却无法打开，采用visual studio code编辑器指定gbk或者gb18030都可以正确打开，这使得我意识到这个数据本身就是一个gb18030编码的数据，只是因为存在各种不规则的的东西使得解码变得很苦难。
 
 借助于以上解决方法，采用以下python代码就可以有效地解决问题。
 
