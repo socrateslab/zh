@@ -62,6 +62,30 @@ plt.show()
 
 ![example](http://oaf2qt3yk.bkt.clouddn.com/40a357e1d6e57596633312c5d203b665.png)
 
+Jon Kleinberg于1999年在Journal of the ACM发表题为Authoritative sources in a hyperlinked environment的文章[^2]。
+
+对于一个网络G：
+
+1. Certain pages are valuable because they provide information about a topic. These pages are called `authorities`, a.
+2. Other pages are valuable because they tell you where to go to find out about that topic. These pages are called `hubs`, h.
+
+> “a page is a good hub if it links to good authorities, and a page is a good authority if it is linked to by good hubs.”
+
+
+Hits算法通过迭代的方法来计算权威度a和导航度h。其中：
+1. 节点i的权威度$a_i$利用指向它的节点的在`上一轮`的导航度hlast和链接的权重来决定。 $a= \mu L h$
+2. 节点i的导航度$h_i$利用指向它指向的节点在`这一轮`的权威度$a_i$和链接的权重来决定。$h = \lambda L a$       
+
+> The iteration will stop after max_iter iterations or an error tolerance of number_of_nodes(G)*tol has been reached. The HITS algorithm was designed for directed graphs but this algorithm does not check if the input graph is directed and will execute on undirected graphs.
+
+[^1]: A. Langville and C. Meyer, "A survey of eigenvector methods of web information retrieval." http://citeseer.ist.psu.edu/713792.html
+
+[^2]: Jon Kleinberg, Authoritative sources in a hyperlinked environment. Journal of the ACM 46 (5): 604-32, 1999. doi:10.1145/324133.324140. http://www.cs.cornell.edu/home/kleinber/auth.pdf.
+
+Hits算法的一个优点：
+
+> An important observation is that `dead ends` or `spider traps` do not prevent the HITS iteration from converging to a meaningful pair of vectors. Thus, we can work with Fig. 5.18 directly, with no “taxation” or alteration of the graph needed.[^mining] 
+
 
 在networkx里，我们可以调用[hits函数](http://networkx.readthedocs.io/en/stable/_modules/networkx/algorithms/link_analysis/hits_alg.html#hits)来采用迭代的方式实现hits算法。
 
@@ -148,17 +172,10 @@ def hits(G,max_iter=100,tol=1.0e-8,nstart=None,normalized=True):
     return h,a
 ```
 
-Examples
 
 > h,a=nx.hits(G)
 
-Jon Kleinberg于1999年在Journal of the ACM发表题为Authoritative sources in a hyperlinked environment的文章[^2]。
 
-> The iteration will stop after max_iter iterations or an error tolerance of number_of_nodes(G)*tol has been reached. The HITS algorithm was designed for directed graphs but this algorithm does not check if the input graph is directed and will execute on undirected graphs.
-
-[^1]: A. Langville and C. Meyer, "A survey of eigenvector methods of web information retrieval." http://citeseer.ist.psu.edu/713792.html
-
-[^2]: Jon Kleinberg, Authoritative sources in a hyperlinked environment. Journal of the ACM 46 (5): 604-32, 1999. doi:10.1145/324133.324140. http://www.cs.cornell.edu/home/kleinber/auth.pdf.
 
 # 分解Hits算法
 
@@ -287,6 +304,8 @@ h
 
 每一轮都对计算的h和a进行归一化， 使得最大值为1。
 
+> While importance is divided among the successors of a page, as expressed by the transition matrix of the Web, the normal way to describe the computation of hubbiness and authority is to add the authority of successors to estimate hubbiness and to add hubbiness of predecessors to estimate authority. If that is all we did, then the hubbiness and authority values would typically grow beyond bounds. Thus, we normally scale the values of the vectors h and a so that the largest component is 1. An alternative is to scale so that the sum of components is 1. [^mining]
+
 ```python
 # normalize vector
 s=1.0/max(h.values())
@@ -413,6 +432,11 @@ a, h
 除了采用迭代的方式计算外，还可以采用特征向量的方法来计算：
 
 > The eigenvector calculation is done by the power iteration method and has no guarantee of convergence [^1].
+
+因为LLT 和 LTL 不如L 和 LT那么稀疏, 我们通常采用迭代的方法计算a和h的方法。 “For Web-sized graphs, the only way of computing the solution to the hubs- and-authorities equations is iteratively.”[^mining]
+
+[^mining]: Jure Leskovec; Anand Rajaraman; Jeffrey D. Ullman. Mining of Massive Datasets. http://www.mmds.org
+
 
 ```python
 def hub_matrix(G,nodelist=None):
