@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "理解hits算法"
+title: "理解HITS算法"
 header:
   teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/unsplash-image-34.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "然后，我们通过迭代的方法来计算权威度a和导航度h。其中：
+excerpt: "Hits算法通过迭代的方法来计算权威度a和导航度h。其中：
 1. 节点i的权威度$a_i$利用指向它的节点的在`上一轮`的导航度hlast和链接的权重来决定。
 2. 节点i的导航度$h_i$利用指向它指向的节点在`这一轮`的权威度$a_i$和链接的权重来决定。"
 modified: 2017-06-07 19:49:48
@@ -22,7 +22,7 @@ categories:
   - algorithm
 ---
 
-
+为了更好地介绍hits算法在networkx里的实现，我们首先来构造一个简单的网络G。
 
 
 ```python
@@ -63,8 +63,9 @@ plt.show()
 ![example](http://oaf2qt3yk.bkt.clouddn.com/40a357e1d6e57596633312c5d203b665.png)
 
 
+在networkx里，我们可以调用[hits函数](http://networkx.readthedocs.io/en/stable/_modules/networkx/algorithms/link_analysis/hits_alg.html#hits)来采用迭代的方式实现hits算法。
+
 ```python
-# http://networkx.readthedocs.io/en/stable/_modules/networkx/algorithms/link_analysis/hits_alg.html#hits
 
 def hits(G,max_iter=100,tol=1.0e-8,nstart=None,normalized=True):
     """Return HITS hubs and authorities values for nodes.
@@ -173,6 +174,8 @@ def hits(G,max_iter=100,tol=1.0e-8,nstart=None,normalized=True):
             h[n] *= s
     return h,a
 ```
+
+# 分解Hits算法
 
 首先，hits算法是从导航页面投票给权威页面。如果不指定，初始的导航度hub取值都一样，如上图共有五个节点，每一个节点的hub初始值为0.2。
 
