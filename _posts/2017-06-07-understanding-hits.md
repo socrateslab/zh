@@ -96,33 +96,6 @@ def hits(G,max_iter=100,tol=1.0e-8,nstart=None,normalized=True):
     (hubs,authorities) : two-tuple of dictionaries
        Two dictionaries keyed by node containing the hub and authority
        values.
-
-    Examples
-    --------
-    >>> G=nx.path_graph(4)
-    >>> h,a=nx.hits(G)
-
-    Notes
-    -----
-    The eigenvector calculation is done by the power iteration method
-    and has no guarantee of convergence.  The iteration will stop
-    after max_iter iterations or an error tolerance of
-    number_of_nodes(G)*tol has been reached.
-
-    The HITS algorithm was designed for directed graphs but this
-    algorithm does not check if the input graph is directed and will
-    execute on undirected graphs.
-
-    References
-    ----------
-    .. [1] A. Langville and C. Meyer,
-       "A survey of eigenvector methods of web information retrieval."
-       http://citeseer.ist.psu.edu/713792.html
-    .. [2] Jon Kleinberg,
-       Authoritative sources in a hyperlinked environment
-       Journal of the ACM 46 (5): 604-32, 1999.
-       doi:10.1145/324133.324140.
-       http://www.cs.cornell.edu/home/kleinber/auth.pdf.
     """
     if type(G) == nx.MultiGraph or type(G) == nx.MultiDiGraph:
         raise Exception("hits() not defined for graphs with multiedges.")
@@ -174,6 +147,18 @@ def hits(G,max_iter=100,tol=1.0e-8,nstart=None,normalized=True):
             h[n] *= s
     return h,a
 ```
+
+Examples
+
+> h,a=nx.hits(G)
+
+Jon Kleinberg于1999年在Journal of the ACM发表题为Authoritative sources in a hyperlinked environment的文章[^2]。
+
+> The iteration will stop after max_iter iterations or an error tolerance of number_of_nodes(G)*tol has been reached. The HITS algorithm was designed for directed graphs but this algorithm does not check if the input graph is directed and will execute on undirected graphs.
+
+[^1]: A. Langville and C. Meyer, "A survey of eigenvector methods of web information retrieval." http://citeseer.ist.psu.edu/713792.html
+
+[^2]: Jon Kleinberg, Authoritative sources in a hyperlinked environment. Journal of the ACM 46 (5): 604-32, 1999. doi:10.1145/324133.324140. http://www.cs.cornell.edu/home/kleinber/auth.pdf.
 
 # 分解Hits算法
 
@@ -425,6 +410,9 @@ a, h
 
 # Computing hits with numpy
 
+除了采用迭代的方式计算外，还可以采用特征向量的方法来计算：
+
+> The eigenvector calculation is done by the power iteration method and has no guarantee of convergence [^1].
 
 ```python
 def hub_matrix(G,nodelist=None):
@@ -714,3 +702,5 @@ hits_numpy(G)
       4: -8.571100967854224e-20,
       5: 0.03643820105855254},
      {1: 0.0, 2: 0.6301287941246466, 3: 0.3698712058753535, 4: 0.0, 5: 0.0})
+
+# 参考文献
