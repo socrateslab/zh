@@ -18,7 +18,6 @@ author: "王成军"
 
 ![bayes](http://oaf2qt3yk.bkt.clouddn.com/a480dab63165c18682d80e1f621f111a.png)
 
-本文
 
 # 问题的提出 [^note]
 [^note]: 以下内容来自 【数说工作室】金融数据挖掘之朴素贝叶斯 http://www.ppvke.com/Blog/archives/6431
