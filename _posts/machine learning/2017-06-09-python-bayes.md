@@ -59,7 +59,7 @@ $$P(C|X) = \frac{ P(X|C)P(C)}{ P(X) } = \frac{P(C)}{P(X)} \prod_{i = 1}^{d}P(X_i
 
 对所有类别来说P(X)相同，因此：
 
-$$h_{naivebayes}^{*}(x) = arg max P(C) \prod_{i=1}^{d} P(X_i|C)$$
+$$h_{naivebayes}^{*}(X) = arg max P(C) \prod_{i=1}^{d} P(X_i|C)$$
 
 利用贝叶斯定理，找出最大的P(X\|C)P(C)即可对未知样本进行分类，如max{P(X\|C)P(C)}=P(X\|C=n)P(C=n)，则说明未知样本属于第n类，其中，
 
