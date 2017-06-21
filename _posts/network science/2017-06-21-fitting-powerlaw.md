@@ -152,9 +152,42 @@ fitted.alpha, fitted.D
     (2.3663242775904081, 0.034385401350230271)
 
 
+    ```python
+    help(fitted_pl.distribution_compare)
+    ```
 
+        Help on method distribution_compare in module powerlaw:
+
+        distribution_compare(self, dist1, dist2, nested=None, **kwargs) method of powerlaw.Fit instance
+            Returns the loglikelihood ratio, and its p-value, between the two
+            distribution fits, assuming the candidate distributions are nested.
+
+            Parameters
+            ----------
+            dist1 : string
+                Name of the first candidate distribution (ex. 'power_law')
+            dist2 : string
+                Name of the second candidate distribution (ex. 'exponential')
+            nested : bool or None, optional
+                Whether to assume the candidate distributions are nested versions
+                of each other. None assumes not unless the name of one distribution
+                is a substring of the other.
+
+            Returns
+            -------
+            R : float
+                Loglikelihood ratio of the two distributions' fit to the data. If
+                greater than 0, the first distribution is preferred. If less than
+                0, the second distribution is preferred.
+            p : float
+                Significance of R
+
+
+R是拟合两统计分布的似然率， p值是R的显著性程度。
 
 ```python
+
+
 r1, p1 = fitted.distribution_compare('power_law', 'exponential', nested = True)
 r2, p2 = fitted.distribution_compare('power_law', 'lognormal', nested = True)
 r3, p3 = fitted.distribution_compare('power_law', 'truncated_power_law', nested = True)
@@ -175,6 +208,23 @@ print r4, p4
     2.61348956987e-05 0.99423151641
     665.388668948 0.0
 
+可见该分布是幂律分布或截断幂律分布（二者无差异），但显著不同于指数分布、广延指数分布[^stretched]、对数正态分布。
+
+[^stretched]: stretched exponential function $f_\beta (t) = e^{ -t^\beta }$
+
+常见的分布律 [^complex]
+
+- 正态/高斯分布Normal distribution / Gaussian distribution
+- 对数正态分布Log-normal distribution
+- 指数/负指数分布Exponential distribution / Negative exponential distribution
+- 泊松分布Poisson distribution
+- 幂律分布Power law distribution
+- 指数截断的幂律分布Power law with exponential cutoff
+-  截断幂律Truncated power law
+-  广延指数分布Stretched exponential distribution
+-  漂移幂律Shifted power law
+
+[^complex]: 复杂性科学研究中常见分布律及数据拟合方法 http://blog.sciencenet.cn/blog-419840-601485.html
 
 ## 另外一个例子
 
@@ -201,37 +251,6 @@ fitted_pl.D
 
 
     0.016086740927675369
-
-```python
-help(fitted_pl.distribution_compare)
-```
-
-    Help on method distribution_compare in module powerlaw:
-
-    distribution_compare(self, dist1, dist2, nested=None, **kwargs) method of powerlaw.Fit instance
-        Returns the loglikelihood ratio, and its p-value, between the two
-        distribution fits, assuming the candidate distributions are nested.
-
-        Parameters
-        ----------
-        dist1 : string
-            Name of the first candidate distribution (ex. 'power_law')
-        dist2 : string
-            Name of the second candidate distribution (ex. 'exponential')
-        nested : bool or None, optional
-            Whether to assume the candidate distributions are nested versions
-            of each other. None assumes not unless the name of one distribution
-            is a substring of the other.
-
-        Returns
-        -------
-        R : float
-            Loglikelihood ratio of the two distributions' fit to the data. If
-            greater than 0, the first distribution is preferred. If less than
-            0, the second distribution is preferred.
-        p : float
-            Significance of R
-
 
 
 
