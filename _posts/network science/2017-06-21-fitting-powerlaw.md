@@ -226,6 +226,8 @@ print r4, p4
 
 [^complex]: 复杂性科学研究中常见分布律及数据拟合方法 http://blog.sciencenet.cn/blog-419840-601485.html
 
+![formula](http://oaf2qt3yk.bkt.clouddn.com/8b22fa094fcac40ca66141e75d47eb79.png)
+
 ## 另外一个例子
 
 ```python
