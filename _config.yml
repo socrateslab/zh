@@ -97,6 +97,7 @@ include:
   - _pages
   - _portfolio
   - _readings
+  - _center
   - _recipes
   - _jekylls
 exclude:
@@ -225,6 +226,9 @@ collections:
     output: true
     permalink: /:collection/:path/
   readings:
+    output: true
+    permalink: /:collection/:path/
+  center:
     output: true
     permalink: /:collection/:path/
   jekylls:
