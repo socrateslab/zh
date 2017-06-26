@@ -13,7 +13,7 @@
   <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.url | absolute_url }}" class="btn btn--linkedin" title="{{ site.data.ui-text[site.locale].share_on_label | default: 'Share on' }} LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 -->
 
-  <!-- JiaThis Button BEGIN -->
+  <!-- JiaThis Button BEGIN
 <div class="jiathis_style_32x32">
 	<a class="jiathis_button_qzone"></a>
 	<a class="jiathis_button_tsina"></a>
@@ -24,5 +24,19 @@
 	<a class="jiathis_counter_style"></a>
 </div>
 <script type="text/javascript" src="https://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
 </section>
+ -->
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+
+<h2>Share button box mode with chosen networks</h2>
+<div id="share-button-2" class="need-share-button-default" data-share-icon-style="box" data-share-networks="Weibo,Wechat,Twitter,RenRen,Facebook,GooglePlus,Linkedin">Share</div>
+
+<script>
+			new needShareButton(document.getElementById('share-button-2'));
+</script>
