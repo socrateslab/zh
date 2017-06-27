@@ -80,7 +80,7 @@ $$Pr(G)=\frac{exp(a∗edges(G)+b∗triangles(G))}{∑_{g∈G}exp(a∗edges(g)+b�
 
 Now we come to the first problem: calculating the denominator of that equation. There are many possible graphs. To take the simplest example, an undirected graph with 3 nodes has 8 possible configurations:
 
-![](http://davidmasad.com/blog/wp-content/uploads/2014/01/3graph.png)
+![](./img/ergm0.png)
 
 There are 64 possible configurations for a 4-node graph, and the number of possible configurations grows mind-bogglingly quickly after that. Most of the time, we simply can't calculate the weights for all possible graphs. Instead, we need some sort of approximation.
 
@@ -251,7 +251,7 @@ nx.draw(G)
 ```
 
 
-![png](../img/ergm1.png)
+![png](./img/ergm1.png)
 
 
 
@@ -331,7 +331,7 @@ l = ax.legend([p1, p2], ["Edge coefficient", "Triangle coefficient"])
 ```
 
 
-![png](../img/ergm2.png)
+![png](./img/ergm2.png)
 
 
 
@@ -371,7 +371,7 @@ plt.show()
 ```
 
 
-![png](../img/ergm3.png)
+![png](./img/ergm3.png)
 
 
 This shows that the bulk of the weight on the edge coefficient is between -1 and -2, while the triangle coefficient is much more evenly distributed on both sides of 0. Using a distribution like this, we can statistically test whether the coefficients are significantly different from 0, estimate the standard error, and do various other statistical tests and operations I won't cover here.
