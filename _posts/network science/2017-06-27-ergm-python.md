@@ -297,6 +297,8 @@ Once it's done (about 20 minutes later, for me), we can find the values it conve
 Edge coefficient: -1.667
 
 Triangle coefficient: -0.258
+
+```
 ==========================
 Summary of model fit
 ==========================
@@ -312,6 +314,7 @@ triangle   0.1574     0.5831      0   0.788
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 Not too far off! The edge coefficient is very close; the triangle coefficient is not too far off, and in any case isn't statistically significant.
+```
 
 One problem I discovered is that I obtained some estimated probabilities for the observed network that were greater than 1. This means that the network MCMC was sampling far away from the observed network, so that the weight on the observed network was greater than the sum of weights on all the sampled networks. This isn't a great outcome, though it still does tell us something about how likely the observed network is under that distribution. Increasing the network sample size might help make this problem go away, as would improving the Markov chain procedure (e.g. with more permutation between networks).
 
