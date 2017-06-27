@@ -15,8 +15,6 @@ author: ""
 tags:
   - ergm
   - python
-categories:
-  - algorithm
 ---
 
 
