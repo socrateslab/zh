@@ -20,8 +20,9 @@ tags:
 
 
 
-Author: David Masad
-Source: http://davidmasad.com/blog/ergms-from-scratch/
+**Author**: David Masad
+
+Source: [http://davidmasad.com/blog/ergms-from-scratch/](http://davidmasad.com/blog/ergms-from-scratch/)
 
 Exponential random graph models (ERGMs) are statistical models for explaining the structure of social and other networks (also called graphs). If we have a network, and some hypotheses about the factors that make it looks the way it does, an ERGM is meant to tell us how big a role (if any) these factors actually play.
 
