@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "本文总结一些计算平台简单管理工具简单使用"
+excerpt: "本文总结一些计算平台的简单管理工具"
 modified: 2017-06-28T11:55:22-04:00
 comments: true
 author_profile: true
