@@ -20,6 +20,12 @@ author: "王成军"
 
 # ssh工具Termius
 
+https://termius.com/download/
+
+> Termius is available on iOS, Android, Mac OS, Ubuntu, and MS Windows. Download the app for free on your platform and become one of the more than a million happy users.
+
+> Termius Basic fully supports essential functionality such as SSH, Telnet, and Port forwarding and it is available for free and ad-free, always.
+
 - 填写ssh root@ip -p port  
 - 输入密码
 
@@ -66,3 +72,6 @@ service vncserver restart
 - 也可以采用bitvise软件在windows机器上图形化界面登陆。
 
 Tunnelier is free for personal use, as well as for individual commercial use inside organizations. You can download Tunnelier here. http://www.bitvise.com/download-area
+
+
+#
