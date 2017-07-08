@@ -97,7 +97,6 @@ include:
   - _pages
   - _portfolio
   - _readings
-  - _center
   - _recipes
   - _jekylls
 exclude:
