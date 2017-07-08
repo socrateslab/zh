@@ -227,9 +227,6 @@ collections:
   readings:
     output: true
     permalink: /:collection/:path/
-  center:
-    output: true
-    permalink: /collaboratory/
   jekylls:
     output: true
     permalink: /:collection/:path/
