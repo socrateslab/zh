@@ -75,3 +75,4 @@ Tunnelier is free for personal use, as well as for individual commercial use ins
 
 
 #
+ssh -N -f -L 8882:localhost:7777 server2

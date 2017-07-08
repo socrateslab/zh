@@ -230,7 +230,7 @@ collections:
     permalink: /:collection/:path/
   center:
     output: true
-    permalink: /:collection/:path/
+    permalink: /collaboratory/
   jekylls:
     output: true
     permalink: /:collection/:path/
