@@ -47,6 +47,19 @@ tags:
 
 会议为期一天，上午为2-3个主题发言报告、下午为Poster论文展示及圆桌会议等环节。
 
+- 9:00-9:20 开幕式
+- 9:20-9:40 大会合影
+
+### 主旨演讲
+
+1. 祝建华， tab
+2. 沈浩， tba
+3. 刘建国， Social signature of dynamic online social networks
+4. 吴晔，tba
+
+### Poster展示环节
+
+
 # 会议征文
 
 参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com) 。 工作坊组委会将以邮件形式通知工作坊入选者。
