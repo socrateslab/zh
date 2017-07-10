@@ -45,17 +45,11 @@ tags:
 
 ## 年会组织形式
 
-会议为期一天，上午为2-3个主题发言报告、下午为Poster论文展示及圆桌会议等环节。
+2017年9月24日。上午为主题发言报告、下午为Poster论文展示及圆桌会议等环节。
 
 - 9:00-9:20 开幕式
 - 9:20-9:40 大会合影
 
-### 主旨演讲
-
-1. 祝建华， tab
-2. 沈浩， tba
-3. 刘建国， Social signature of dynamic online social networks
-4. 吴晔，tba
 
 ### Poster展示环节
 
