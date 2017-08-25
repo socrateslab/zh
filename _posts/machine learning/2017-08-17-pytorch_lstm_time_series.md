@@ -37,20 +37,22 @@ author: "陈志聪"
 - Ir: Cumulated hours of rain
 
 原来的DataFrame长这样
-```
+```python
 No,year,month,day,hour,pm2.5,DEWP,TEMP,PRES,cbwd,Iws,Is,Ir
 1,2010,1,1,0,NA,-21,-11,1021,NW,1.79,0,0
 2,2010,1,1,1,NA,-21,-12,1020,NW,4.92,0,0
 ……
 ```
 将日期数据用pandas合并成一列
-```
+
+```python
 def parse(x):
 	return datetime.strptime(x, '%Y %m %d %H')
 dataset = read_csv('raw.csv',  parse_dates = [['year', 'month', 'day', 'hour']], index_col=0, date_parser=parse)
 ```
 得到新的DataFrame
-```
+
+```python
 date,pollution,dew,temp,press,wnd_dir,wnd_spd,snow,rain
 2010-01-02 00:00:00,129.0,-16,-4.0,1020.0,SE,1.79,0,0
 2010-01-02 01:00:00,148.0,-15,-4.0,1020.0,SE,2.68,0,0
@@ -64,7 +66,7 @@ date,pollution,dew,temp,press,wnd_dir,wnd_spd,snow,rain
 
 下面是代码，定义了一个函数series_to_supervised，用来把原来的时间序列数据转化成监督学习的数据集。在调用这个函数之前，用Sci-kit Learn中的两个类进行了数据预处理，先是用LabelEncoder把数据中非数值特征（风向-wnd_dir）转化成了从0开始的数值特征，然后用MinMaxScaler对整个数据集进行了标准化。
 
-```
+```python
 # convert series to supervised learning
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 	n_vars = 1 if type(data) is list else data.shape[1]
@@ -113,7 +115,7 @@ print(reframed.head())
 
 这样可以得到的DataFrame长这样，一共是8个特征，作为X，预测值Y是其中的第一个特征，即pm2.5的污染量，因为是预测时间序列数据，所以Y可以是X中的某一个特征，只不过是利用t-1时刻的值预测t时刻的值。
 
-```
+```python
    var1(t-1)  var2(t-1)  var3(t-1)  var4(t-1)  var5(t-1)  var6(t-1)  \
 1   0.129779   0.352941   0.245902   0.527273   0.666667   0.002290
 2   0.148893   0.367647   0.245902   0.527273   0.666667   0.003811
@@ -135,7 +137,7 @@ print(reframed.head())
 
 在LSTM模型中，每个cell都包含一个hidden state和一个cell state，分别记为h和c，对应于这个cell的输入，在cell中通过定义一系列的函数，有点类似于数字电路中的“门”的概念，从而实现一些诸如“遗忘”的功能。这些具体的函数已经被PyTorch等深度学习框架封装好了，因此我们需要做的就是定义h和c。在原文中，作者使用了Keras进行神经网络的搭建，他把隐层定义为50个神经元（我的理解其实就是说hidden state包含有50个feature），在这之后又接了一个Dense层，这应该是为了把隐层的计算结果映射出一个output值。
 
-```
+```python
 # design network
 model = Sequential()
 model.add(LSTM(50, input_shape=(train_X.shape[1], train_X.shape[2])))
@@ -144,7 +146,7 @@ model.add(Dense(1))
 
 在PyTorch中，采用如下的方法定义这个网络。建立一个有两个LSTMCell构成的Sequence网络，然后给定初始化的h0和c0，把输入和输出喂给这两个cell即可。
 
-```
+```python
 class Sequence(nn.Module):
     def __init__(self):
         super(Sequence, self).__init__()
@@ -182,7 +184,7 @@ class Sequence(nn.Module):
 
 训练这样一个网络，需要定义相应的损失函数loss function和优化算法，然后就可以套一下代码的模板进行训练了。
 
-```
+```python
 # build the model
 seq = Sequence()
 criterion = nn.MSELoss()
@@ -216,6 +218,4 @@ for epoch in range(epoch_num):
     y = pred.data.numpy()
 ```
 
-详细代码参见：
-
-http://nbviewer.jupyter.org/github/zhicongchen/ml-beginners/blob/master/Multivariate%20Time%20Series%20Forecasting%20with%20LSTMs%20in%20PyTorch.ipynb
+详细代码参见[这里](http://nbviewer.jupyter.org/github/zhicongchen/ml-beginners/blob/master/Multivariate%20Time%20Series%20Forecasting%20with%20LSTMs%20in%20PyTorch.ipynb)。
