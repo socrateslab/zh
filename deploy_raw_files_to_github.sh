@@ -2,6 +2,7 @@
 
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
+# git pull first
 git pull origin master
 
 # Add changes to git.
