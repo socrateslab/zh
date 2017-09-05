@@ -162,9 +162,7 @@ tags:
 - 乘坐地铁s1号线(禄口机场-南京南站)，经过7站，在南京南站下车
 - 乘坐地铁1号线(中国药科大学-迈皋桥)，经过10站，在鼓楼地铁站下车
 
-<iframe frameborder=0 width=1000 height=500 marginheight=0 marginwidth=0 scrolling=no src=http://j.map.baidu.com/U1ZDL></iframe>
-
-
+![http://j.map.baidu.com/U1ZDL]({{ site.url }}{{ site.baseurl }}/assets/img2017/guloumap.png)
 
 
 
