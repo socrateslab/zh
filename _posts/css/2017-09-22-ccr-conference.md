@@ -16,6 +16,8 @@ tags:
   - 计算传播学
 ---
 
+{% include toc title="Table" icon="file-text" %}
+
 
 ## 2017 Annual Conference and Workshop of Computational Communication
 
@@ -164,6 +166,8 @@ tags:
 
 ![http://j.map.baidu.com/U1ZDL]({{ site.url }}{{ site.baseurl }}/assets/img2017/guloumap.png)
 
+[百度地图](http://j.map.baidu.com/U1ZDL)
+{: .notice--info}
 
 
 ## 会议附件
