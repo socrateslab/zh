@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "2017年计算传播学年会暨工作坊征稿"
+title: "2017年计算传播学年会暨工作坊"
 header:
   teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
