@@ -51,6 +51,10 @@ tags:
 |9月24日16:30-17:30|全体| 圆桌会议|
 |9月24日17:30|晚宴|丽晶酒店|
 
+# 工作坊
+
+https://github.com/computational-class/workshop 或 http://nbviewer.jupyter.org/github/computational-class/workshop/tree/master/
+
 # 主题演讲
 
 一. **关系视角下的传播网络与社会计算**
