@@ -86,11 +86,12 @@ tags:
 七. 王成军 《网络信息传播基础：NetworkX》&《主题模型》
 
 简介：传播学博士。现为南京大学新闻传播学院副教授，奥美数据科学实验室主任，计算传播学实验中心副主任。参与翻译《社会网络分析：方法与实践》(2013)、合著《社交网络上的计算传播学》(2015)。其研究兴趣聚焦于采用计算社会科学视角分析人类传播行为，研究成果发表于SSCI和SCI索引的期刊，例如Scientific Reports、PloS ONE、Physica A、Cyberpsychology。2014年，发起创建计算传播网 https://computational-communication.com
-{: .notice--success}
+{: .notice--info}
+
 
 
 工作坊Slides、编程代码、阅读资料见[Github](https://github.com/computational-class/workshop )或[nbviewer](http://nbviewer.jupyter.org/github/computational-class/workshop/tree/master/)。
-{: .notice--info}
+{: .notice--success}
 
 # 主题演讲
 
