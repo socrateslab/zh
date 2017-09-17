@@ -137,8 +137,15 @@ tags:
 
 参会者需提交1份研究海报展示和报名表，Poster与报名表模板见[附件](https://pan.baidu.com/s/1c2oubfi) [^download]，发送至 [computational.communication@gmail.com](computational.communication@gmail.com) 。 工作坊组委会将以邮件形式通知工作坊入选者。
 
+### Poster 易拉宝海报
 
-[^download]: 点击下载Poster与报名表模板 [https://pan.baidu.com/s/1c2oubfi](https://pan.baidu.com/s/1c2oubfi)
+易拉宝海报 尺寸为宽度80cm*长度180cm，可以使用以下[ppt模板](https://pan.baidu.com/s/1miHZkAc)进行修改。[^poster]
+
+
+[^download]: 点击下载报名表模板 [https://pan.baidu.com/s/1c2oubfi](https://pan.baidu.com/s/1c2oubfi)
+
+[^poster]: 点击下载Poster易拉宝ppt模板 [https://pan.baidu.com/s/1miHZkAc](https://pan.baidu.com/s/1miHZkAc)
+
 
 ### 时间
 
