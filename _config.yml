@@ -9,7 +9,7 @@ minimal_mistakes_skin    : "default" # "air", "contrast", "dark", "dirt", "mint"
 
 # Site Settings
 locale                   : "en"
-title                    : #""
+title                    : "计算传播网"
 title_separator          : "-"
 name                     : "计算传播网"
 description              : "An amazing website."
