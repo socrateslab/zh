@@ -75,12 +75,9 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-<<<<<<< HEAD
   github           : "data-science-lab"
-=======
   github           :
   gitlab           :
->>>>>>> mmistakes/master
   google_plus      :
   keybase          :
   instagram        :
@@ -299,7 +296,4 @@ defaults:
       layout: single
       author_profile: false
       share: true
-<<<<<<< HEAD
-=======
       related: true
->>>>>>> mmistakes/master
