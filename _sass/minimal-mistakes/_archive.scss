@@ -181,15 +181,11 @@
   }
 
   .archive__item-teaser {
-
-<<<<<<< HEAD:_sass/_archive.scss
     .archive__item-teaser {
       max-height: 150px;
       max-width: 150px;
-=======
     @include breakpoint($small) {
       max-height: 200px;
->>>>>>> mmistakes/master:_sass/minimal-mistakes/_archive.scss
     }
 
     @include breakpoint($medium) {
