@@ -5,7 +5,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # `jekyll serve`. If you change this file, please restart the server process.
 
-minimal_mistakes_skin    : "default" # "air", "contrast", "dark", "dirt", "mint", "sunrise"
+minimal_mistakes_skin    : "contrast" #"default" # "air", "contrast", "dark", "dirt", "mint", "sunrise"
 
 # Site Settings
 locale                   : "en"
@@ -103,6 +103,7 @@ include:
   - _readings
   - _recipes
   - _jekylls
+  - jekyll-paginate
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -129,6 +130,7 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
+gems: [jekyll-paginate]
 keep_files:
   - .git
   - .svn
