@@ -106,6 +106,10 @@ http://www.wolframalpha.com/input/?i=(((1-x)%2F200)+**(1-x))*+x**x+-+2**(-0.5)+%
 
 在我发起悬赏之后，Izaak van Dongen给出了一个[使用mpmath](http://docs.sympy.org/0.7.6/modules/mpmath/calculus/optimization.html#root-finding-findroot)的解决方案：https://stackoverflow.com/questions/46905044/runtimeerror-in-solving-equation-using-sympy/
 
+Mpmath is a Python library for arbitrary-precision floating-point arithmetic. For general information about mpmath, see the project website http://code.google.com/p/mpmath/, 在sympy的网站上也有mpmath的使用手册 http://docs.sympy.org/0.7.6/modules/mpmath/
+
+
+
 > Specifically, mpmath.findroot seems to do what you want. It takes an actual callable Python object which is the function to find a root of, and a starting value for x.
 
 
