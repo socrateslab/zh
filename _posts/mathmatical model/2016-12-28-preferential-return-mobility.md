@@ -16,7 +16,7 @@ tags:
   - Human Mobility
   - Barabasi
 categories:
-  - 传播网络
+  - model
 ---
 
 {% include toc title="Table" icon="file-text" %}
