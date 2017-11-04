@@ -233,3 +233,8 @@ p + t
 
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2017/output_16_0.png)
+
+## 结论
+
+- 真实熵越大，可预测性越小；
+- 在熵不变的条件下，去过的地方越多，可预测性越强。
