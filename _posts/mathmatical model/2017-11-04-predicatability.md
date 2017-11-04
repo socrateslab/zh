@@ -8,7 +8,7 @@ header:
   overlay_image: /assets/images/unsplash-image-16.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "在Limits of Predictability inHuman Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示为S; 以一个小时为一个观察窗口，观察一段连续的时间里的人类个体移动轨迹，一个人到过的地点总数是N。"
+excerpt: "在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示为S; 以一个小时为一个观察窗口，观察一段连续的时间里的人类个体移动轨迹，一个人到过的地点总数是N。"
 modified: 2017-04-20 19:49:48
 comments: true
 author: "王成军"
@@ -22,7 +22,7 @@ categories:
 
 # 真实熵与人类行为可预测性
 
-在Limits of Predictability inHuman Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示为S; 以一个小时为一个观察窗口，观察一段连续的时间里的人类个体移动轨迹，一个人到过的地点总数是N。
+在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示为S; 以一个小时为一个观察窗口，观察一段连续的时间里的人类个体移动轨迹，一个人到过的地点总数是N。
 
 计算真实熵的方法是采用一种称之为Lempel-Ziv的算法来进行估计。
 
