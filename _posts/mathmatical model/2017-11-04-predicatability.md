@@ -18,6 +18,7 @@ categories:
   - Python
 ---
 
+{% include toc title="Table" icon="file-text" %}
 
 
 # 真实熵与人类行为可预测性
