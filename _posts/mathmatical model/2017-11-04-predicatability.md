@@ -32,7 +32,7 @@ where $\Lambda_i$ is the length of the shortest substring starting at position i
 
 The estimated entropy converges to the real entropy of the time series when n approaches to infinity.[^lz]
 
-[^lz]: Kontoyiannis I., Algoet P. H., Suhov Yu. M., Wyner A. J. Nonparametric Entropy Estima- tion for Stationary Processes and Random Fields, with Applications to English Text, IEEE Transactions on Information Theory 44, 1319-1327 (1998).
+[^lz]: Kontoyiannis I., Algoet P. H., Suhov Yu. M., Wyner A. J. Nonparametric Entropy Estimation for Stationary Processes and Random Fields, with Applications to English Text, IEEE Transactions on Information Theory 44, 1319-1327 (1998).
 
 
 ```python
