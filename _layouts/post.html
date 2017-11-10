@@ -53,6 +53,10 @@ layout: default
       {% include post_pagination.html %}
     </div>
 
+    <div id="disqus_thread">
+      <a href="#" onclick="disqus();return false;">Show Comments</a>
+    </div>
+
     {% if site.comments.provider and page.comments %}
       {% include comments.html %}
     {% endif %}
