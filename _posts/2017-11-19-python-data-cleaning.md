@@ -33,7 +33,7 @@ The data contains quite a few issues, and this tutorial shows how to do things l
 - Extracting and cleaning values for dates
 - Removing duplicate rows
 - Using a scatterplot to visualize relationships between values in different columns
-- Finding geographic coordinates for a list of place names (i.e. the names of universities, etc.)
+- <del>Finding geographic coordinates for a list of place names (i.e. the names of universities, etc.)</del>
 - Exporting cleaned data to Excel
 
 # Reading Data with Pandas
@@ -2272,3 +2272,11 @@ plt.show()
 
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2017/output_106_0.png)
+
+# Write data
+
+df.to_csv('universityDataClean.csv', index = False)
+
+# Jupyter Notebook
+
+本文所使用到的所有代码见 [nbviewer](http://nbviewer.jupyter.org/github/data-journalism/dj2017/blob/master/code/dataCleaningWithPython.ipynb)。
