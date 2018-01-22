@@ -19,7 +19,9 @@ author: "王成军"
 
 > Voronoi图，又叫泰森多边形或Dirichlet图，它是由一组由连接两邻点直线的垂直平分线组成的连续多边形组成。N个在平面上有区别的点，按照最邻近原则划分平面；每个点与它的最近邻区域相关联。
 
-本文介绍Emden Gansner, Yifan Hu, Stephen Kobourov三人所发展的GMap方法，将网络采用地图的形式进行可视化。[^Gansner]
+本文介绍Emden Gansner, [Yifan Hu](http://yifanhu.net/), Stephen Kobourov三人所发展的GMap方法，将网络采用地图的形式进行可视化。[^Gansner]
+
+[GMap](http://yifanhu.net/MAPS/index.html) as an algorithm for visualizing clusters and relations has been adopted in Graphviz. Check this  [example](https://graphviz.gitlab.io/_pages/Gallery/undirected/gd_1994_2007.html).
 
 [^Gansner]: Emden Gansner, Yifan Hu, Stephen Kobourov, GMap: Visualizing Graphs and Clusters as Maps https://www2.cs.arizona.edu/~kobourov/pacvis10.pdf
 
