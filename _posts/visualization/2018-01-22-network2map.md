@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: ""
+excerpt: "Voronoi图，又叫泰森多边形或Dirichlet图，它是由一组由连接两邻点直线的垂直平分线组成的连续多边形组成。N个在平面上有区别的点，按照最邻近原则划分平面；每个点与它的最近邻区域相关联。本文介绍Emden Gansner, Yifan Hu, Stephen Kobourov三人所发展的GMap方法，将网络采用地图的形式进行可视化。[^Gansner]"
 modified: 2018-01-22T11:55:22-04:00
 comments: true
 author_profile: true
@@ -18,6 +18,10 @@ author: "王成军"
 
 
 > Voronoi图，又叫泰森多边形或Dirichlet图，它是由一组由连接两邻点直线的垂直平分线组成的连续多边形组成。N个在平面上有区别的点，按照最邻近原则划分平面；每个点与它的最近邻区域相关联。
+
+本文介绍Emden Gansner, Yifan Hu, Stephen Kobourov三人所发展的GMap方法，将网络采用地图的形式进行可视化。[^Gansner]
+
+[^Gansner]: Emden Gansner, Yifan Hu, Stephen Kobourov, GMap: Visualizing Graphs and Clusters as Maps https://www2.cs.arizona.edu/~kobourov/pacvis10.pdf
 
 
 ```python
@@ -30,8 +34,6 @@ from scipy.spatial import Voronoi
 import networkx as nx
 import matplotlib.cm as cm
 import matplotlib.patches as patches
-#https://www2.cs.arizona.edu/~kobourov/pacvis10.pdf
-#Emden Gansner, Yifan Hu, Stephen Kobourov, GMap: Visualizing Graphs and Clusters as Maps
 
 %matplotlib inline
 ```
