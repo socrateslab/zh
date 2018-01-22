@@ -148,7 +148,7 @@ plt.show()
 ```
 
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_4_0.jpeg)
+![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/output_4_0.png)
 
 
 ```python
@@ -231,7 +231,7 @@ plt.show()
 ```
 
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_8_0.jpeg)
+![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/output_8_0.png)
 
 
 ```python
@@ -253,7 +253,7 @@ plt.show()
 ```
 
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_9_0.png)
+![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/output_9_0.png)
 
 
 ```python
@@ -303,7 +303,7 @@ plt.ylim(-1,1.5)
 
 
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_11_1.png)
+![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/output_11_1.png)
 
 
 
@@ -365,7 +365,7 @@ plt.ylim(-1,1.5)
 plt.show()
 ```
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_13_0.png)
+![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/output_13_0.png)
 
 
 ```python
@@ -454,6 +454,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_14_0_1.png)
+![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/output_14_0.png)
 
 # Reference
