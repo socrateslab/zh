@@ -8,7 +8,7 @@ header:
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "本文介绍使用python可视化地理数据，使用维基解密阿富汗战争日志数据作为例子，涵盖folium，geopandas两个主要的工具。"
-modified: 2018-02-12T11:55:22-04:00
+modified: 2018-02-11T11:55:22-04:00
 comments: true
 author_profile: true
 author: "王成军"
