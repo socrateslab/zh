@@ -743,3 +743,11 @@ plt.show()
 
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets/img2018/wikileaks_afghan_war/output_31_0.png)
+
+更多信息见：
+
+https://github.com/chengjun/WikileaksAfghanistanDataAnalysis
+
+和
+
+https://chengjunwang.com/WikileaksAfghanistanDataAnalysis/
