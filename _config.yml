@@ -5,6 +5,8 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # `jekyll serve`. If you change this file, please restart the server process.
 
+minimal_mistakes_skin    : "contrast" #"default" # "air", "contrast", "dark", "dirt", "mint", "sunrise"
+
 # Site Settings
 locale                   : "en"
 title                    : "计算传播网"
@@ -18,7 +20,7 @@ teaser                   : "/assets/images/500x300.png" # path of fallback tease
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : "disqus"   # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  provider               : "disqus" # false (default)，"disqus"   , "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
     shortname            : "computational-communication" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
@@ -74,15 +76,17 @@ author:
   facebook         :
   foursquare       :
   github           : "data-science-lab"
+  github           :
+  gitlab           :
   google_plus      :
   keybase          :
   instagram        :
   lastfm           :
-  linkedin         :
+  linkedin         : # "john-doe-12345678" (the last part of your profile url, e.g. https://www.linkedin.com/in/john-doe-12345678)
   pinterest        :
   soundcloud       :
-  stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
-  steam            :
+  stackoverflow    : # "123456/username" (the last part of your profile url, e.g. https://stackoverflow.com/users/123456/username)
+  steam            : # "steamId" (the last part of your profile url, e.g. https://steamcommunity.com/id/steamId/)
   tumblr           :
   twitter          :
   vine             :
@@ -99,6 +103,7 @@ include:
   - _readings
   - _recipes
   - _jekylls
+  - jekyll-paginate
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -125,6 +130,7 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
+gems: [jekyll-paginate]
 keep_files:
   - .git
   - .svn
@@ -162,11 +168,11 @@ sass:
 permalink: /:categories/:title/
 paginate: 10 # amount of posts to show
 paginate_path: /page:num/
-timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
-# Plugins
-gems:
+# Plugins (previously gems:)
+plugins_dir:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
@@ -292,3 +298,4 @@ defaults:
       layout: single
       author_profile: false
       share: true
+      related: true

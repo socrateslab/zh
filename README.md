@@ -1,9 +1,10 @@
 # [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/)
 
-[![GitHub release](https://img.shields.io/gem/v/minimal-mistakes-jekyll.svg)](https://github.com/mmistakes/minimal-mistakes/releases) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/mmistakes/minimal-mistakes/master/LICENSE)
+[![GitHub release](https://img.shields.io/gem/v/minimal-mistakes-jekyll.svg)](https://github.com/mmistakes/minimal-mistakes/releases) [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/mmistakes/minimal-mistakes/master/LICENSE.txt)
 
 Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your personal site, blog, or portfolio on GitHub or self-hosting on your own server. As the name implies --- styling is purposely minimalistic to be enhanced and customized by you :smile:.
 
+<<<<<<< HEAD
 ## Customization
 
 - fork and change the repo name
@@ -14,6 +15,9 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 See what's new in the [CHANGELOG](CHANGELOG.md).
 
 :sparkles: Minimal Mistakes is now available as a [Ruby gem](https://rubygems.org/gems/minimal-mistakes-jekyll). Consult the [Quick-Start Guide](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/) and [this blog post](https://mmistakes.github.io/minimal-mistakes/jekyll/gemified-theme-beta/) to learn how to upgrade.
+=======
+:sparkles: See what's new in the [CHANGELOG](CHANGELOG.md).
+>>>>>>> mmistakes/master
 
 [![Minimal Mistakes live preview][2]][1]
 
@@ -24,15 +28,28 @@ See what's new in the [CHANGELOG](CHANGELOG.md).
 
 ## Notable Features
 
-- "Gemified" for easier install/upgrading
-- Compatible with Jekyll 3.x and GitHub Pages
-- Support for Jekyll's built-in Sass/SCSS preprocessor
-- Several responsive layout options (single, archive index, splash, and paginated home page)
-- SEO optimized with support for [Twitter Cards](https://dev.twitter.com/cards/overview) and [Open Graph](http://ogp.me/) data
+- Bundled as a "theme gem" for easier install/upgrading.
+- Compatible with GitHub Pages.
+- Support for Jekyll's built-in Sass/SCSS preprocessor.
+- Seven different skins (color variations).
+- Several responsive layout options (single, archive index, splash, and paginated home page).
+- Optimized for search engines with support for [Twitter Cards](https://dev.twitter.com/cards/overview) and [Open Graph](http://ogp.me/) data
 - Optional [header images](https://mmistakes.github.io/minimal-mistakes/docs/layouts/#headers), [custom sidebars](https://mmistakes.github.io/minimal-mistakes/docs/layouts/#sidebars), [table of contents](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#table-of-contents), [galleries](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#gallery), related posts, [breadcrumb links](https://mmistakes.github.io/minimal-mistakes/docs/configuration/#breadcrumb-navigation-beta), [navigation lists](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#navigation-list), and more.
-- Commenting support (powered by [Disqus](https://disqus.com/), [Facebook](https://developers.facebook.com/docs/plugins/comments), Google+, [Discourse](https://www.discourse.org/), static-based via [Staticman](https://staticman.net/), and custom).
+- Commenting support (powered by [Disqus](https://disqus.com/), [Facebook](https://developers.facebook.com/docs/plugins/comments), Google+, [Discourse](https://www.discourse.org/), static-based via [Staticman v1](https://staticman.net/), and custom).
 - [Google Analytics](https://www.google.com/analytics/) support.
-- UI localized text in English (default), Brazilian Portuguese, Chinese, French, German, Italian, Spanish, and Turkish
+- UI localized text in English (default), Brazilian Portuguese, Chinese, French, German, Italian, Korean, Nepali (Nepalese), Russian, Spanish, and Turkish.
+
+## Skins (Color Variations)
+
+This theme comes in seven different skins (including the default one).
+
+| `air` | `contrast` | `dark` |
+| --- | --- | --- |
+| ![air skin](https://mmistakes.github.io/minimal-mistakes/assets/images/air-skin-archive.png) | ![contrast skin](https://mmistakes.github.io/minimal-mistakes/assets/images/contrast-skin-archive.png) | ![dark skin](https://mmistakes.github.io/minimal-mistakes/assets/images/dark-skin-archive.png) |
+
+| `dirt` | `mint` | `sunrise` |
+| --- | --- | --- |
+| ![dirt skin](https://mmistakes.github.io/minimal-mistakes/assets/images/dirt-skin-archive.png) | ![mint skin](https://mmistakes.github.io/minimal-mistakes/assets/images/mint-skin-archive.png) | ![sunrise skin](https://mmistakes.github.io/minimal-mistakes/assets/images/sunrise-skin-archive.png) |
 
 ## Demo Pages
 
@@ -44,7 +61,7 @@ See what's new in the [CHANGELOG](CHANGELOG.md).
 | [Post with a Gallery][gallery-post] | A post showing several images wrapped in `<figure>` elements. |
 | [Sample Collection Page][sample-collection] | Single page from a collection. |
 | [Categories Archive][categories-archive] | Posts grouped by category. |
-| [Tags Archive][tags-archive] | Posts grouped by tags. |
+| [Tags Archive][tags-archive] | Posts grouped by tag. |
 
 Additional sample posts are available under [posts archive][year-archive] on the demo site. Source files for these (and the entire demo site) can be found in [`/docs`](docs).
 
@@ -97,7 +114,11 @@ This goes for author sidebar links and "share button" additions -- I have no int
 
 ### Pull Requests
 
-To help me out try to avoid creating pull requests on `master` and instead branch off of `develop`. It's much easier for me to test, merge, and roll them into new releases this way.
+When submitting a pull request:
+
+1. Clone the repo.
+2. Create a branch off of `master` and give it a meaningful name (e.g. `my-awesome-new-feature`) and describe the feature or fix.
+3. Open a pull request on GitHub.
 
 Theme documentation and demo pages can be found in the [`/docs`](docs) if submitting improvements, typo corrections, etc.
 
@@ -105,7 +126,7 @@ Theme documentation and demo pages can be found in the [`/docs`](docs) if submit
 
 To set up your environment to develop this theme, run `bundle install`.
 
-To test the theme, run `bundle exec rake preview` and open your browser at `http://localhost:4000/test/`. This starts a Jekyll server using your theme and the contents of the `test/` directory. As you make modifications to your theme and to the example site, your site will regenerate and you should see the changes in the browser after a refresh.
+To test the theme, run `bundle exec rake preview` and open your browser at `http://localhost:4000/test/`. This starts a Jekyll server using content in the `test/` directory. As modifications are made to the theme and test site, it will regenerate and you should see the changes in the browser after a refresh.
 
 ---
 
@@ -135,7 +156,6 @@ To test the theme, run `bundle exec rake preview` and open your browser at `http
 - [FitVids.JS](http://fitvidsjs.com/)
 - Greedy Navigation - [lukejacksonn](http://codepen.io/lukejacksonn/pen/PwmwWV)
 - [jQuery Smooth Scroll](https://github.com/kswedberg/jquery-smooth-scroll)
-- [Stickyfill](https://github.com/wilddeer/stickyfill)
 
 ---
 
@@ -143,7 +163,7 @@ To test the theme, run `bundle exec rake preview` and open your browser at `http
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Michael Rose
+Copyright (c) 2017 Michael Rose
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

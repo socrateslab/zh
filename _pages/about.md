@@ -22,7 +22,7 @@ author_profile: true
 
 
 
-![](http://computational-communication.com/assets/CCC.png)
+![](https://computational-communication.com/assets/CCC.png)
 
 
 > 基因是生物学飞跃的原因，货币是经济学发展的关键。人类传播行为所隐藏的计算化“基因”是什么？
@@ -81,7 +81,7 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 - [latex online](http://codecogs.com/latex/eqneditor.php)
 
 
-![](http://computational-communication.com/assets/images/pengui.gif)
+![](https://computational-communication.com/assets/images/pengui.gif)
 
 **不要温和地走进黑夜**
 

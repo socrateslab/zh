@@ -2,8 +2,10 @@
 
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
+#git config 'lfs.https://github.com/data-science-lab/data-science-lab.github.io.git/info/lfs.locksverify' false
+
 # git pull first
-git pull origin master
+#git pull origin master
 
 # Add changes to git.
 git add -A

@@ -6,13 +6,8 @@ main:
      url: /year-archive/
    - title: "作者"
      url: /authors/
-   - title: "成员"
-     url: /portfolio/
    - title: "中心"
      url: /collaboratory/
-   - title: "文献"
-     url: /readings/
-   - title: "工具"
-     url: /tools/
    - title: "百科"
-     url: https://github.com/data-science-lab/data-science-lab.github.io/wiki
+     url: http://wiki.swarma.net/index.php/Category:%E8%AE%A1%E7%AE%97%E4%BC%A0%E6%92%AD%E5%AD%A6
+     
