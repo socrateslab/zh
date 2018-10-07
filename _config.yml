@@ -130,7 +130,7 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]
 keep_files:
   - .git
   - .svn
