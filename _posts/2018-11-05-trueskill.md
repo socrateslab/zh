@@ -338,3 +338,21 @@ alice, bob = rate_1vs1(alice, bob)  # update the ratings after the match
 ```
 
     This match seems to be not so fair
+
+# References
+
+    @inproceedings{Dangauthier2007TrueSkill,
+      title={TrueSkill through time: revisiting the history of chess},
+      author={Dangauthier, Pierre and Herbrich, Ralf and Minka, Tom and Graepel, Thore},
+      booktitle={International Conference on Neural Information Processing Systems},
+      pages={337-344},
+      year={2007},
+    }
+
+    @book{Liu2013Question,
+      title={Question Difficulty Estimation in Community Question Answering Services},
+      author={Liu, Jing and Wang, Quan and Lin, Chin Yew and Hon, Hsiao Wuen},
+      publisher={American Section of the International Solar Energy Society,},
+      pages={495-501},
+      year={2013},
+    }
