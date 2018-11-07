@@ -24,7 +24,14 @@ tags:
 - 链接：https://www.jianshu.com/p/c1fbba3af787
 
 
-TrueSkill算法是Elo排名方法与贝叶斯规则的结合，可用于计算竞赛选手的能力排名。Herbrich 等人(2007)提出了这个方法；同一年，Dangauthier和Herbrich 等人应用其方法到国际象棋的比赛中去，计算国际象棋选手的能力随时间如何变化；Liu (2013)创造性地建议使用这方法来计算问答类社区问题的难度。
+TrueSkill算法是Elo排名方法与贝叶斯规则的结合，可用于计算竞赛选手的能力排名。Herbrich 等人(2007)提出了这个方法[^1]:；同一年，Dangauthier和Herbrich 等人应用其方法到国际象棋的比赛中去，计算国际象棋选手的能力随时间如何变化[^2]:；Liu (2013)创造性地建议使用这方法来计算问答类社区问题的难度[^3]:。
+
+[^1]: Herbrich, Ralf; Minka, Tom; Graepel, Thore (2007), Schölkopf, B.; Platt, J. C.; Hoffman, T., eds., TrueSkill™ : A Bayesian Skill Rating System, Advances in Neural Information Processing Systems 19, MIT Press, pp. 569–576, retrieved 2018-10-11
+
+[^2]: Dangauthier, P., Herbrich, R., Minka, T., & Graepel, T. (2008). Trueskill through time: Revisiting the history of chess. In Advances in neural information processing systems (pp. 337-344).
+
+[^3]: Liu, J., Wang, Q., Lin, C. Y., & Hon, H. W. (2013). Question difficulty estimation in community question answering services. In Proceedings of the 2013 Conference on Empirical Methods in Natural Language Processing (pp. 85-90).
+
 
 算法给每一个用户分配一个正态分布，均值代表真实能力，方差代表系统对该用户真实能力猜测的不确定程度。一开始假设每个人分布的均值和方差一致，此后利用数据中的每一对输赢关系不断更新每个用户的分布。更新规则如下：
 
@@ -340,22 +347,3 @@ alice, bob = rate_1vs1(alice, bob)  # update the ratings after the match
     This match seems to be not so fair
 
 # References
-
-    Herbrich, Ralf; Minka, Tom; Graepel, Thore (2007), Schölkopf, B.; Platt, J. C.; Hoffman, T., eds., TrueSkill™ : A Bayesian Skill Rating System, Advances in Neural Information Processing Systems 19, MIT Press, pp. 569–576, retrieved 2018-10-11
-
-
-    @inproceedings{Dangauthier2007TrueSkill,
-      title={TrueSkill through time: revisiting the history of chess},
-      author={Dangauthier, Pierre and Herbrich, Ralf and Minka, Tom and Graepel, Thore},
-      booktitle={International Conference on Neural Information Processing Systems},
-      pages={337-344},
-      year={2007},
-    }
-
-    @book{Liu2013Question,
-      title={Question Difficulty Estimation in Community Question Answering Services},
-      author={Liu, Jing and Wang, Quan and Lin, Chin Yew and Hon, Hsiao Wuen},
-      publisher={American Section of the International Solar Energy Society,},
-      pages={495-501},
-      year={2013},
-    }
