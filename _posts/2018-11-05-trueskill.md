@@ -11,7 +11,7 @@ header:
 excerpt: "TrueSkill算法是Elo排名方法与贝叶斯规则的结合，可用于计算竞赛选手的能力排名。Dangauthier2007提出了这个方法 ，Liu2013创造性地建议使用这方法来计算问答类社区问题的难度。"
 modified: 2018-11-04 19:49:48
 comments: true
-author: "计算士"
+author: "吴令飞"
 tags:
   - 计算传播学
 ---
