@@ -24,7 +24,7 @@ tags:
 - 链接：https://www.jianshu.com/p/c1fbba3af787
 
 
-TrueSkill算法是Elo排名方法与贝叶斯规则的结合，可用于计算竞赛选手的能力排名。Herbrich 等人(2007)提出了这个方法[^1]:；同一年，Dangauthier和Herbrich 等人应用其方法到国际象棋的比赛中去，计算国际象棋选手的能力随时间如何变化[^2]:；Liu (2013)创造性地建议使用这方法来计算问答类社区问题的难度[^3]:。
+TrueSkill算法是Elo排名方法与贝叶斯规则的结合，可用于计算竞赛选手的能力排名。Herbrich 等人(2007)提出了这个方法[^1]；同一年，Dangauthier和Herbrich 等人应用其方法到国际象棋的比赛中去，计算国际象棋选手的能力随时间如何变化[^2]；Liu (2013)创造性地建议使用这方法来计算问答类社区问题的难度[^3]。
 
 [^1]: Herbrich, Ralf; Minka, Tom; Graepel, Thore (2007), Schölkopf, B.; Platt, J. C.; Hoffman, T., eds., TrueSkill™ : A Bayesian Skill Rating System, Advances in Neural Information Processing Systems 19, MIT Press, pp. 569–576, retrieved 2018-10-11
 
