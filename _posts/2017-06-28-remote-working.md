@@ -137,6 +137,8 @@ Tunnelier is free for personal use, as well as for individual commercial use ins
 $ ssh -N -f -L [remote port]:localhost:[local port] -p [ssh port] -l [username] [公网IP]
 ```
 
+ssh -N -f -L 7777:localhost:7777 -p 2223 -l sysadmin 114.212.178.252  
+
 
 > ssh -N -f -L 8882:localhost:7777 server2
 
