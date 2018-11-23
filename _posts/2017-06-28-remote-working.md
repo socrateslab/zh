@@ -66,7 +66,7 @@ dir
 cd ..
 ```
 
-![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/termius.png)
+![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/terminus.png)
 
 # 图形化界面VNC
 
