@@ -96,7 +96,7 @@ service vncserver restart
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/vnc.png)
 
-# 文件传输
+# filezilla文件传输
 
 - 可以使用filezilla
 
@@ -109,4 +109,31 @@ Tunnelier is free for personal use, as well as for individual commercial use ins
 
 
 
+# 从PC通过浏览器访问服务器上的Jupyter Notebook
+
+为了更好地利用服务器的计算资源，一直希望能够有一种方法从PC通过浏览器访问服务器上的Jupyter Notebook。事实上，在IPython官网上有一份很详细的文档，说明了如何[**Running a notebook server**](https://ipython.org/ipython-doc/2/notebook/public_server.html)
+
+
+不过，由于实验室的服务器网络情况特殊，几台服务器共用一个公网IP，要想直接访问其中的某一台服务器，还需要通过防火墙，因此要采取另一种方法，**建立ssh隧道**，就是在建立ssh连接的时候实现一个端口的转发就行了。
+
+以下内容参考
+[http://www.hydro.washington.edu/~jhamman/hydro-logic/blog/2013/10/04/pybook-remote/](http://www.hydro.washington.edu/~jhamman/hydro-logic/blog/2013/10/04/pybook-remote/)
+
+如果PC为Linux或Mac，可以直接用ssh命令
+
+``` bash
+$ ssh -N -f -L [remote port]:localhost:[local port] -p [ssh port] -l [username] [公网IP]
+```
+
+
 > ssh -N -f -L 8882:localhost:7777 server2
+
+在Windows下无法直接运行这条命令，因此要借助其他软件，我用的是Xshell，在Xshell的连接属性中建立一个隧道，实现一下端口的转发即可。
+
+在这样的一个ssh连接中启动jupter notebook服务，使用如下命令
+
+``` bash
+$ jupyter notebook --no-browser --port=7777
+```
+
+将jupyter Notebook运行在服务器的7777端口，并且设置为不在服务器上打开浏览器，然后在PC上通过浏览器访问localhost:7777即可远程访问。
