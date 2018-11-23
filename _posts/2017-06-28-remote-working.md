@@ -68,6 +68,18 @@ cd ..
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/terminus.png)
 
+在 Termius 中,Linux 的一些基本操作命令:
+
+1. cd [切换的目录] 切换到当前目录
+2. top 监测 Linux 的系统状况,cpu 和内存的使用情况
+3. q 可以退出 top
+4. ll 查看目录
+5. nohup python3 **.py & 可以在关闭自己的电脑的铅矿下后台运行这个程序
+6. kill -9 [对应需要结束的程序的 PID] 强制中断一个进程的进行
+
+提示:可以在手机上下载 Termius,可以在手机上监测 只能在有校园网的情况下使用
+
+
 # 图形化界面VNC
 
 - Q:连接VNC出现too many security failures
