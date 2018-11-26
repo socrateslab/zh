@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、vncviewer,并介绍通过建立ssh隧道的方式使用jupyter notebook的方法。"
+excerpt: "本文总结一些计算平台的简单管理工具，包括termius、filezilla、vncviewer, 并介绍通过建立ssh隧道的方式使用jupyter notebook的方法。"
 modified: 2018-11-25T11:55:22-04:00
 comments: true
 author_profile: true
@@ -17,7 +17,6 @@ manuscript: false
 
 {% include toc title="Table" icon="file-text" %}
 
-本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer，并介绍建立ssh隧道使用jupyter notebook的实现方法。
 
 实验中心配备了4台大内存服务器、两台网络服务器、两台nas，还有10台塔式服务器。之前一直通过学校外网ip进行使用，2018年搬到仙林校区紫金楼后仅仅申请了一个校内网固定ip（114.212.178.252），绑定防火墙mac地址（58696c0f42f8)，通过原有的防火墙设置了虚拟ip的映射。例如：
 
