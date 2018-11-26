@@ -12,7 +12,7 @@ modified: 2018-11-25T11:55:22-04:00
 comments: true
 author_profile: true
 author: "王成军"
-manuscript: true
+manuscript: false
 ---
 
 {% include toc title="Table" icon="file-text" %}
