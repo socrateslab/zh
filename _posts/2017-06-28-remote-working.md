@@ -131,25 +131,35 @@ Tunnelier is free for personal use, as well as for individual commercial use ins
 以下内容参考
 [http://www.hydro.washington.edu/~jhamman/hydro-logic/blog/2013/10/04/pybook-remote/](http://www.hydro.washington.edu/~jhamman/hydro-logic/blog/2013/10/04/pybook-remote/)
 
+## 第一步
+
 如果PC为Linux或Mac，可以直接用ssh命令
 
 ``` bash
 $ ssh -N -f -L [remote port]:localhost:[local port] -p [ssh port] -l [username] [公网IP]
 ```
 
+例如，对于2223这台服务器而言，需要在个人的笔记本电脑的terminal中输入:
+
+```bash
 ssh -N -f -L 7777:localhost:7777 -p 2223 -l sysadmin 114.212.178.252  
-
-
-> ssh -N -f -L 8882:localhost:7777 server2
+```
 
 在Windows下无法直接运行这条命令，因此要借助其他软件，我用的是Xshell，在Xshell的连接属性中建立一个隧道，实现一下端口的转发即可。
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/xshell.png)
 
-在这样的一个ssh连接中启动jupter notebook服务，使用如下命令
+
+## 第二步
+
+在这样的一个ssh连接中启动jupter notebook服务，只需要使用termius登陆服务器，并输入如下命令
 
 ``` bash
 $ jupyter notebook --no-browser --port=7777
 ```
 
 将jupyter Notebook运行在服务器的7777端口，并且设置为不在服务器上打开浏览器，然后在PC上通过浏览器访问localhost:7777即可远程访问。
+
+效果如下图（亲测有效）：
+
+![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/ssh-tunnel.png)
