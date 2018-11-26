@@ -26,7 +26,7 @@ author: "王成军"
 |2224port|wan2/114.212.178.252|	**2224**/tcp	|192.168.50.14	|22/tcp|
 |5981port	|wan2/114.212.178.252|	**5981**/tcp	|192.168.50.14	|5901/tcp|
 
-
+![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/servers.jpeg)
 
 # ssh工具Termius
 
