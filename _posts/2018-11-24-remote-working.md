@@ -1,14 +1,14 @@
 ---
 layout: single
-title: "ROC分析与统计检验"
+title: "服务器远程使用简介"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。"
-modified: 2017-11-05T11:55:22-04:00
+excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer等。"
+modified: 2018-11-25T11:55:22-04:00
 comments: true
 author_profile: true
 author: "王成军"
