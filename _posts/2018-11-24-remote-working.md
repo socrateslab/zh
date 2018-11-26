@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "服务器远程登录的简单工具"
+title: "服务器远程登使用简介"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
