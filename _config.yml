@@ -135,6 +135,10 @@ keep_files:
   - .git
   - .svn
 encoding: "utf-8"
+variables:
+  LC_ALL: "C.UTF-8"
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US.UTF-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 

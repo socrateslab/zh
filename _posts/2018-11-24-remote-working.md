@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "服务器远程使用简介 "
+title: "2018年大会通知"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
@@ -41,7 +41,7 @@ author: "王成军"
 
 默认登录到sysadmin界面，使用**su**命令切换到root
 
-```
+```bash
 su
 ```
 
@@ -49,20 +49,20 @@ su
 linux 根目录以 / 开始，所以要想跑到最顶层，输入`cd /`打开顶层的文件夹
 
 
-```
+```bash
 cd /
 ```
 
 使用**dir**看某个文件夹下的文件：
 
-```
+```bash
 dir
 ```
 
 退出一个文件夹使用 `cd ..`
 
 
-```
+```bash
 cd ..
 ```
 
