@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "2018年大会通知"
+title: "服务器远程使用简介"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
