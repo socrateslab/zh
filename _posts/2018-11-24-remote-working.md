@@ -145,7 +145,7 @@ $ ssh -N -f -L [remote port]:localhost:[local port] -p [ssh port] -l [username] 
 ssh -N -f -L 7777:localhost:7777 -p 2223 -l sysadmin 114.212.178.252  
 ```
 
-在Windows下无法直接运行这条命令，因此要借助其他软件，我用的是Xshell，在Xshell的连接属性中建立一个隧道，实现一下端口的转发即可。
+在Windows下无法直接运行这条命令，因此要借助其他软件，陈志聪用的是Xshell，在Xshell的连接属性中建立一个隧道，实现一下端口的转发即可。
 
 ![png]({{ site.url }}{{ site.baseurl }}/assets//img2018/xshell.png)
 
