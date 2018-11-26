@@ -7,7 +7,7 @@ header:
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer等。"
+excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer，并介绍建立ssh隧道使用jupyter notebook的实现方法。"
 modified: 2018-11-25T11:55:22-04:00
 comments: true
 author_profile: true
