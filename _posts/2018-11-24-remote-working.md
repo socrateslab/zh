@@ -1,21 +1,23 @@
 ---
 layout: single
-title: "服务器远程使用简介"
+title: "ROC分析与统计检验"
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-4.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer，并介绍建立ssh隧道使用jupyter notebook的实现方法。"
-modified: 2018-11-25T11:55:22-04:00
+excerpt: "pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。"
+modified: 2017-11-05T11:55:22-04:00
 comments: true
 author_profile: true
 author: "王成军"
+manuscript: true
 ---
 
 {% include toc title="Table" icon="file-text" %}
 
+本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer，并介绍建立ssh隧道使用jupyter notebook的实现方法。
 
 实验中心配备了4台大内存服务器、两台网络服务器、两台nas，还有10台塔式服务器。之前一直通过学校外网ip进行使用，2018年搬到仙林校区紫金楼后仅仅申请了一个校内网固定ip（114.212.178.252），绑定防火墙mac地址（58696c0f42f8)，通过原有的防火墙设置了虚拟ip的映射。例如：
 
