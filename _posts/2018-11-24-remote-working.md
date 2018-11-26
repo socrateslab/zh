@@ -90,7 +90,7 @@ ssh root@ip -p port  #登录后，重启vnc服务器：
 service vncserver restart
 ```
 
-需要特别注意的是：每一个服务器做了两组映射，一组用于ssh，一组用于vnc。VNC的使用使用的是校内ip的vnc端口，这个端口映射到路由器ip的vncserver端口。
+需要注意的是：每一个服务器做了两组映射，一组用于ssh，一组用于vnc。VNC的使用使用的是校内ip的vnc端口，这个端口映射到路由器ip的vncserver端口。
 
     MacBook-Pro:~ datalab$ telnet 114.212.178.252 5961
     Trying 114.212.178.252...
