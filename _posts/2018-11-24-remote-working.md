@@ -8,7 +8,7 @@ header:
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "本文总结一些计算平台的简单管理工具，包括terminus、filezilla、VNCviewer等。"
-modified: 2018-11-20T11:55:22-04:00
+modified: 2018-11-25T11:55:22-04:00
 comments: true
 author_profile: true
 author: "王成军"
