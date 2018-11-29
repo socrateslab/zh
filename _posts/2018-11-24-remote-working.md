@@ -2,9 +2,10 @@
 layout: single
 title: "服务器远程使用简介"
 header:
+  teaser: "/assets/images/unsplash-gallery-image-1-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-4.jpg
+  overlay_image: /assets/images/unsplash-image-1.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "本文总结一些计算平台的简单管理工具，包括termius、filezilla、vncviewer, 并介绍通过建立ssh隧道的方式使用jupyter notebook的方法。"

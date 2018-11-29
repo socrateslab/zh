@@ -2,6 +2,15 @@ require "bundler/gem_tasks"
 require "jekyll"
 require "listen"
 
+variables:
+  LC_ALL: "C.UTF-8"
+  LANG: "en_US.UTF-8"
+  LANGUAGE: "en_US.UTF-8"
+
+task :build do
+  system "env LANG=\"en_US.UTF-8\" bundle exec jekyll build"
+end
+
 def listen_ignore_paths(base, options)
   [
     /_config\.ya?ml/,

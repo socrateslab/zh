@@ -51,7 +51,6 @@ $breakpoint: () !default;
   $private-breakpoint-context-holder: map-get($breakpoint, 'context holder') !global;
   $private-breakpoint-query-count: map-get($breakpoint, 'query count') !global;
 
-  // Allow for an as-needed override or usage of no query fallback.
   @if $no-query != false {
     $query-fallback: $no-query;
   }

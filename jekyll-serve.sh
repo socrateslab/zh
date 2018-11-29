@@ -1,2 +1,2 @@
-jekyll serve --incremental
+jekyll serve # --incremental
 #jekyll build --trace
