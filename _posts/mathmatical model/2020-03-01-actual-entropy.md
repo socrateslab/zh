@@ -118,4 +118,38 @@ actual_entropy(D1)
 
 我把gamma的取值全部手工找了一遍，如上。的确是第二个序列的sum_gamma更大19，第一个序列的sum_gamma是17。所以计算没错。
 
-反常：也就是是说第二个序列的信息更丰富，熵越小。换句话说：序列越不规律，越难以预测，反而熵越小! Something is wrong!
+### 问题：第二个序列的信息更丰富，熵越小？错误❌
+
+
+换句话说：序列越不规律，越难以预测，反而熵越小! Something is wrong!
+
+因为这里的例子有问题：太短了。不满足n趋近于无穷大的条件。
+
+![zhicong](/assets/2019/zhicong.png)
+
+这里的推导由香港城市大学媒体与传播系陈志聪同学提供。
+
+因此，可以构造更长的序列来检验，此时期待随机化序列的真实熵更大。
+
+
+
+```python
+import random
+random.seed(2020)
+
+D2 = []
+
+for i in range(200):
+    if random.random() >= 0.5:
+        D2.append('1')
+    else:
+        D2.append('2')
+D2  = ''.join(D2)
+D1 = '12'*100
+
+actual_entropy(D1), actual_entropy(D2)
+```
+
+> (0.21197508967985743, 0.7645479605408423)
+
+问题解决。
