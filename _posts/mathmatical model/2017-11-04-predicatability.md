@@ -47,11 +47,10 @@ def actual_entropy(l):
     n = len(l)
     sequence = [l[0]]
     sum_gamma = 0
-
     for i in range(1, n):
         for j in range(i+1, n+1):
             s = l[i:j]
-            if contains(s, sequence) != True:
+            if not contains(list(s), sequence): # s is not contained in previous sequence
                 sum_gamma += len(s)
                 sequence.append(l[i])
                 break
