@@ -38,6 +38,16 @@ The estimated entropy converges to the real entropy of the time series when n ap
 [^lz]: Kontoyiannis I., Algoet P. H., Suhov Yu. M., Wyner A. J. Nonparametric Entropy Estimation for Stationary Processes and Random Fields, with Applications to English Text, IEEE Transactions on Information Theory 44, 1319-1327 (1998).
 
 
+## Lempel-Ziv Compression Algorithm
+
+> In Haifa, Israel in 1977, Abraham Lempel and Jacob Ziv develop a highly flexible algorithm that compresses data with no data loss. First published in the IEEE Transactions on Information Theory in May 1977 and improved in 1978, it enabled efficient data transmission via the internet.
+
+> These algorithms, originally known as LZ77 and LZ78 and now referred to as LZ1 and LZ2, respectively, were foundational to the development of subsequent compression algorithms and are the root of compression programs like GIF and DEFLATE, which is used in PNG files.
+
+**Lempel and Ziv’s 1977 algorithm compressed data by replacing repeated instances of data with a single reference copy of that data as it appeared earlier in the uncompressed, or input, data stream**. These data matches were registered as a pair of numbers known as the length-distance pair. To code the matches, LZ77 used so-called sliding window compression. The most recent data in the stream would be held for a length of time, during which the encoder would search for matches. The longer the sliding window, the greater the ability of the encoder to build references.
+
+LZ78 changed the encoding scheme by replacing repeated instances of data with references to a dictionary. This dictionary was built to match the data entering the input stream. Subsequent modifications of LZ78, such as LZW, used an algorithm that was pre-initialized with all possible characters.
+
 ```python
 import math
 def contains(small, big):
