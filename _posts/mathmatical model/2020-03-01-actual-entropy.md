@@ -129,9 +129,10 @@ actual_entropy(D1)
 
 这里的推导由香港城市大学媒体与传播系陈志聪同学提供。
 
-因此，可以构造更长的序列来检验，此时期待随机化序列的真实熵更大。
+> 因此，可以构造更长的序列来检验，此时期待随机化序列的真实熵更大。
 
 
+![undraw_news](/assets/2019/undraw_news.svg)
 
 ```python
 import random
