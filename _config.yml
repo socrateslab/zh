@@ -7,7 +7,7 @@
 # https://github.com/mmistakes/minimal-mistakes
 # theme: minimal-mistakes-jekyll
 
-remote_theme: "mmistakes/minimal-mistakes
+remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "contrast" #"default" # "air", "contrast", "dark", "dirt", "mint", "sunrise"
 
 # Site Settings
