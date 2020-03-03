@@ -64,7 +64,7 @@ def actual_entropy(l):
     return ae, sum_gamma, n, shortest_substrings
 ```
 
-但是这个算法的计算复杂度比较高，对于观察窗口为秒或者毫秒的长时间序列，很难算出来。一开始我们在stackover flow上提了[这个问题](https://stackoverflow.com/questions/46296891/entropy-estimator-based-on-the-lempel-ziv-algorithm-using-python)。后来才发现Song也是按照小时为观察窗口计算的!
+但是这个算法的计算复杂度比较高，对于观察窗口为秒或者毫秒的长时间序列，很难算出来。一开始我们在stackoverflow上提了[这个问题](https://stackoverflow.com/questions/46296891/entropy-estimator-based-on-the-lempel-ziv-algorithm-using-python)。后来才发现Song也是按照小时为观察窗口计算的!
 
 > To construct a time series for each user we segment the three month observation period into hour-long intervals. Each interval is assigned a tower ID if one is known (i.e. the phone was used in that time interval). If multiple calls were made in a given interval, we choose one of them at random. Finally if no call is made in a given interval, we assign it an ID “?”, implying an unknown location. Thus for each user i we obtain a string of length $L = 24 * 7 * 14 = 2352$ with $N_i + 1$ distinct symbols, each denoting one of the Ni towers visited by the user and one for the missing location “?”. ([Supporting Online Material](http://science.sciencemag.org/content/suppl/2010/02/18/327.5968.1018.DC1) for Limits of Predictability in Human Mobility, page 4)
 
