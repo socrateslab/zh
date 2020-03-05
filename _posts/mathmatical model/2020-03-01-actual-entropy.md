@@ -155,7 +155,7 @@ actual_entropy(D1), actual_entropy(D2)
 
 问题解决。
 
-```
+```python
 import random
 import numpy as np
 
@@ -193,6 +193,5 @@ plt.show()
 ```
 
 ![actual_ent](/assets/2019/actual_ent.png)
-
 
 对这个例子，随机字符串的真实熵在0.7-0.8之间稳定波动，而规则字符的真实熵则不断下降到0.2以下。
