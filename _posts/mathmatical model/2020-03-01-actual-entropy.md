@@ -154,3 +154,45 @@ actual_entropy(D1), actual_entropy(D2)
 > (0.21197508967985743, 0.7645479605408423)
 
 问题解决。
+
+```
+import random
+import numpy as np
+
+random.seed(2020)
+ent_list = []
+
+for n in range(5, 200):
+    D2 = []
+    for i in range(n*2):
+        if random.random() >= 0.5:
+            D2.append('1')
+        else:
+            D2.append('2')
+    D2  = ''.join(D2)
+    D1 = '12'*n
+    ent_list.append([n, actual_entropy(D1), actual_entropy(D2)])  
+
+n, ent1, ent2 = np.array(ent_list).T
+
+import pylab as plt
+
+plt.plot(2*n, ent1, label = 'regular string')
+plt.plot(2*n, ent2, label = 'random string')
+plt.axhline(y=0.8,ls=":",c="red", alpha = 0.3)#添加水平直线
+plt.axhline(y=0.7,ls=":",c="red", alpha = 0.3)#添加水平直线
+plt.axhline(y=0.2,ls=":",c="red", alpha = 0.3)#添加水平直线
+plt.axhline(y=0.1,ls=":",c="red", alpha = 0.3)#添加水平直线
+
+plt.ylim(0, 2)
+plt.legend(fontsize = 15)
+#plt.xscale('log', basex=2)
+plt.xlabel('length of string',fontsize = 15)
+plt.ylabel('actual entropy',fontsize = 15)
+plt.show()
+```
+
+![actual_ent](/assets/2019/actual_ent.png)
+
+
+对这个例子，随机字符串的真实熵在0.7-0.8之间稳定波动，而规则字符的真实熵则不断下降到0.2以下。
