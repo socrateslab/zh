@@ -21,4 +21,4 @@ manuscript: false
 
 为了方便维护和更新，计算传播网正式迁移至豆瓣小组。
 
-![https://www.douban.com/group/webmining/](https://www.douban.com/group/webmining/)
+[https://www.douban.com/group/webmining/](https://www.douban.com/group/webmining/)
