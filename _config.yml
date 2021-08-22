@@ -16,9 +16,9 @@ title                    : "计算传播网"
 title_separator          : "-"
 name                     : "计算传播网"
 description              : "An amazing website."
-url                      : "https://computational-communication.com"
-baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "socrateslab/socrateslab.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+url                      : "https://socrateslab.github.io/book/"
+baseurl                  : /book# the subpath of your site, e.g. "/blog"
+repository               : "socrateslab/book/" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/500x300.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
