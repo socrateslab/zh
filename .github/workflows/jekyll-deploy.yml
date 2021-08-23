@@ -5,7 +5,7 @@ on:
 
 jobs:
   jekyll:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
@@ -22,11 +22,11 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    # Specify the Jekyll source location as a parameter
-    - uses: helaili/jekyll-action@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        jekyll_src: './docs'
+#     # Specify the Jekyll source location as a parameter
+#     - uses: helaili/jekyll-action@v2
+#       with:
+#         token: ${{ secrets.GITHUB_TOKEN }}
+#         jekyll_src: './docs'
 
     # Specify the target branch (optional)
     - uses: helaili/jekyll-action@v2
