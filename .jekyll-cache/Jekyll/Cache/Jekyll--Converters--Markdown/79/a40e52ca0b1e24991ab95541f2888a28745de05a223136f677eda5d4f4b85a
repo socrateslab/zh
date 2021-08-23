@@ -1,0 +1,52 @@
+I"Ÿ<p>This post has a custom navigation list set in the postâ€™s YAML Front Matter.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">sidebar</span><span class="pi">:</span>
+  <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Sample</span><span class="nv"> </span><span class="s">Title"</span>
+  <span class="na">nav</span><span class="pi">:</span> <span class="s">sidebar-sample</span>
+</code></pre></div></div>
+
+<p>Along with navigation elements set in <code class="language-plaintext highlighter-rouge">_data/navigation.yml</code>.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">sidebar-sample</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Parent</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">A"</span>
+    <span class="na">children</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">A1"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">A2"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">A3"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">A4"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Parent</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B"</span>
+    <span class="na">children</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B1"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B2"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B3"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B4"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">B5"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Parent</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C"</span>
+    <span class="na">children</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C1"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C2"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C3"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C4"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">C5"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Parent</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">D"</span>
+    <span class="na">children</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">D1"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Child</span><span class="nv"> </span><span class="s">Page</span><span class="nv"> </span><span class="s">D2"</span>
+        <span class="na">url</span><span class="pi">:</span> <span class="s">/</span>
+</code></pre></div></div>
+:ET

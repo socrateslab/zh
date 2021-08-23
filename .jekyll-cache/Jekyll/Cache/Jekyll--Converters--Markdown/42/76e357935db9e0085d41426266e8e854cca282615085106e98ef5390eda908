@@ -1,0 +1,274 @@
+I"m<p>Cheng-Jun Wang, Ph.D of City University of Hong Kong. He is currently an assistant research fellow in the School of Journalism and Communication, Nanjing University. He is also the director of Ogilvy Data Science Lab, Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology.</p>
+
+<ul>
+
+  
+    <li><a href="/douban-group/">计算传播网迁移至豆瓣小组</a></li>
+  
+
+  
+    <li><a href="/python/actual-entropy/">思考真实熵</a></li>
+  
+
+  
+
+  
+
+  
+    <li><a href="/remote-working/">服务器远程使用简介</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <li><a href="/python-spatial-vis/">使用python可视化地理空间数据</a></li>
+  
+
+  
+
+  
+    <li><a href="/network2map/">基于泰森多边形的网络可视化</a></li>
+  
+
+  
+    <li><a href="/python-data-cleaning/">使用python进行数据清洗</a></li>
+  
+
+  
+    <li><a href="/ROC-analysis/">ROC分析与统计检验</a></li>
+  
+
+  
+    <li><a href="/python/predicatability/">真实熵与人类行为可预测性</a></li>
+  
+
+  
+
+  
+
+  
+    <li><a href="/pytorch-mnist/">使用pytorch建立卷积神经网络</a></li>
+  
+
+  
+    <li><a href="/pytorch_rnn_regression/">使用pytorch进行线性回归</a></li>
+  
+
+  
+    <li><a href="/pytorch/">pytorch初步</a></li>
+  
+
+  
+
+  
+
+  
+    <li><a href="/algorithm/fitting-powerlaw/">使用powerlaw拟合重尾分布</a></li>
+  
+
+  
+    <li><a href="/python-bayes/">利用python实现naive bayes算法</a></li>
+  
+
+  
+    <li><a href="/algorithm/understanding-hits/">理解HITS算法</a></li>
+  
+
+  
+
+  
+    <li><a href="/python/byte-decoding/">解决python读取文本数据中的encoding问题</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <li><a href="/python/wechat-robot/">12行Python代码回复微信拜年</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <li><a href="/cc2016-conference/">第一届计算传播学论坛</a></li>
+  
+
+  
+    <li><a href="/why-vis/">可视化的重要性</a></li>
+  
+
+  
+    <li><a href="/memory-walk/">记忆优先随机游走模型</a></li>
+  
+
+  
+    <li><a href="/scaling/">无标度网络的度相关理论</a></li>
+  
+
+  
+    <li><a href="/cc-concept/">计算传播学的起源、概念和应用</a></li>
+  
+
+  
+    <li><a href="/plotly/">使用plotly-py进行数据可视化</a></li>
+  
+
+  
+    <li><a href="/fudan-class/">计算新闻传播学2016课程资料发布（代码、数据、PPT）</a></li>
+  
+
+  
+
+  
+    <li><a href="/traffic/">中国交通事故媒介日记</a></li>
+  
+
+  
+
+  
+
+  
+    <li><a href="/gov-report/">对《政府工作报告》进行文本挖掘</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+    <li><a href="/geometric-network-model/">标度行为的几何模型</a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <li><a href="/%E5%8F%AF%E8%A7%86%E5%8C%96/ggplot2-sos/">使用ggplot2可视化多主体建模结果</a></li>
+  
+
+  
+
+  
+    <li><a href="/%E6%95%B0%E6%8D%AE%E6%96%B0%E9%97%BB/terrorism-vis/">恐怖袭击距离中国有多远？</a></li>
+  
+
+  
+    <li><a href="/%E6%A8%A1%E5%9E%8B%E7%AE%97%E6%B3%95/pagerank-intro/">PageRank算法浅介</a></li>
+  
+
+  
+    <li><a href="/%E5%8F%AF%E8%A7%86%E5%8C%96/webgl-globe/">使用webgl-globe可视化社会企业家的全球分布</a></li>
+  
+
+  
+
+  
+    <li><a href="/correlation-profile/">演员网络中的度相关：随机洗牌的影响</a></li>
+  
+
+  
+
+  
+    <li><a href="/average-shortest-path-length/">使用networkx计算平均最短路径长度</a></li>
+  
+
+  
+    <li><a href="/book-error/">译稿勘误:有向三元组的类型</a></li>
+  
+
+  
+    <li><a href="/network-evolution-and-loacal-transtivity/">社交网络演化中的局部传递性</a></li>
+  
+
+  
+    <li><a href="/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/">网络残缺度：共同好友间可否两步到达？</a></li>
+  
+
+  
+    <li><a href="/%E3%80%8A%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93%E9%98%85%E8%AF%BB%E6%8A%A5%E5%91%8A%E3%80%8B/sns-evolution/">从概念到真实:SNS的形式蜕变</a></li>
+  
+
+  
+    <li><a href="/network/simulate-network-diffusion-with-r/">使用R模拟网络扩散</a></li>
+  
+
+  
+
+  
+    <li><a href="/network/sna-book-chapter/">探寻社交网络中的关系: 统计网络模型初探</a></li>
+  
+
+  
+    <li><a href="/qap-test-network/">QAP检验：计算两个网络的关联</a></li>
+  
+
+</ul>
+
+<figure class="third ">
+  
+    
+      <a href="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-1.jpg">
+        <img src="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-1-th.jpg" alt="placeholder image 1" />
+      </a>
+    
+  
+    
+      <a href="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-2.jpg">
+        <img src="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-2-th.jpg" alt="placeholder image 2" />
+      </a>
+    
+  
+    
+      <a href="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-3.jpg">
+        <img src="https://socrateslab.github.io/handbook/assets/images/unsplash-gallery-image-3-th.jpg" alt="placeholder image 3" />
+      </a>
+    
+  
+  
+    <figcaption>
+</figcaption>
+  
+</figure>
+:ET

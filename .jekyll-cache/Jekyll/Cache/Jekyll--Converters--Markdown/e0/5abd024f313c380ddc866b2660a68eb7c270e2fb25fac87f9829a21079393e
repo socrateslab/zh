@@ -1,0 +1,311 @@
+I"Z<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#2017-annual-conference-and-workshop-of-computational-communication" id="markdown-toc-2017-annual-conference-and-workshop-of-computational-communication">2017 Annual Conference and Workshop of Computational Communication</a></li>
+  <li><a href="#工作坊和年会日程安排" id="markdown-toc-工作坊和年会日程安排">工作坊和年会日程安排</a></li>
+  <li><a href="#工作坊" id="markdown-toc-工作坊">工作坊</a></li>
+  <li><a href="#主题演讲" id="markdown-toc-主题演讲">主题演讲</a></li>
+  <li><a href="#会议征文" id="markdown-toc-会议征文">会议征文</a>    <ul>
+      <li><a href="#poster-易拉宝海报" id="markdown-toc-poster-易拉宝海报">Poster 易拉宝海报</a></li>
+      <li><a href="#时间" id="markdown-toc-时间">时间</a></li>
+      <li><a href="#费用" id="markdown-toc-费用">费用</a></li>
+    </ul>
+  </li>
+  <li><a href="#主办单位" id="markdown-toc-主办单位">主办单位</a></li>
+  <li><a href="#会议学术委员会" id="markdown-toc-会议学术委员会">会议学术委员会</a></li>
+  <li><a href="#交通" id="markdown-toc-交通">交通</a></li>
+  <li><a href="#poster与报名表模板" id="markdown-toc-poster与报名表模板">Poster与报名表模板</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="2017-annual-conference-and-workshop-of-computational-communication">2017 Annual Conference and Workshop of Computational Communication</h2>
+
+<p>计算社会科学研究范式对传播学研究产生了重要影响。在线人类行为踪迹（Digital Traces）以及计算方法的广泛应用，为传播学探索人类信息传播行为模式提供了重要契机，也催生了“计算传播学”这一新兴研究领域。该领域主要关注人类传播行为的可计算性基础，以传播网络分析、传播文本挖掘、数据科学等为主要分析工具，（以非介入的方式）大规模地收集并分析人类传播行为数据，挖掘人类传播行为背后的模式和法则，分析模式背后的生成机制与基本原理，可以被广泛地应用于数据新闻、计算广告、新闻推荐系统等场景。</p>
+
+<p>熟悉计算社会科学研究范式并掌握基本的计算技能，是传播学者进入计算计算传播学领域的基本条件。基于此，南京大学新闻传播学院、百度、中文信息学会社会媒体处理专业委员会、香港城市大学传播研究中心/互联网挖掘实验室四方共同举办2017年计算传播学工作坊。本次计算传播学年会暨工作坊共2.5天时间，包括：一天半工作坊 + 一天会议。具体安排如下：</p>
+
+<p>工作坊为期一天半，分为两个子题、并行进行，分别为“信息传播的网络分析 （Network Approaches to Information Diffusion）”和“文本数据处理方法（Processing Text Data）”。前者定位为高级程度，聚焦于计算传播学研究中的一个核心而又困难的题目，以探讨研究设计、理论模型、数据要求、方法选择等问题为主、操作问题为辅，适合已掌握基本方法并有一定研究经验者。后者定位为入门程度，介绍用于文本数据处理的各个步骤上的方法、工具、算法等，含有众多动手操作。</p>
+
+<p>工作坊拟吸引以计算传播学为主要研究领域的学者（尤其是青年研究者），以及未来致力于在相关领域进行研究的研究生和高年级本科生。每个子论题分别招收学员30人。</p>
+
+<h1 id="工作坊和年会日程安排">工作坊和年会日程安排</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"><strong>计算传播学工作坊</strong></th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">时间</td>
+      <td style="text-align: center"><strong>主题1</strong> 信息传播的网络分析 <br /> 费彝民楼<strong>418</strong>教室</td>
+      <td style="text-align: center"><strong>主题2</strong> 文本分析的基本步骤与方法 <br /> 费彝民楼<strong>409</strong>教室</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月22日9:00-12:00</td>
+      <td style="text-align: center">注册</td>
+      <td style="text-align: center">注册</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月22日14:00-17:00</td>
+      <td style="text-align: center"><strong>网络信息传播基础</strong> <br />张子柯、王成军</td>
+      <td style="text-align: center"><strong>文本分析的基本步骤与方法</strong><br />张伦</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月23日9:00-12:00</td>
+      <td style="text-align: center"><strong>网络信息传播实证研究</strong> <br />许小可</td>
+      <td style="text-align: center"><strong>主题模型</strong><br />王成军</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月23日14:00-17:00</td>
+      <td style="text-align: center"><strong>网络信息传播模型</strong><br />胡海波、阮中远</td>
+      <td style="text-align: center"><strong>情感分析</strong><br />汪臻真</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><strong>计算传播学年会</strong>   <br />  费彝民楼<strong>4楼演播厅</strong></td>
+      <td style="text-align: center"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日9:00-9:30</td>
+      <td style="text-align: center">巢乃鹏 (主持)</td>
+      <td style="text-align: center">开幕式&amp;与会者合影</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日9:30-10:10</td>
+      <td style="text-align: center"><strong>沈浩</strong> <br />中国传媒大学新闻学院教授</td>
+      <td style="text-align: center">关系视角下的传播网络与社会计算</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日10:10-10:50</td>
+      <td style="text-align: center"><strong>吴晔</strong> <br />北京师范大学新闻传播学院教授</td>
+      <td style="text-align: center">人类行为中的厚尾现象及其在传播中的影响</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日10:50-11:30</td>
+      <td style="text-align: center"><strong>戎文晋</strong> <br />百度营销云产品架构师</td>
+      <td style="text-align: center">计算广告学在品牌广告中的思考与实践</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日11:30-12:10</td>
+      <td style="text-align: center"><strong>刘建国</strong> <br />上海财经大学讲席教授</td>
+      <td style="text-align: center">Social signature of dynamic online social Networks</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日12:10-13:00</td>
+      <td style="text-align: center">全体</td>
+      <td style="text-align: center">午餐</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日13:00-14:30</td>
+      <td style="text-align: center">全体</td>
+      <td style="text-align: center">论文展示（Poster Sessions）</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日14:30-16:00</td>
+      <td style="text-align: center"><strong>祝建华</strong>  <br /> 香港城市大学媒体与传播系讲座教授</td>
+      <td style="text-align: center">计算传播学的富矿、贫矿和泥坑</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日16:00-16:10</td>
+      <td style="text-align: center">全体</td>
+      <td style="text-align: center">优秀论文评选</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日16:10-16:30</td>
+      <td style="text-align: center">全体</td>
+      <td style="text-align: center">茶歇</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日16:30-17:30</td>
+      <td style="text-align: center">全体</td>
+      <td style="text-align: center">圆桌会议</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9月24日17:30</td>
+      <td style="text-align: center">晚宴</td>
+      <td style="text-align: center">丽晶酒店</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="工作坊">工作坊</h1>
+
+<p>一. 许小可 《网络信息传播实证研究》</p>
+
+<p class="notice--info">简介：男，1979年5月生，教授。 2008年6月博士毕业于大连海事大学通信与信息系统专业，曾为香港理工大学博士后，香港城市大学访问学者。目前为大连民族大学信息与通信工程学院学术带头人、民族信息资源挖掘与利用研究所所长。主持国家自然科学基金2项，参与国家自然科学基金项目1项，主持省自然科学基金等省部级项目2项，参与省部级项目1项。共发表学术论文33篇，其中SCI检索论文20篇。2013年入选辽宁省优秀人才支持计划，获得CCF-腾讯犀牛鸟科研基金资助，在阿里巴巴数据创新大赛暨阿里巴巴青年学者支持计划一等奖；2014年获得大连市“青年科技之星”称号。主要为社交网络上的大数据处理，复杂网络与复杂系统，非线性时间序列等方面，重点是研究大型社交网络如QQ，阿里旺旺，人人网以及移动手机通话数据集中的数据挖掘和机器学习，以及智慧城市和“互联网+”的相关应用为研究对象。</p>
+
+<p>二. 张子柯 《网络信息传播基础》</p>
+
+<p class="notice--info">简介：张子柯，男，博士，杭州师范大学阿里巴巴商学院教授，主要研究方向为网络科学与大数据等交叉科学领域。其中以大数据理论与分析、复杂网络、人工智能为主要研究对象。已正式发表SCI论文50余篇，SCI总被引1000余次。相关研究成果发表在《Physics Reports》等国内外顶尖期刊。主持国家自然科学基金2项，欧盟第七科技框架项目1项，其他省部级项目5项。荣获浙江省杰出青年基金，浙江省钱江人才计划，浙江省师德先进个人。</p>
+
+<p>三. 胡海波 《网络信息传播模型》</p>
+
+<p class="notice--info">简介：华东理工大学管理科学与工程系副教授。2010年获上海交通大学工学博士学位。曾在香港城市大学媒体与传播系访问学者。研究方向为网络科学，社交网络，社会化媒体，计算社会学，系统工程等。主持两项有关信息扩散动力学的国家自然科学基金项目。</p>
+
+<p>四. 张伦 《文本分析的基本步骤与方法》</p>
+
+<p class="notice--info">简介：传播学博士，北京师范大学数字媒体系副教授。主要研究方向为基于数据挖掘方法的新媒体信息传播，即以传播网络分析、传播文本挖掘、数据科学等为主要分析工具,大规模地收集并分析人类传播行为数据，挖掘人类传播行为背后的模式和法则,分析模式背后的生成机制与基本原理。于SSCI、SCI以及CSSCI索引期刊发表论文20余篇，其中SSCI期刊论文5篇，SCI期刊论文1篇，CSSCI期刊论文13篇， EI论文1篇。合著出版《社交网络上的计算传播学》（高等教育出版社， 2015年）一书。</p>
+
+<p>五. 阮中远  《网络信息传播模型: Watts模型》</p>
+
+<p class="notice--info">简介：浙江工业大学计算机学院讲师。2013年6月博士毕业于华东师范大学理论物理研究所。2013年-2015年在匈牙利布达佩斯技术与经济大学和中欧大学从事博士后研究，主要研究方向为复杂网络上的动力学行为，包括流行病传播，信息传播，人类行为动力学等。以第一作者在国际权威期刊上发表多篇学术论文，包括Physical Review Letters, Scientific Reports, Physical Review E等。目前主持国家自然科学基金一项。</p>
+
+<p>六. 汪臻真 《情感分析》</p>
+
+<p class="notice--info">简介：腾讯社交广告部数据分析师。2015年2月毕业于香港城市大学，曾就职于香港OpenRice有限公司和香港城市大学商学院管理科学系。</p>
+
+<p>七. 王成军 《网络信息传播基础：NetworkX》&amp;《主题模型》</p>
+
+<p class="notice--info">简介：传播学博士。现为南京大学新闻传播学院副教授，奥美数据科学实验室主任，计算传播学实验中心副主任。参与翻译《社会网络分析：方法与实践》(2013)、合著《社交网络上的计算传播学》(2015)。其研究兴趣聚焦于采用计算社会科学视角分析人类传播行为，研究成果发表于SSCI和SCI索引的期刊，例如Scientific Reports、PloS ONE、Physica A、Cyberpsychology。2014年，发起创建计算传播网 https://computational-communication.com</p>
+
+<p class="notice--success">工作坊Slides、编程代码、阅读资料见<a href="https://github.com/computational-class/workshop">Github</a>或<a href="http://nbviewer.jupyter.org/github/computational-class/workshop/tree/master/">nbviewer</a>。</p>
+
+<h1 id="主题演讲">主题演讲</h1>
+
+<p>一. <strong>关系视角下的传播网络与社会计算</strong></p>
+
+<p class="notice--info">沈浩，教授，博士生导师，现任职于中国传媒大学新闻学院，中国传媒大学调查统计研究所，所长。中国市场研究行业协会会长。拥有20年的统计和数据分析经验，精通各种统计技术分析方法，擅长大数据挖掘、网络分析、空间地理分析和数据可视化，多变量数据分析、市场研究定量模型、统计分析软件和模型，主要包括：传播研究方法、数据挖掘、结合分析、离散选择模型、结构方程式模型、网络分析等</p>
+
+<p>二. 人类行为中的厚尾现象及其在传播中的影响</p>
+
+<p class="notice--info"><strong>吴晔</strong>，北京师范大学新闻传播学院教授，博士生导师。2005年6月获得北京师范大学物理学系物理学专业学士学位，于2007年6月提前获得北京邮电大学理学院物理电子学专业硕士学位，导师为肖井华教授和占萌教授。2010年9月在德国波茨坦大学自然科学学院获得自然科学博士学位，导师为Prof.Jurger.Kurths和周昌松教授。长期从事复杂网络，非线性动力学，以及计算传播学方面的研究工作，近年来在PNAS，Phys.Rev.E，EPL，Chaos等国际国内学术期刊上发表30余篇SCI论文，相关研究多次获得国家自然科学基金的资助。</p>
+
+<p>三. 计算广告学在品牌广告中的思考与实践</p>
+
+<p class="notice--info"><strong>戎文晋</strong>，百度营销云产品架构师。经济学博士，2007年3月加入百度从事广告产品的设计工作。他是百度搜索广告最早的产品机制架构师，在拍卖机制设计、客户交互、Ecosystem等领域为凤巢做出开创或重要贡献。他还是国内计算广告学最早的推广者之一，著有《搜索引擎广告的拍卖机制设计》和《互联网广告的市场设计》等著作。在十几所高校开设《计算广告学》课程或讲座，累计有数千人次聆听学习。</p>
+
+<p>四. Social signature of dynamic online social Networks</p>
+
+<p class="notice--info"><strong>刘建国</strong>，上海财经大学讲席教授，博士生导师。2016年获得中国系统工程学会“青年科技奖”，2014年获得“上海市东方学者特聘教授”，“上海市曙光学者”称号，2011年获得“上海市科技启明星(A类)”称号。主持中国-瑞士国际科技合作SSSTC项目(09-032016)，国家自然科学基金4项，国家自然科学基金重大研究计划重点项目(91024026) 子课题1项(结题被评为优秀)，教育部科学技术研究重点项目(211057)和上海市教委科研创新项目重点项目(11ZZ135)各1项。以项目组骨干成员身份参与欧盟第七框架基金项目(238597，95753)和索罗斯(Soros)基金。发表IF大于3的SCI论文7篇，其中在《美国科学院院刊(PNAS)》上发表1篇(被ESI收录，《Nature》曾进行专题报道)，Scientific Reports（IF=5.578）上发表3篇。总引用次数1429次，H指数19。担任Scientific Reports期刊学术编辑，并且为十余种SCI期刊审稿人。</p>
+
+<p>五. 计算传播学的富矿、贫矿和泥坑</p>
+
+<p class="notice--info"><strong>祝建华</strong>，香港城市大学媒体与传播系讲座教授。先后获得复旦大学学士和硕士以及美国印第安纳大学博士，曾任复旦大学教师、美国康奈迪克大学助理教授和副教授、中国人民大学长江学者讲座教授，现为香港城市大学计算社会科学讲座教授、传播研究中心主任和互联网挖掘实验室创办人。近十余年间主要研究互联网媒体、社会化媒体和移动媒体，并作为首倡者、联合欧美亚太等地50余名学者者，推动创立了国际传播学会（ICA）计算方法小组。先后担任了2012年与2017年中国社会计算学术会议的共同主席，及Asian Journal of Communication 计算传播学专辑联合主编。他先后培养了近10名计算传播学博士研究生，分别在美国、香港、中国内地等一流大学任教。</p>
+
+<h1 id="会议征文">会议征文</h1>
+
+<p>计算传播学是计算社会科学的重要分支。它主要关注人类传播行为的可计算性基础,以传播网络分析、传播文本挖掘、数据科学等为主要分析工具,(以非介入的方式)大规模地收集并分析人类传播行为数据,挖掘人类传播行为背后的模式和法则,分析模式背后的生成机制与基本原理,可以被广泛地应用于数据新闻和计算广告等场景。</p>
+
+<ul>
+  <li>计算社会科学</li>
+  <li>计算传播学</li>
+  <li>传播网络分析</li>
+  <li>新闻文本挖掘</li>
+  <li>传播学可计算研究方法</li>
+  <li>数据新闻</li>
+  <li>计算广告</li>
+  <li>新闻推荐系统</li>
+</ul>
+
+<p>参会者需提交1份研究海报展示和报名表，Poster与报名表模板见<a href="https://pan.baidu.com/s/1c2oubfi">附件</a> <sup id="fnref:download" role="doc-noteref"><a href="#fn:download" class="footnote" rel="footnote">1</a></sup>，发送至 <a href="computational.communication@gmail.com">computational.communication@gmail.com</a> 。 工作坊组委会将以邮件形式通知工作坊入选者。</p>
+
+<h3 id="poster-易拉宝海报">Poster 易拉宝海报</h3>
+
+<p>易拉宝海报 尺寸为宽度80cm*长度180cm，可以使用以下<a href="https://pan.baidu.com/s/1miHZkAc">ppt模板</a>进行修改。<sup id="fnref:poster" role="doc-noteref"><a href="#fn:poster" class="footnote" rel="footnote">2</a></sup></p>
+
+<h3 id="时间">时间</h3>
+
+<ol>
+  <li>2017年5月30日提交申请材料</li>
+  <li>2017年6月15日公布入选参会者名单</li>
+  <li>2017年9月22日-23日（周五-周六）计算传播学工作坊</li>
+  <li>2017年9月24日（周日）计算传播学年会</li>
+</ol>
+
+<h3 id="费用">费用</h3>
+
+<ul>
+  <li>工作坊优先接收提交研究海报的学员，免除学费。</li>
+  <li>如有剩余名额，将继续接收学员，学费1000元。</li>
+  <li>工作坊期间差旅费自理。</li>
+</ul>
+
+<h1 id="主办单位">主办单位</h1>
+
+<ul>
+  <li>南京大学新闻传播学院</li>
+  <li>百度</li>
+  <li>中文信息学会社会媒体处理专业委员会</li>
+  <li>香港城市大学传播研究中心/互联网挖掘实验室</li>
+</ul>
+
+<h1 id="会议学术委员会">会议学术委员会</h1>
+
+<p>会议学术委员会由香港城市大学祝建华教授担任计算传播学年会名誉主席，由巢乃鹏担任会议共同主席，会议学术委员会成员包括（拼音排序）：</p>
+
+<ul>
+  <li>巢乃鹏，南京大学新闻传播学院教授</li>
+  <li>陈积银，西安交通大学新闻与新媒体学院教授</li>
+  <li>杜骏飞， 南京大学新闻传播学院教授</li>
+  <li>高剑波，广西大学复杂科学与大数据技术研究所所长，教授</li>
+  <li>胡海波，华东理工大学商学院副教授</li>
+  <li>黄志敏，财新传媒CTO，财新数据新闻与可视化实验室负责人</li>
+  <li>金兼斌， 清华大学新闻传播学院教授</li>
+  <li>刘德寰，北京大学新媒体研究院教授</li>
+  <li>廖圣清，复旦大学新闻传播学院教授</li>
+  <li>戎文晋，百度营销云产品架构师</li>
+  <li>沈浩，中国传媒大学教授</li>
+  <li>王成军，南京大学新闻传播学院副教授</li>
+  <li>韦路，浙江大学传媒与国际文化学院教授</li>
+  <li>吴晔，北京邮电大学理学院副教授</li>
+  <li>许小可，大连民族大学信息与通信工程学院教授</li>
+  <li>喻国明， 北京师范大学新闻传播学院教授</li>
+  <li>张放，四川大学文学新闻传播学院教授</li>
+  <li>张伦，北京师范大学副教授</li>
+  <li>张洪忠，北京师范大学新闻传播学院教授</li>
+  <li>张明新，华中科技大学教授</li>
+  <li>周葆华，复旦大学新闻学院教授</li>
+  <li>钟智锦，中山大学传播与设计学院副教授</li>
+  <li>祝建华，香港城市大学媒体与传播系教授</li>
+</ul>
+
+<p>（名单在修订增补当中，欢迎推荐）</p>
+
+<h1 id="交通">交通</h1>
+
+<p>南京南站</p>
+<ul>
+  <li>地铁1号线 13.6公里50分钟</li>
+  <li>南京南站</li>
+  <li>步行至南京南站</li>
+  <li>乘坐地铁1号线(中国药科大学-迈皋桥)，经过10站，在鼓楼地铁站下车</li>
+</ul>
+
+<p>南京站</p>
+<ul>
+  <li>地铁1号线 5.6公里30分钟</li>
+  <li>南京站</li>
+  <li>步行至南京站</li>
+  <li>乘坐地铁1号线(迈皋桥-中国药科大学)，经过5站，在鼓楼地铁站下车</li>
+</ul>
+
+<p>南京禄口国际机场</p>
+<ul>
+  <li>46.6公里1小时40分钟</li>
+  <li>乘坐地铁s1号线(禄口机场-南京南站)，经过7站，在南京南站下车</li>
+  <li>乘坐地铁1号线(中国药科大学-迈皋桥)，经过10站，在鼓楼地铁站下车</li>
+</ul>
+
+<p><img src="https://socrateslab.github.io/handbook/assets/img2017/guloumap.png" alt="http://j.map.baidu.com/U1ZDL" /></p>
+
+<p class="notice--info"><a href="http://j.map.baidu.com/U1ZDL">百度地图</a></p>
+
+<h1 id="poster与报名表模板">Poster与报名表模板</h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:download" role="doc-endnote">
+      <p>点击下载报名表模板 <a href="https://pan.baidu.com/s/1c2oubfi">https://pan.baidu.com/s/1c2oubfi</a> <a href="#fnref:download" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:poster" role="doc-endnote">
+      <p>点击下载Poster易拉宝ppt模板 <a href="https://pan.baidu.com/s/1miHZkAc">https://pan.baidu.com/s/1miHZkAc</a> <a href="#fnref:poster" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

@@ -1,0 +1,4 @@
+I"<p>This is the post content. It should be displayed in place of the user-defined excerpt in archive-index pages.</p>
+
+<p>This paragraph should be absent from an archive-index page where <code class="language-plaintext highlighter-rouge">post.excerpt</code> is shown.</p>
+:ET

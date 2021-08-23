@@ -1,0 +1,4 @@
+I"¯<p>This post has the author sidebar disabled.</p>
+
+<p>To disable add <code class="language-plaintext highlighter-rouge">author_profile: false</code> to YAML Front Matter.</p>
+:ET

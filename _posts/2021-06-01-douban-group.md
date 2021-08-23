@@ -2,10 +2,10 @@
 layout: single
 title: "计算传播网迁移至豆瓣小组"
 header:
-  teaser: "/assets/images/unsplash-gallery-image-1-th.jpg"
+  teaser: "/assets/images/unsplash-gallery-image-2-th.jpg"
   overlay_color: "#000"
   overlay_filter: "0.5"
-  overlay_image: /assets/images/unsplash-image-1.jpg
+  overlay_image: /assets/images/unsplash-image-2.jpg
   cta_label: "Read More"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/"

@@ -1,0 +1,35 @@
+I"U
+<p>This post should display a <strong>header with an overlay image</strong>, if the theme supports it.</p>
+
+<p>Non-square images can provide some unique styling issues.</p>
+
+<p>This post tests overlay header images.</p>
+
+<h2 id="overlay-filter">Overlay filter</h2>
+
+<p>You can use it by specifying the opacity (between 0 and 1) of a black overlay like so:</p>
+
+<p><img src="/assets/images/mm-header-overlay-black-filter.jpg" alt="transparent black overlay" /></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">excerpt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">This</span><span class="nv"> </span><span class="s">post</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">[...]"</span>
+<span class="na">header</span><span class="pi">:</span>
+  <span class="na">overlay_image</span><span class="pi">:</span> <span class="s">/assets/images/unsplash-image-1.jpg</span>
+  <span class="na">overlay_filter</span><span class="pi">:</span> <span class="m">0.5</span> <span class="c1"># same as adding an opacity of 0.5 to a black background</span>
+  <span class="na">caption</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Photo</span><span class="nv"> </span><span class="s">credit:</span><span class="nv"> </span><span class="s">[**Unsplash**](https://unsplash.com)"</span>
+  <span class="na">cta_label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">More</span><span class="nv"> </span><span class="s">Info"</span>
+  <span class="na">cta_url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://unsplash.com"</span>
+</code></pre></div></div>
+
+<p>Or if you want to do more fancy things, go full rgba:</p>
+
+<p><img src="/assets/images/mm-header-overlay-red-filter.jpg" alt="transparent red overlay" /></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">excerpt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">This</span><span class="nv"> </span><span class="s">post</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">[...]"</span>
+<span class="na">header</span><span class="pi">:</span>
+  <span class="na">overlay_image</span><span class="pi">:</span> <span class="s">/assets/images/unsplash-image-1.jpg</span>
+  <span class="na">overlay_filter</span><span class="pi">:</span> <span class="s">rgba(255, 0, 0, 0.5)</span>
+  <span class="na">caption</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Photo</span><span class="nv"> </span><span class="s">credit:</span><span class="nv"> </span><span class="s">[**Unsplash**](https://unsplash.com)"</span>
+  <span class="na">cta_label</span><span class="pi">:</span> <span class="s2">"</span><span class="s">More</span><span class="nv"> </span><span class="s">Info"</span>
+  <span class="na">cta_url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://unsplash.com"</span>
+</code></pre></div></div>
+:ET

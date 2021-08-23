@@ -1,0 +1,13 @@
+I"<p>This post has a custom sidebar set in the post’s YAML Front Matter.</p>
+
+<p>An example of how that YAML could look is:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">sidebar</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Title"</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">http://placehold.it/350x250</span>
+    <span class="na">image_alt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">image"</span>
+    <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Some</span><span class="nv"> </span><span class="s">text</span><span class="nv"> </span><span class="s">here."</span>
+  <span class="pi">-</span> <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Another</span><span class="nv"> </span><span class="s">Title"</span>
+    <span class="na">text</span><span class="pi">:</span> <span class="s2">"</span><span class="s">More</span><span class="nv"> </span><span class="s">text</span><span class="nv"> </span><span class="s">here."</span>
+</code></pre></div></div>
+:ET

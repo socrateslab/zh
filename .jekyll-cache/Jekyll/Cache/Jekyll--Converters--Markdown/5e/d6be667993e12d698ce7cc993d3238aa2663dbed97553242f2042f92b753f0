@@ -1,0 +1,52 @@
+I" <p>A notice displays information that explains nearby content. Often used to call attention to a particular detail.</p>
+
+<p>When using Kramdown <code class="language-plaintext highlighter-rouge">{: .notice}</code> can be added after a sentence to assign the <code class="language-plaintext highlighter-rouge">.notice</code> to the <code class="language-plaintext highlighter-rouge">&lt;p&gt;&lt;/p&gt;</code> element.</p>
+
+<p class="notice"><strong>Changes in Service:</strong> We just updated our <a href="#">privacy policy</a> here to better service our customers. We recommend reviewing the changes.</p>
+
+<p class="notice--primary"><strong>Primary Notice:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. <a href="#">Praesent libero</a>. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+
+<p class="notice--info"><strong>Info Notice:</strong> Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+
+<p class="notice--warning"><strong>Warning Notice:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Integer nec odio</a>. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+
+<p class="notice--danger"><strong>Danger Notice:</strong> Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing</a> elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+
+<p class="notice--success"><strong>Success Notice:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at <a href="#">nibh elementum</a> imperdiet.</p>
+
+<p>Want to wrap several paragraphs or other elements in a notice? Using Liquid to capture the content and then filter it with <code class="language-plaintext highlighter-rouge">markdownify</code> is a good way to go.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% capture notice-2 %}
+#### New Site Features
+
+* You can now have cover images on blog pages
+* Drafts will now auto-save while writing
+{% endcapture %}
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"notice"</span><span class="nt">&gt;</span>{{ notice-2 | markdownify }}<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<div class="notice">
+  
+<h4 id="new-site-features">New Site Features</h4>
+
+<ul>
+  <li>You can now have cover images on blog pages</li>
+  <li>Drafts will now auto-save while writing</li>
+</ul>
+
+</div>
+
+<p>Or you could skip the capture and stick with straight HTML.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"notice"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h4&gt;</span>Message<span class="nt">&lt;/h4&gt;</span>
+  <span class="nt">&lt;p&gt;</span>A basic message.<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<div class="notice">
+  <h4>Message</h4>
+  <p>A basic message.</p>
+</div>
+:ET

@@ -1,0 +1,31 @@
+I"H<p>Sites that may have content authored from various individuals can be accommodated by using <a href="https://jekyllrb.com/docs/datafiles/">data files</a>.</p>
+
+<p>To attribute an author to a post or page that is different from the site author specified in <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+<p><strong>Step 1.</strong> Create <code class="language-plaintext highlighter-rouge">_data/authors.yml</code> and add authors using the following format. Anything variables found under <code class="language-plaintext highlighter-rouge">author</code> in <code class="language-plaintext highlighter-rouge">_config.yml</code> can be used (e.g. <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">avatar</code>, <code class="language-plaintext highlighter-rouge">uri</code>, social media profiles, etc.).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># /_data/authors.yml</span>
+
+<span class="na">Billy Rick</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Billy</span><span class="nv"> </span><span class="s">Rick"</span>
+  <span class="na">uri</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http://thewhip.com"</span>
+  <span class="na">email</span><span class="pi">:</span> <span class="s2">"</span><span class="s">billy@rick.com"</span>
+  <span class="na">bio</span><span class="pi">:</span> <span class="s2">"</span><span class="s">What</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">want,</span><span class="nv"> </span><span class="s">jewels?</span><span class="nv"> </span><span class="s">I</span><span class="nv"> </span><span class="s">am</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">extravagant</span><span class="nv"> </span><span class="s">man."</span>
+  <span class="na">avatar</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/assets/images/bio-photo-2.jpg"</span>
+  <span class="na">twitter</span><span class="pi">:</span> <span class="s2">"</span><span class="s">extravagantman"</span>
+
+<span class="na">Cornelius Fiddlebone</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Cornelius</span><span class="nv"> </span><span class="s">Fiddlebone"</span>
+  <span class="na">email</span><span class="pi">:</span> <span class="s2">"</span><span class="s">cornelius@thewhip.com"</span>
+  <span class="na">bio</span><span class="pi">:</span> <span class="s2">"</span><span class="s">I</span><span class="nv"> </span><span class="s">ordered</span><span class="nv"> </span><span class="s">what?"</span>
+  <span class="na">avatar</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/assets/images/bio-photo.jpg"</span>
+  <span class="na">twitter</span><span class="pi">:</span> <span class="s2">"</span><span class="s">rhymeswithsackit"</span>
+</code></pre></div></div>
+
+<p><strong>Step 2.</strong> Assign one of the authors in <code class="language-plaintext highlighter-rouge">authors.yml</code> to a post or page you wish to override the <code class="language-plaintext highlighter-rouge">site.author</code> with.</p>
+
+<p>Example: To assign <code class="language-plaintext highlighter-rouge">Billy Rick</code> as an author for a post the following YAML Front Matter would be applied:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">author</span><span class="pi">:</span> <span class="s">Billy Rick</span>
+</code></pre></div></div>
+:ET

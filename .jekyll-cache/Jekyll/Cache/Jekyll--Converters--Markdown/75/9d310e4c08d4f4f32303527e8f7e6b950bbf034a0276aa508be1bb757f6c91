@@ -1,0 +1,426 @@
+I"M<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#boosting" id="markdown-toc-boosting">Boosting</a></li>
+  <li><a href="#using-xgboost-in-python" id="markdown-toc-using-xgboost-in-python">Using XGBoost in Python</a></li>
+  <li><a href="#xgboosts-hyperparameters" id="markdown-toc-xgboosts-hyperparameters">XGBoost’s hyperparameters</a></li>
+  <li><a href="#k-fold-cross-validation-using-xgboost" id="markdown-toc-k-fold-cross-validation-using-xgboost">k-fold Cross Validation using XGBoost</a></li>
+  <li><a href="#visualize-boosting-trees-and-feature-importance" id="markdown-toc-visualize-boosting-trees-and-feature-importance">Visualize Boosting Trees and Feature Importance</a></li>
+  <li><a href="#conclusion" id="markdown-toc-conclusion">Conclusion</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p>source:https://www.datacamp.com/community/tutorials/xgboost-in-python</p>
+
+<p>XGBoost is one of the most popular machine learning algorithm these days. Regardless of the type of prediction task at hand; regression or classification.</p>
+
+<p>XGBoost is well known to provide better solutions than other machine learning algorithms. In fact, since its inception, it has become the “state-of-the-art” machine learning algorithm to deal with structured data.</p>
+
+<p>In this tutorial, you’ll learn to build machine learning models using XGBoost in python. More specifically you will learn:</p>
+
+<ul>
+  <li>
+    <p><a href="https://www.datacamp.com/community/tutorials/xgboost-in-python#what">what Boosting is and how XGBoost operates.</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.datacamp.com/community/tutorials/xgboost-in-python#apply">how to apply XGBoost on a dataset and validate the results.</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.datacamp.com/community/tutorials/xgboost-in-python#hyperparameters">about various hyper-parameters that can be tuned in XGBoost to improve model’s performance.</a></p>
+  </li>
+  <li>
+    <p>how to visualize the Boosted Trees and Feature Importance</p>
+  </li>
+</ul>
+
+<p>But what makes XGBoost so popular?</p>
+
+<ul>
+  <li><strong>Speed and performance</strong> : Originally written in C++, it is comparatively faster than other ensemble classifiers.</li>
+  <li><strong>Core algorithm is parallelizable</strong> : Because the core XGBoost algorithm is parallelizable it can harness the power of multi-core computers. It is also parallelizable onto GPU’s and across networks of computers making it feasible to train on very large datasets as well.</li>
+  <li><strong>Consistently outperforms other algorithm methods</strong> : It has shown better performance on a variety of machine learning benchmark datasets.</li>
+  <li><strong>Wide variety of tuning parameters</strong> : XGBoost internally has parameters for cross-validation, regularization, user-defined objective functions, missing values, tree parameters, scikit-learn compatible API etc.</li>
+</ul>
+
+<p>XGBoost (Extreme Gradient Boosting) belongs to a family of boosting algorithms and uses the gradient boosting (GBM) framework at its core. It is an optimized distributed gradient boosting library. But wait, what is boosting? Well, keep on reading.</p>
+
+<h2 id="boosting">Boosting</h2>
+
+<p>Boosting is a sequential technique which works on the principle of an ensemble. It combines a set of weak learners and delivers improved prediction accuracy. At any instant t, the model outcomes are weighed based on the outcomes of previous instant t-1. The outcomes predicted correctly are given a lower weight and the ones miss-classified are weighted higher. Note that a weak learner is one which is slightly better than random guessing. For example, a decision tree whose predictions are slightly better than 50%. Let’s understand boosting in general with a simple illustration.</p>
+
+<p><img src="http://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1528107577/output_1_0_ilvuyr.png" alt="img" /></p>
+
+<p>Four classifiers (in 4 boxes), shown above, are trying to classify <strong>+</strong> and <strong>-</strong> classes as homogeneously as possible.</p>
+
+<p><strong>1. Box 1</strong>: The first classifier (usually a decision stump) creates a vertical line (split) at D1. It says anything to the left of D1 is <strong>+</strong> and anything to the right of D1 is <strong>-</strong>. However, this classifier misclassifies three <strong>+</strong> points.</p>
+
+<p><strong>Note</strong> a Decision Stump is a Decision Tree model that only splits off at one level, therefore the final prediction is based on only one feature.</p>
+
+<p><strong>2. Box 2</strong>: The second classifier gives more weight to the three <strong>+</strong> misclassified points (see the bigger size of <strong>+</strong>) and creates a vertical line at D2. Again it says, anything to the right of D2 is <strong>-</strong> and left is <strong>+</strong>. Still, it makes mistakes by incorrectly classifying three <strong>-</strong> points.</p>
+
+<p><strong>3. Box 3</strong>: Again, the third classifier gives more weight to the three <strong>-</strong> misclassified points and creates a horizontal line at D3. Still, this classifier fails to classify the points (in the circles) correctly.</p>
+
+<p><strong>4. Box 4</strong>: This is a weighted combination of the weak classifiers (Box 1,2 and 3). As you can see, it does a good job at classifying all the points correctly.</p>
+
+<p>That’s the basic idea behind boosting algorithms is building a weak model, making conclusions about the various feature importance and parameters, and then using those conclusions to build a new, stronger model and capitalize on the misclassification error of the previous model and try to reduce it. Now, let’s come to XGBoost. To begin with, you should know about the default base learners of XGBoost: <strong>tree ensembles</strong>. The tree ensemble model is a set of classification and regression trees (CART). Trees are grown one after another ,and attempts to reduce the misclassification rate are made in subsequent iterations. <a href="https://xgboost.readthedocs.io/en/latest/model.html">Here’s</a> a simple example of a CART that classifies whether someone will like computer games straight from the XGBoost’s documentation.</p>
+
+<p>If you check the image in Tree Ensemble section, you will notice each tree gives a different prediction score depending on the data it sees and the scores of each individual tree are summed up to get the final score.</p>
+
+<p>In this tutorial, you will be using XGBoost to solve a regression problem. The dataset is taken from the UCI Machine Learning Repository and is also present in sklearn’s <code class="language-plaintext highlighter-rouge">datasets</code>module. It has 14 explanatory variables describing various aspects of residential homes in Boston, the challenge is to predict the median value of owner-occupied homes per $1000s.</p>
+
+<h2 id="using-xgboost-in-python">Using XGBoost in Python</h2>
+
+<p>First of all, just like what you do with any other dataset, you are going to import the Boston Housing dataset and store it in a variable called boston. To import it from scikit-learn you will need to run this snippet.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.datasets import load_boston
+boston = load_boston()
+</code></pre></div></div>
+
+<p>The boston variable itself is a dictionary, so you can check for its keys using the <code class="language-plaintext highlighter-rouge">.keys()</code>method.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(boston.keys())
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict_keys(['data', 'target', 'feature_names', 'DESCR'])
+</code></pre></div></div>
+
+<p>You can easily check for its shape by using the <code class="language-plaintext highlighter-rouge">boston.data.shape</code> attribute, which will return the size of the dataset.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(boston.data.shape)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(506, 13)
+</code></pre></div></div>
+
+<p>As you can see it returned (506, 13), that means there are 506 rows of data with 13 columns. Now, if you want to know what the 13 columns are, you can simply use the <code class="language-plaintext highlighter-rouge">.feature_names</code>attribute and it will return the feature names.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(boston.feature_names)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO'
+ 'B' 'LSTAT']
+</code></pre></div></div>
+
+<p>The description of the dataset is available in the dataset itself. You can take a look at it using <code class="language-plaintext highlighter-rouge">.DESCR</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(boston.DESCR)
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Boston House Prices dataset
+===========================
+
+Notes
+------
+Data Set Characteristics:  
+
+    :Number of Instances: 506
+
+    :Number of Attributes: 13 numeric/categorical predictive
+
+    :Median Value (attribute 14) is usually the target
+
+    :Attribute Information (in order):
+        - CRIM     per capita crime rate by town
+        - ZN       proportion of residential land zoned for lots over 25,000 sq.ft.
+        - INDUS    proportion of non-retail business acres per town
+        - CHAS     Charles River dummy variable (= 1 if tract bounds river; 0 otherwise)
+        - NOX      nitric oxides concentration (parts per 10 million)
+        - RM       average number of rooms per dwelling
+        - AGE      proportion of owner-occupied units built prior to 1940
+        - DIS      weighted distances to five Boston employment centres
+        - RAD      index of accessibility to radial highways
+        - TAX      full-value property-tax rate per $10,000
+        - PTRATIO  pupil-teacher ratio by town
+        - B        1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+        - LSTAT    % lower status of the population
+        - MEDV     Median value of owner-occupied homes in $1000's
+
+    :Missing Attribute Values: None
+
+    :Creator: Harrison, D. and Rubinfeld, D.L.
+
+This is a copy of UCI ML housing dataset.
+http://archive.ics.uci.edu/ml/datasets/Housing
+
+
+This dataset was taken from the StatLib library which is maintained at Carnegie Mellon University.
+
+The Boston house-price data of Harrison, D. and Rubinfeld, D.L. 'Hedonic
+prices and the demand for clean air', J. Environ. Economics &amp; Management,
+vol.5, 81-102, 1978.   Used in Belsley, Kuh &amp; Welsch, 'Regression diagnostics
+...', Wiley, 1980.   N.B. Various transformations are used in the table on
+pages 244-261 of the latter.
+
+The Boston house-price data has been used in many machine learning papers that address regression
+problems.   
+
+**References**
+
+   - Belsley, Kuh &amp; Welsch, 'Regression diagnostics: Identifying Influential Data and Sources of Collinearity', Wiley, 1980. 244-261.
+   - Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning. In Proceedings on the Tenth International Conference of Machine Learning, 236-243, University of Massachusetts, Amherst. Morgan Kaufmann.
+   - many more! (see http://archive.ics.uci.edu/ml/datasets/Housing)
+</code></pre></div></div>
+
+<p>Now let’s convert it into a pandas DataFrame! For that you need to import the <code class="language-plaintext highlighter-rouge">pandas</code>library and call the <code class="language-plaintext highlighter-rouge">DataFrame()</code> function passing the argument <code class="language-plaintext highlighter-rouge">boston.data</code>. To label the names of the columns, use the <code class="language-plaintext highlighter-rouge">.columnns</code> attribute of the pandas DataFrame and assign it to <code class="language-plaintext highlighter-rouge">boston.feature_names</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pandas as pd
+
+data = pd.DataFrame(boston.data)
+data.columns = boston.feature_names
+</code></pre></div></div>
+
+<p>Explore the top 5 rows of the dataset by using <code class="language-plaintext highlighter-rouge">head()</code> method on your pandas DataFrame.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.head()
+</code></pre></div></div>
+
+<p><img src="http://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1528107777/data_head_zhv2ji.png" alt="img" /></p>
+
+<p>You’ll notice that there is no column called <code class="language-plaintext highlighter-rouge">PRICE</code> in the DataFrame. This is because the target column is available in another attribute called <code class="language-plaintext highlighter-rouge">boston.target</code>. Append <code class="language-plaintext highlighter-rouge">boston.target</code> to your pandas DataFrame.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data['PRICE'] = boston.target
+</code></pre></div></div>
+
+<p>Run the <code class="language-plaintext highlighter-rouge">.info()</code> method on your DataFrame to get useful information about the data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.info()
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 506 entries, 0 to 505
+Data columns (total 14 columns):
+CRIM       506 non-null float64
+ZN         506 non-null float64
+INDUS      506 non-null float64
+CHAS       506 non-null float64
+NOX        506 non-null float64
+RM         506 non-null float64
+AGE        506 non-null float64
+DIS        506 non-null float64
+RAD        506 non-null float64
+TAX        506 non-null float64
+PTRATIO    506 non-null float64
+B          506 non-null float64
+LSTAT      506 non-null float64
+PRICE      506 non-null float64
+dtypes: float64(14)
+memory usage: 55.4 KB
+</code></pre></div></div>
+
+<p>Turns out that this dataset has 14 columns (including the target variable <code class="language-plaintext highlighter-rouge">PRICE</code>) and 506 rows. Notice that the columns are of <code class="language-plaintext highlighter-rouge">float</code> data-type indicating the presence of only continuous features with no missing values in any of the columns. To get more summary statistics of the different features in the dataset you will use the <code class="language-plaintext highlighter-rouge">describe()</code> method on your DataFrame.</p>
+
+<p><strong>Note</strong> that <code class="language-plaintext highlighter-rouge">describe()</code> only gives summary statistics of columns which are continuous in nature and not categorical.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.describe()
+</code></pre></div></div>
+
+<p><img src="http://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1528107575/data_describe_pnvrdi.png" alt="img" /></p>
+
+<p>If you plan to use XGBoost on a dataset which has categorical features you may want to consider applying some encoding (like one-hot encoding) to such features before training the model. Also, if you have some missing values such as <code class="language-plaintext highlighter-rouge">NA</code> in the dataset you may or may not do a separate treatment for them, because XGBoost is capable of handling missing values internally. You can check out this <a href="https://github.com/dmlc/xgboost/issues/21">link</a> if you wish to know more on this.</p>
+
+<p>Without delving into more exploratory analysis and feature engineering, you will now focus on applying the algorithm to train the model on this data.</p>
+
+<p>You will build the model using Trees as base learners (which are the default base learners) using XGBoost’s scikit-learn compatible API. Along the way, you will also learn some of the common tuning parameters which XGBoost provides in order to improve the model’s performance, and using the root mean squared error (RMSE) performance metric to check the performance of the trained model on the test set. Root mean Squared error is the square root of the mean of the squared differences between the actual and the predicted values. As usual, you start by importing the library <code class="language-plaintext highlighter-rouge">xgboost</code> and other important libraries that you will be using for building the model.</p>
+
+<p><strong>Note</strong> you can install python libraries like <code class="language-plaintext highlighter-rouge">xgboost</code> on your system using <code class="language-plaintext highlighter-rouge">pip install xgboost</code> on cmd.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import xgboost as xgb
+from sklearn.metrics import mean_squared_error
+import pandas as pd
+import numpy as np
+</code></pre></div></div>
+
+<p>Separate the target variable and rest of the variables using <code class="language-plaintext highlighter-rouge">.iloc</code> to subset the data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X, y = data.iloc[:,:-1],data.iloc[:,-1]
+</code></pre></div></div>
+
+<p>Now you will convert the dataset into an optimized data structure called <code class="language-plaintext highlighter-rouge">Dmatrix</code> that XGBoost supports and gives it acclaimed performance and efficiency gains. You will use this later in the tutorial.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data_dmatrix = xgb.DMatrix(data=X,label=y)
+</code></pre></div></div>
+
+<h2 id="xgboosts-hyperparameters">XGBoost’s hyperparameters</h2>
+
+<p>At this point, before building the model, you should be aware of the tuning parameters that XGBoost provides. Well, there are a plethora of tuning parameters for tree-based learners in XGBoost and you can read all about them <a href="http://xgboost.readthedocs.io/en/latest/parameter.html#general-parameters">here</a>. But the most common ones that you should know are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">learning_rate</code>: step size shrinkage used to prevent overfitting. Range is [0,1]</li>
+  <li><code class="language-plaintext highlighter-rouge">max_depth</code>: determines how deeply each tree is allowed to grow during any boosting round.</li>
+  <li><code class="language-plaintext highlighter-rouge">subsample</code>: percentage of samples used per tree. Low value can lead to underfitting.</li>
+  <li><code class="language-plaintext highlighter-rouge">colsample_bytree</code>: percentage of features used per tree. High value can lead to overfitting.</li>
+  <li><code class="language-plaintext highlighter-rouge">n_estimators</code>: number of trees you want to build.</li>
+  <li><code class="language-plaintext highlighter-rouge">objective</code>: determines the loss function to be used like <code class="language-plaintext highlighter-rouge">reg:linear</code> for regression problems, <code class="language-plaintext highlighter-rouge">reg:logistic</code> for classification problems with only decision, <code class="language-plaintext highlighter-rouge">binary:logistic</code> for classification problems with probability.</li>
+</ul>
+
+<p>XGBoost also supports regularization parameters to penalize models as they become more complex and reduce them to simple (parsimonious) models.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gamma</code>: controls whether a given node will split based on the expected reduction in loss after the split. A higher value leads to fewer splits. Supported only for tree-based learners.</li>
+  <li><code class="language-plaintext highlighter-rouge">alpha</code>: L1 regularization on leaf weights. A large value leads to more regularization.</li>
+  <li><code class="language-plaintext highlighter-rouge">lambda</code>: L2 regularization on leaf weights and is smoother than L1 regularization.</li>
+</ul>
+
+<p>It’s also worth mentioning that though you are using trees as your base learners, you can also use XGBoost’s relatively less popular linear base learners and one other tree learner known as dart. All you have to do is set the <code class="language-plaintext highlighter-rouge">booster</code> parameter to either <code class="language-plaintext highlighter-rouge">gbtree</code> (default),<code class="language-plaintext highlighter-rouge">gblinear</code> or <code class="language-plaintext highlighter-rouge">dart</code>.</p>
+
+<p>Now, you will create the train and test set for cross-validation of the results using the <code class="language-plaintext highlighter-rouge">train_test_split</code> function from sklearn’s <code class="language-plaintext highlighter-rouge">model_selection</code> module with <code class="language-plaintext highlighter-rouge">test_size</code>size equal to 20% of the data. Also, to maintain reproducibility of the results, a <code class="language-plaintext highlighter-rouge">random_state</code> is also assigned.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
+</code></pre></div></div>
+
+<p>The next step is to instantiate an XGBoost regressor object by calling the <code class="language-plaintext highlighter-rouge">XGBRegressor()</code>class from the XGBoost library with the hyper-parameters passed as arguments. For classification problems, you would have used the <code class="language-plaintext highlighter-rouge">XGBClassifier()</code> class.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xg_reg = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,
+                max_depth = 5, alpha = 10, n_estimators = 10)
+</code></pre></div></div>
+
+<p>Fit the regressor to the training set and make predictions on the test set using the familiar <code class="language-plaintext highlighter-rouge">.fit()</code> and <code class="language-plaintext highlighter-rouge">.predict()</code> methods.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xg_reg.fit(X_train,y_train)
+
+preds = xg_reg.predict(X_test)
+</code></pre></div></div>
+
+<p>Compute the rmse by invoking the <code class="language-plaintext highlighter-rouge">mean_sqaured_error</code> function from sklearn’s <code class="language-plaintext highlighter-rouge">metrics</code>module.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rmse = np.sqrt(mean_squared_error(y_test, preds))
+print("RMSE: %f" % (rmse))
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RMSE: 10.569356
+</code></pre></div></div>
+
+<p>Well, you can see that your RMSE for the price prediction came out to be around 10.8 per 1000$.</p>
+
+<h2 id="k-fold-cross-validation-using-xgboost">k-fold Cross Validation using XGBoost</h2>
+
+<p>In order to build more robust models, it is common to do a k-fold cross validation where all the entries in the original training dataset are used for both training as well as validation. Also, each entry is used for validation just once. XGBoost supports k-fold cross validation via the <code class="language-plaintext highlighter-rouge">cv()</code> method. All you have to do is specify the <code class="language-plaintext highlighter-rouge">nfolds</code> parameter, which is the number of cross validation sets you want to build. Also, it supports many other parameters (check out this <a href="http://xgboost.readthedocs.io/en/latest/python/python_api.html">link</a>) like:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">num_boost_round</code>: denotes the number of trees you build (analogous to n_estimators)</li>
+  <li><code class="language-plaintext highlighter-rouge">metrics</code>: tells the evaluation metrics to be watched during CV</li>
+  <li><code class="language-plaintext highlighter-rouge">as_pandas</code>: to return the results in a pandas DataFrame.</li>
+  <li><code class="language-plaintext highlighter-rouge">early_stopping_rounds</code>: finishes training of the model early if the hold-out metric (“rmse” in our case) does not improve for a given number of rounds.</li>
+  <li><code class="language-plaintext highlighter-rouge">seed</code>: for reproducibility of results.</li>
+</ul>
+
+<p>This time you will create a hyper-parameter dictionary <code class="language-plaintext highlighter-rouge">params</code> which holds all the hyper-parameters and their values as key-value pairs but will exclude the <code class="language-plaintext highlighter-rouge">n_estimators</code> from the hyper-parameter dictionary because you will use <code class="language-plaintext highlighter-rouge">num_boost_rounds</code> instead.</p>
+
+<p>You will use these parameters to build a 3-fold cross validation model by invoking XGBoost’s <code class="language-plaintext highlighter-rouge">cv()</code> method and store the results in a <code class="language-plaintext highlighter-rouge">cv_results</code> DataFrame. Note that here you are using the Dmatrix object you created before.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>params = {"objective":"reg:linear",'colsample_bytree': 0.3,'learning_rate': 0.1,
+                'max_depth': 5, 'alpha': 10}
+
+cv_results = xgb.cv(dtrain=data_dmatrix, params=params, nfold=3,
+                    num_boost_round=50,early_stopping_rounds=10,metrics="rmse", as_pandas=True, seed=123)
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">cv_results</code> contains train and test RMSE metrics for each boosting round.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cv_results.head()
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>test-rmse-mean</th>
+      <th>test-rmse-std</th>
+      <th>train-rmse-mean</th>
+      <th>train-rmse-std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>21.746693</td>
+      <td>0.019311</td>
+      <td>21.749371</td>
+      <td>0.033853</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>19.891096</td>
+      <td>0.053295</td>
+      <td>19.859423</td>
+      <td>0.029633</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>18.168509</td>
+      <td>0.014465</td>
+      <td>18.072169</td>
+      <td>0.018803</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>16.687861</td>
+      <td>0.037342</td>
+      <td>16.570206</td>
+      <td>0.018556</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>15.365013</td>
+      <td>0.059400</td>
+      <td>15.206344</td>
+      <td>0.015451</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Extract and print the final boosting round metric.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print((cv_results["test-rmse-mean"]).tail(1))
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>49    4.031162
+Name: test-rmse-mean, dtype: float64
+</code></pre></div></div>
+
+<p>You can see that your RMSE for the price prediction has reduced as compared to last time and came out to be around 4.03 per 1000$. You can reach an even lower RMSE for a different set of hyper-parameters. You may consider applying techniques like Grid Search, Random Search and Bayesian Optimization to reach the optimal set of hyper-parameters.</p>
+
+<h2 id="visualize-boosting-trees-and-feature-importance">Visualize Boosting Trees and Feature Importance</h2>
+
+<p>You can also visualize individual trees from the fully boosted model that XGBoost creates using the entire housing dataset. XGBoost has a <code class="language-plaintext highlighter-rouge">plot_tree()</code> function that makes this type of visualization easy. Once you train a model using the XGBoost learning API, you can pass it to the <code class="language-plaintext highlighter-rouge">plot_tree()</code> function along with the number of trees you want to plot using the num_trees argument.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xg_reg = xgb.train(params=params, dtrain=data_dmatrix, num_boost_round=10)
+</code></pre></div></div>
+
+<p>Plotting the first tree with the <code class="language-plaintext highlighter-rouge">matplotlib</code> library:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import matplotlib.pyplot as plt
+
+xgb.plot_tree(xg_reg,num_trees=0)
+plt.rcParams['figure.figsize'] = [50, 10]
+plt.show()
+</code></pre></div></div>
+
+<p><img src="http://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1528107575/output_54_0_izbh1l.png" alt="img" /></p>
+
+<p>These plots provide insight into how the model arrived at its final decisions and what splits it made to arrive at those decisions.</p>
+
+<p><strong>Note</strong> that if the above plot throws the ‘graphviz’ error on your system, consider installing the graphviz package via <code class="language-plaintext highlighter-rouge">pip install graphviz</code> on cmd. You may also need to run <code class="language-plaintext highlighter-rouge">sudo apt-get install graphviz</code> on cmd. (<a href="https://stackoverflow.com/questions/35064304/runtimeerror-make-sure-the-graphviz-executables-are-on-your-systems-path-aft">link</a>)</p>
+
+<p>Another way to visualize your XGBoost models is to examine the importance of each feature column in the original dataset within the model.</p>
+
+<p>One simple way of doing this involves counting the number of times each feature is split on across all boosting rounds (trees) in the model, and then visualizing the result as a bar graph, with the features ordered according to how many times they appear. XGBoost has a <code class="language-plaintext highlighter-rouge">plot_importance()</code> function that allows you to do exactly this.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xgb.plot_importance(xg_reg)
+plt.rcParams['figure.figsize'] = [5, 5]
+plt.show()
+</code></pre></div></div>
+
+<p><img src="http://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1528107575/output_57_0_s5agpl.png" alt="img" /></p>
+
+<p>As you can see the feature <code class="language-plaintext highlighter-rouge">RM</code> has been given the highest importance score among all the features. Thus XGBoost also gives you a way to do Feature Selection. Isn’t this brilliant?</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>You have reached the end of this tutorial. I hope this might have or will help you in some way or the other. You started off with understanding how Boosting works in general and then narrowed down to XGBoost specifically. You also practiced applying XGBoost on an open source dataset and along the way you learned about its hyper-parameters, doing cross-validation, visualizing the trees and in the end how it can also be used as a Feature Selection technique. Whoa!! that’s something for starters, but there is so much to explore in XGBoost that it can’t be covered in a single tutorial. If you would like to learn more, be sure to take a look at our <a href="https://www.datacamp.com/courses/extreme-gradient-boosting-with-xgboost">Extreme Gradient Boosting with XGBoost</a> course on DataCamp.</p>
+:ET
