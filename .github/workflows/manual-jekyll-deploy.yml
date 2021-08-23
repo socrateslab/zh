@@ -1,0 +1,7 @@
+- name: jekyll-deploy
+  # You may pin to the exact commit or the version.
+  # uses: DavidS/jekyll-deploy@4e59472205269cce9739ac284303e74701fd7e9d
+  uses: DavidS/jekyll-deploy@1.1.1
+  with:
+    # Set to "true" to only build, but not deploy. This is useful for PR testing
+    build-only: false # optional, default is false
