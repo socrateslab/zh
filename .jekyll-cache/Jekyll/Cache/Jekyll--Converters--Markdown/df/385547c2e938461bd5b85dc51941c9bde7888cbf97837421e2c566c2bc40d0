@@ -1,8 +1,0 @@
-I"2<p>This content is before the <a href="http://jekyllrb.com/docs/posts/#post-excerpts">excerpt separator tag</a>.</p>
-
-<p>Right after this sentence there should be a <strong>continue reading</strong> link of some sort in archive-index pages.</p>
-
-<!--more-->
-
-<p>And this content is after the more tag.</p>
-:ET

@@ -1,7 +1,0 @@
-I"�<p>文档聚类和文本分类是文本挖掘的基本任务，本文主要针对的是无监督的聚类算法，包括K-means聚类、谱系聚类和LDA主题建模。</p>
-
-<p>Python环境下对文本的处理主要用到以下模块：nltk、pandas、sklearn、gensim等。对于想利用Python来处理文本的挖掘者来说，本文应该是不错的借鉴。</p>
-
-<p>原链接：<a href="http://nbviewer.jupyter.org/github/yihongfa/pythondata/blob/master/document_cluster.ipynb">http://nbviewer.jupyter.org/github/yihongfa/pythondata/blob/master/document_cluster.ipynb</a></p>
-<p><iframe src="http://nbviewer.jupyter.org/github/yihongfa/pythondata/blob/master/document_cluster.ipynb" width="1000" height="8000"> </iframe></p>
-:ET
