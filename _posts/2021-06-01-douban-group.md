@@ -43,4 +43,4 @@ manuscript: false
 
 欢迎对计算社会科学感兴趣的朋友一起参加。
 
-加入本组请填写问卷 https://wj.qq.com/s2/8418932/fa15/
+加入本组请填写问卷!! https://wj.qq.com/s2/8418932/fa15/
