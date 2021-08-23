@@ -7,7 +7,7 @@ main:
    - title: "作者"
      url: /authors/
    - title: "中心"
-     url: /collaboratory/
+     url: https://socarateslab.github.io
    - title: "百科"
      url: http://wiki.swarma.net/index.php/Category:%E8%AE%A1%E7%AE%97%E4%BC%A0%E6%92%AD%E5%AD%A6
      
