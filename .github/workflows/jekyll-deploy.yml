@@ -26,7 +26,7 @@ jobs:
     - uses: helaili/jekyll-action@v2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        jekyll_src: 'handbook'
+        jekyll_src: './vendor/cache/ruby/2.4.0/gems/jekyll-3.3.1/lib/site_template'
 
     # Specify the target branch (optional)
     - uses: helaili/jekyll-action@v2
