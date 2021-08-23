@@ -1,0 +1,125 @@
+I"h
+<div class="feature__wrapper">
+
+  
+
+    
+
+    <div class="feature__item--center">
+      <div class="archive__item">
+        
+
+        <div class="archive__item-body">
+          
+
+          
+            <div class="archive__item-excerpt">
+              <p>Get notified when I add new stuff   <a href="https://twitter.com/mmistakes" class="btn btn--twitter"><i class="fa fa-twitter"></i> @mmistakes</a></p>
+
+            </div>
+          
+
+          
+        </div>
+      </div>
+    </div>
+  
+
+</div>
+
+<div class="feature__wrapper">
+
+  
+
+    
+
+    <div class="feature__item">
+      <div class="archive__item">
+        
+          <div class="archive__item-teaser">
+            <img src="https://socrateslab.github.io/handbook/assets/images/mm-customizable-feature.png" alt="customizable" />
+          </div>
+        
+
+        <div class="archive__item-body">
+          
+            <h2 class="archive__item-title">Super Customizable</h2>
+          
+
+          
+            <div class="archive__item-excerpt">
+              <p>Everything from the menus, sidebars, comments, and more can be configured or set with YAML Front Matter.</p>
+
+            </div>
+          
+
+          
+            <p><a href="https://socrateslab.github.io/handbook/docs/configuration/" class="btn ">Learn More</a></p>
+          
+        </div>
+      </div>
+    </div>
+  
+
+    
+
+    <div class="feature__item">
+      <div class="archive__item">
+        
+          <div class="archive__item-teaser">
+            <img src="https://socrateslab.github.io/handbook/assets/images/mm-responsive-feature.png" alt="fully responsive" />
+          </div>
+        
+
+        <div class="archive__item-body">
+          
+            <h2 class="archive__item-title">Responsive Layouts</h2>
+          
+
+          
+            <div class="archive__item-excerpt">
+              <p>Built on HTML5 + CSS3. All layouts are fully responsive with helpers to augment your content.</p>
+
+            </div>
+          
+
+          
+            <p><a href="https://socrateslab.github.io/handbook/docs/layouts/" class="btn ">Learn More</a></p>
+          
+        </div>
+      </div>
+    </div>
+  
+
+    
+
+    <div class="feature__item">
+      <div class="archive__item">
+        
+          <div class="archive__item-teaser">
+            <img src="https://socrateslab.github.io/handbook/assets/images/mm-free-feature.png" alt="100% free" />
+          </div>
+        
+
+        <div class="archive__item-body">
+          
+            <h2 class="archive__item-title">100% Free</h2>
+          
+
+          
+            <div class="archive__item-excerpt">
+              <p>Free to use however you want under the MIT License. Clone it, fork it, customize it, whatever!</p>
+
+            </div>
+          
+
+          
+            <p><a href="https://socrateslab.github.io/handbook/docs/license/" class="btn ">Learn More</a></p>
+          
+        </div>
+      </div>
+    </div>
+  
+
+</div>
+:ET

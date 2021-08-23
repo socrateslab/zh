@@ -1,0 +1,202 @@
+I"X�<p>之前在网上看到了一篇使用LSTM进行时间序列预测的教程，采用的是Keras框架，本文的主要工作是尝试理解这整个过程并改用PyTorch框架重写一遍。在此之前，笔者只安装过TensorFlow和PyTorch的编程环境（还是基于CPU的），然后跑过官网上一两个Getting Started之类的Tutorial，因此可以说是Start From Scratch了。</p>
+
+<p>原文在此：<a href="http://machinelearningmastery.com/multivariate-time-series-forecasting-lstms-keras/">Multivariate Time Series Forecasting with LSTMs in Keras</a>。此外，还有一篇相关的文章，也是用Keras做的：<a href="http://www.jakob-aungiers.com/articles/a/LSTM-Neural-Network-for-Time-Series-Prediction">LSTM Neural Network for Time Series Prediction</a>, 可以在Github上看到<a href="https://github.com/jaungiers/LSTM-Neural-Network-for-Time-Series-Prediction">Source Code</a></p>
+
+<p>下面开始解剖整个过程</p>
+
+<h1 id="数据准备">数据准备</h1>
+<p>首先是数据准备，在原文中，使用的是环境监测的数据集，包含的属性主要有：</p>
+<ul>
+  <li>No: row number</li>
+  <li>year: year of data in this row</li>
+  <li>month: month of data in this row</li>
+  <li>day: day of data in this row</li>
+  <li>hour: hour of data in this row</li>
+  <li>pm2.5: PM2.5 concentration</li>
+  <li>DEWP: Dew Point</li>
+  <li>TEMP: Temperature</li>
+  <li>PRES: Pressure</li>
+  <li>cbwd: Combined wind direction</li>
+  <li>Iws: Cumulated wind speed</li>
+  <li>Is: Cumulated hours of snow</li>
+  <li>Ir: Cumulated hours of rain</li>
+</ul>
+
+<p>原来的DataFrame长这样</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">No</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">hour</span><span class="p">,</span><span class="n">pm2</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="n">DEWP</span><span class="p">,</span><span class="n">TEMP</span><span class="p">,</span><span class="n">PRES</span><span class="p">,</span><span class="n">cbwd</span><span class="p">,</span><span class="n">Iws</span><span class="p">,</span><span class="n">Is</span><span class="p">,</span><span class="n">Ir</span>
+<span class="mi">1</span><span class="p">,</span><span class="mi">2010</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">NA</span><span class="p">,</span><span class="o">-</span><span class="mi">21</span><span class="p">,</span><span class="o">-</span><span class="mi">11</span><span class="p">,</span><span class="mi">1021</span><span class="p">,</span><span class="n">NW</span><span class="p">,</span><span class="mf">1.79</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">2</span><span class="p">,</span><span class="mi">2010</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">NA</span><span class="p">,</span><span class="o">-</span><span class="mi">21</span><span class="p">,</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="mi">1020</span><span class="p">,</span><span class="n">NW</span><span class="p">,</span><span class="mf">4.92</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<span class="err">……</span>
+</code></pre></div></div>
+<p>将日期数据用pandas合并成一列</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">'%Y %m %d %H'</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s">'raw.csv'</span><span class="p">,</span>  <span class="n">parse_dates</span> <span class="o">=</span> <span class="p">[[</span><span class="s">'year'</span><span class="p">,</span> <span class="s">'month'</span><span class="p">,</span> <span class="s">'day'</span><span class="p">,</span> <span class="s">'hour'</span><span class="p">]],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">date_parser</span><span class="o">=</span><span class="n">parse</span><span class="p">)</span>
+</code></pre></div></div>
+<p>得到新的DataFrame</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">date</span><span class="p">,</span><span class="n">pollution</span><span class="p">,</span><span class="n">dew</span><span class="p">,</span><span class="n">temp</span><span class="p">,</span><span class="n">press</span><span class="p">,</span><span class="n">wnd_dir</span><span class="p">,</span><span class="n">wnd_spd</span><span class="p">,</span><span class="n">snow</span><span class="p">,</span><span class="n">rain</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mf">129.0</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">-</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">1020.0</span><span class="p">,</span><span class="n">SE</span><span class="p">,</span><span class="mf">1.79</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">01</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mf">148.0</span><span class="p">,</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span><span class="o">-</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">1020.0</span><span class="p">,</span><span class="n">SE</span><span class="p">,</span><span class="mf">2.68</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">02</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mf">159.0</span><span class="p">,</span><span class="o">-</span><span class="mi">11</span><span class="p">,</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">1021.0</span><span class="p">,</span><span class="n">SE</span><span class="p">,</span><span class="mf">3.57</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mf">181.0</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">1022.0</span><span class="p">,</span><span class="n">SE</span><span class="p">,</span><span class="mf">5.36</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span>
+<span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span> <span class="mi">04</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mf">138.0</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">1022.0</span><span class="p">,</span><span class="n">SE</span><span class="p">,</span><span class="mf">6.25</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span>
+<span class="err">……</span>
+</code></pre></div></div>
+
+<p>接下来需要做的工作是把时间序列数据转化为可以进行监督学习的数据，参见<a href="http://machinelearningmastery.com/convert-time-series-supervised-learning-problem-python/">这篇文章</a>。</p>
+
+<p>下面是代码，定义了一个函数series_to_supervised，用来把原来的时间序列数据转化成监督学习的数据集。在调用这个函数之前，用Sci-kit Learn中的两个类进行了数据预处理，先是用LabelEncoder把数据中非数值特征（风向-wnd_dir）转化成了从0开始的数值特征，然后用MinMaxScaler对整个数据集进行了标准化。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># convert series to supervised learning
+</span><span class="k">def</span> <span class="nf">series_to_supervised</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_in</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_out</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dropnan</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+	<span class="n">n_vars</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span> <span class="k">else</span> <span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+	<span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+	<span class="n">cols</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+	<span class="c1"># input sequence (t-n, ... t-1)
+</span>	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_in</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+		<span class="n">cols</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">shift</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+		<span class="n">names</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">'var%d(t-%d)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_vars</span><span class="p">)]</span>
+	<span class="c1"># forecast sequence (t, t+1, ... t+n)
+</span>	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_out</span><span class="p">):</span>
+		<span class="n">cols</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="n">names</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">'var%d(t)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_vars</span><span class="p">)]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">names</span> <span class="o">+=</span> <span class="p">[(</span><span class="s">'var%d(t+%d)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_vars</span><span class="p">)]</span>
+	<span class="c1"># put it all together
+</span>	<span class="n">agg</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+	<span class="n">agg</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">names</span>
+	<span class="c1"># drop rows with NaN values
+</span>	<span class="k">if</span> <span class="n">dropnan</span><span class="p">:</span>
+		<span class="n">agg</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">agg</span>
+
+<span class="c1"># load dataset
+</span><span class="n">values</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">.</span><span class="n">values</span>
+<span class="c1"># integer encode direction
+</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">values</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">values</span><span class="p">[:,</span><span class="mi">4</span><span class="p">])</span>
+<span class="c1"># ensure all data is float
+</span><span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+<span class="c1"># normalize features
+</span><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+<span class="c1"># frame as supervised learning
+</span><span class="n">reframed</span> <span class="o">=</span> <span class="n">series_to_supervised</span><span class="p">(</span><span class="n">scaled</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># drop columns we don't want to predict
+</span><span class="n">reframed</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">reframed</span><span class="p">.</span><span class="n">columns</span><span class="p">[[</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">reframed</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>这样可以得到的DataFrame长这样，一共是8个特征，作为X，预测值Y是其中的第一个特征，即pm2.5的污染量，因为是预测时间序列数据，所以Y可以是X中的某一个特征，只不过是利用t-1时刻的值预测t时刻的值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">var1</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var2</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var3</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var4</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var5</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var6</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  \
+<span class="mi">1</span>   <span class="mf">0.129779</span>   <span class="mf">0.352941</span>   <span class="mf">0.245902</span>   <span class="mf">0.527273</span>   <span class="mf">0.666667</span>   <span class="mf">0.002290</span>
+<span class="mi">2</span>   <span class="mf">0.148893</span>   <span class="mf">0.367647</span>   <span class="mf">0.245902</span>   <span class="mf">0.527273</span>   <span class="mf">0.666667</span>   <span class="mf">0.003811</span>
+<span class="mi">3</span>   <span class="mf">0.159960</span>   <span class="mf">0.426471</span>   <span class="mf">0.229508</span>   <span class="mf">0.545454</span>   <span class="mf">0.666667</span>   <span class="mf">0.005332</span>
+<span class="mi">4</span>   <span class="mf">0.182093</span>   <span class="mf">0.485294</span>   <span class="mf">0.229508</span>   <span class="mf">0.563637</span>   <span class="mf">0.666667</span>   <span class="mf">0.008391</span>
+<span class="mi">5</span>   <span class="mf">0.138833</span>   <span class="mf">0.485294</span>   <span class="mf">0.229508</span>   <span class="mf">0.563637</span>   <span class="mf">0.666667</span>   <span class="mf">0.009912</span>
+
+   <span class="n">var7</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="n">var8</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="n">var1</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="mi">1</span>   <span class="mf">0.000000</span>        <span class="mf">0.0</span>  <span class="mf">0.148893</span>
+<span class="mi">2</span>   <span class="mf">0.000000</span>        <span class="mf">0.0</span>  <span class="mf">0.159960</span>
+<span class="mi">3</span>   <span class="mf">0.000000</span>        <span class="mf">0.0</span>  <span class="mf">0.182093</span>
+<span class="mi">4</span>   <span class="mf">0.037037</span>        <span class="mf">0.0</span>  <span class="mf">0.138833</span>
+<span class="mi">5</span>   <span class="mf">0.074074</span>        <span class="mf">0.0</span>  <span class="mf">0.109658</span>
+</code></pre></div></div>
+
+<h1 id="构建lstm网络">构建LSTM网络</h1>
+
+<p>关于LSTM模型的介绍可以参考这篇：<a href="http://www.jianshu.com/p/9dc9f41f0b29">理解LSTM网络(译)</a></p>
+
+<p>在LSTM模型中，每个cell都包含一个hidden state和一个cell state，分别记为h和c，对应于这个cell的输入，在cell中通过定义一系列的函数，有点类似于数字电路中的“门”的概念，从而实现一些诸如“遗忘”的功能。这些具体的函数已经被PyTorch等深度学习框架封装好了，因此我们需要做的就是定义h和c。在原文中，作者使用了Keras进行神经网络的搭建，他把隐层定义为50个神经元（我的理解其实就是说hidden state包含有50个feature），在这之后又接了一个Dense层，这应该是为了把隐层的计算结果映射出一个output值。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># design network
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">train_X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">train_X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>在PyTorch中，采用如下的方法定义这个网络。建立一个有两个LSTMCell构成的Sequence网络，然后给定初始化的h0和c0，把输入和输出喂给这两个cell即可。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Sequence</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sequence</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="c1"># the hidden_size is 51
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">lstm1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">51</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lstm2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="mi">51</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># both the input(h_t, c_t) and output(h_t2, c_t2) are initialized to zeros
+</span>        <span class="n">h_t</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">51</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">c_t</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">51</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">h_t2</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">c_t2</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">input_t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">chunk</span><span class="p">(</span><span class="nb">input</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)):</span>
+            <span class="n">h_t</span><span class="p">,</span> <span class="n">c_t</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm1</span><span class="p">(</span><span class="n">input_t</span><span class="p">,</span> <span class="p">(</span><span class="n">h_t</span><span class="p">,</span> <span class="n">c_t</span><span class="p">))</span>
+            <span class="n">h_t2</span><span class="p">,</span> <span class="n">c_t2</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lstm2</span><span class="p">(</span><span class="n">c_t</span><span class="p">,</span> <span class="p">(</span><span class="n">h_t2</span><span class="p">,</span> <span class="n">c_t2</span><span class="p">))</span>
+            <span class="n">outputs</span> <span class="o">+=</span> <span class="p">[</span><span class="n">c_t2</span><span class="p">]</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">stack</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+</code></pre></div></div>
+
+<p>这里参考了以下三篇文档：</p>
+<ul>
+  <li>https://github.com/pytorch/examples/tree/master/time_sequence_prediction</li>
+  <li>http://pytorch.org/docs/master/nn.html#lstm</li>
+  <li>http://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html</li>
+</ul>
+
+<h1 id="模型训练">模型训练</h1>
+
+<p>训练这样一个网络，需要定义相应的损失函数loss function和优化算法，然后就可以套一下代码的模板进行训练了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># build the model
+</span><span class="n">seq</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">()</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<span class="c1"># use LBFGS as optimizer since we can load the whole data to train
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="n">seq</span><span class="p">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">epoch_num</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># begin to train
+</span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch_num</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'epoch : '</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">closure</span><span class="p">():</span>
+        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">seq</span><span class="p">(</span><span class="n">train_X</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<span class="c1">#         print('loss:', loss.data.numpy()[0])
+</span>        <span class="n">loss_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="n">closure</span><span class="p">)</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">seq</span><span class="p">(</span><span class="n">test_X</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">test_y</span><span class="p">)</span>
+<span class="c1">#     print('test loss:', loss.data.numpy()[0])
+</span>    <span class="n">test_loss_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pred</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>详细代码参见<a href="http://nbviewer.jupyter.org/github/zhicongchen/ml-beginners/blob/master/Multivariate%20Time%20Series%20Forecasting%20with%20LSTMs%20in%20PyTorch.ipynb">这里</a>。</p>
+:ET

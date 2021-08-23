@@ -1,0 +1,110 @@
+I"�2<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#reference" id="markdown-toc-reference">Reference</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2>作为联合概率分布的度相关</h2>
+
+<p>$P(k_1, k_2) $ 表示度为$k_1$和$k_2$ 的两个节点连接在一起的概率。 如果没有度相关: $P(k_1, k_2) \sim k_1 P(k_1) k_2 P(k_2) $。</p>
+<p>对于无标度网络：$P(k_1, k_2) \sim k_1 P(k_1) k_2 P(k_2) \sim k_1^{1-\gamma} k_2^{1-\gamma} $</p>
+<h2>密度守恒定律</h2>
+<p>Density conservation law</p>
+<p>$\int P(k_1, k_2) d k_2 = k_1 P(k_1)$</p>
+<p>等式两边表示的都是度为$k_1$的节点一共连了多少条边的概率!!!</p>
+<p>密度守恒定律，指的是边密度从度分布算和联合度分布算结果总是一样的。</p>
+<p>对无标度网络而言，满足 $P(k) \sim k^{-\gamma}$，所以边密度守恒的公式可以表达为：</p>
+<p>$\int P(k_1, k_2) d k_2 = k_1 P(k_1) \sim k_1^{-(\gamma -1) }$</p>
+<h2>硬猜$P(k_1, k_2)$</h2>
+<p>The statistical similarity of the corresponding plots suggests the invariance of $P(k_1, k_2)$. Accordingly, this suggests that the $k_1$ and $k_2$ dependence can be separated, and the behavior of the tail of the joint degree distribution is</p>
+<p>$P(k_1, k_2) \sim k_1^{-(\gamma -1 )} k_2^{-\epsilon}$ (1)</p>
+<p>for completely random networks:</p>
+<p>$P(k_1, k_2) \sim k_1 P(k_1) k_2 P(k_2) \sim k_1^{1-\gamma} k_2^{1-\gamma}$ (2)</p>
+<p>Using Eq. (1), we can see that:</p>
+<ul>
+<li>For low-degree nodes ($k_1 &gt; k_2$), integrating over $k_2$, we retrieve the $k^{1-\gamma}$ dependence.</li>
+<li>For the case of hubs, where integration is over $k_1$, the dependence on the degree is $k^{-\epsilon}$</li>
+</ul>
+<h2>$E_b(k)$</h2>
+<p>测量度相关的方式很多，Newman提出的度相关系数、$k_{nn}$等，但是不幸的是它们随着重整化并非不变的（invariant）。$E_b(k)$可以做到伴随着重整化不变（但要求是无标度网络才行）。</p>
+<p>$E_b(k) \equiv \frac{\int_{bk}^{\infty} P(k | k&#8217;) dk&#8217;}{ \int_{bk}^{\infty} P( k&#8217;) dk&#8217; }$</p>
+<ul>
+<li>分子是两节点度为k和大于bk的链接比例；</li>
+<li>分母是度大于bk的节点的比例</li>
+</ul>
+<p>我们知道对无标度网络而言，满足 $P(k) \sim k^{-\gamma}$，所以边密度守恒的公式可以表达为：$\int P(k_1, k_2) d k_2 = k_1 P(k_1) \sim k_1^{-(\gamma -1) }$</p>
+<p>以下哪一个推导正确：</p>
+<ul>
+<li>推导1：$P(k | k&#8217;) = \frac{P(k, k&#8217;) }{\int P(k, k&#8217;) dk} = \frac{k^{-(\gamma-1)} k&#8217;^{-\epsilon}}{k&#8217;^{1-\gamma}} = k^{-(\gamma -1)} k&#8217;^{-(1+\epsilon &#8211; \gamma)}$</li>
+<li>推导2：$P(k | k&#8217;) = \frac{P(k, k&#8217;) }{P(k&#8217;)} = \frac{k^{-(\gamma-1)} k&#8217;^{-\epsilon}}{k&#8217;^{-\gamma}} = k^{-(\gamma -1)} k&#8217;^{-\epsilon + \gamma}$</li>
+</ul>
+<p>已知度为k的节点存在的概率为p(k)，那么连边的一头连度为k的概率为kP(k)。就是P(k,k&#8217;)是连边存在的概率，p(k)为度值为k的节点存在的概率，这个没法放到分母下面，放到分布下面的是度值为k的连边存在的概率，这个值还有乘以k才对。</p>
+
+<h2>计算$E_b(k)$</h2>
+<p>算法设计 &#8211; 将链接表达为 （k, k&#8217;)的形式<br />
+&#8211; 使得其中的 k&#8217;&gt;k &#8211; 选择 b = 3<br />
+&#8211; 计算： ** &#8211; 计算k&#8217; &gt; 3k, k = k的链接数量$N_{kk&#8217;}$ **<br />
+&#8211; 计算$P(k, k&#8217;) = \frac{N_{kk’}}{Number\;of\;edges}$ **<br />
+&#8211; 对于每一个节点, 计算整个网络节点的度大于3k的比例, $P(k&#8217;)$和$k&#8217; P(k&#8217;)$ **<br />
+&#8211; 计算$p1 = \sum \frac{P(k, k&#8217;)}{k&#8217; P(k&#8217;)}$和$P2 = \sum P(k&#8217;)$。 **<br />
+&#8211; 计算 p1/p2</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="n">cm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">def</span> <span class="nf">ebkk</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">edge_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="n">degree_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">edge_degree</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">e</span><span class="p">).</span><span class="n">values</span><span class="p">())</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">g</span><span class="p">.</span><span class="n">edges</span><span class="p">()]</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge_degree</span><span class="p">:</span>
+        <span class="n">edge_dict</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">e</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">().</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">degree_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="n">edge_number</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">number_of_edges</span><span class="p">()</span>
+    <span class="n">node_number</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">number_of_nodes</span><span class="p">()</span>
+    <span class="n">ebks</span><span class="p">,</span> <span class="n">ks</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k1</span> <span class="ow">in</span> <span class="n">edge_dict</span><span class="p">:</span>
+        <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k2</span> <span class="ow">in</span> <span class="n">edge_dict</span><span class="p">[</span><span class="n">k1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">k2</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">k1</span><span class="p">:</span>
+                <span class="n">pkk</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">edge_dict</span><span class="p">[</span><span class="n">k1</span><span class="p">][</span><span class="n">k2</span><span class="p">])</span><span class="o">/</span><span class="n">edge_number</span>
+                <span class="n">pk2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">degree_dict</span><span class="p">[</span><span class="n">k2</span><span class="p">])</span><span class="o">/</span><span class="n">node_number</span>
+                <span class="n">k2pk2</span> <span class="o">=</span> <span class="n">k2</span><span class="o">*</span><span class="n">pk2</span>
+                <span class="n">p1</span> <span class="o">+=</span> <span class="n">pkk</span><span class="o">/</span><span class="n">k2pk2</span>
+                <span class="n">p2</span> <span class="o">+=</span> <span class="n">pk2</span>
+        <span class="k">if</span> <span class="n">p2</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ebks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">p1</span><span class="o">/</span><span class="n">p2</span><span class="p">)</span>
+            <span class="n">ks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">k1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ebks</span><span class="p">,</span> <span class="n">ks</span>
+
+<span class="c1"># http://snap.stanford.edu/data/ca-CondMat.html
+</span><span class="n">ca</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">'/Users/chengjun/bigdata/ca-CondMat.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'#'</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">strip</span><span class="p">().</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
+            <span class="n">ca</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">ca</span><span class="p">)</span>
+
+
+<span class="n">ebk</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ebkk</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">ebk</span><span class="p">,</span><span class="s">'r^'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s">'$k$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s">'$E_b(k)$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">yscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="reference">Reference</h2>
+
+<p>Lazaros K. Gallos, Chaoming Song, Hernán A Makse, 2008. Scaling of Degree Correlations and Its Influence on Diffusion in Scale-Free Networks. Physical Review Letters 100(24):248701 Impact Factor: 7.51 DOI: 10.3731/topologica.2.020</p>
+:ET

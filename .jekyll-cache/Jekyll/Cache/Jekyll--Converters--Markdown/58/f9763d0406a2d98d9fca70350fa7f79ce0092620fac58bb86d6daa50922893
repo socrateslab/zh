@@ -1,0 +1,227 @@
+I"�^<h1 id="how-to-calculate-bootstrap-confidence-intervals-for-machine-learning-results-in-python">How to Calculate Bootstrap Confidence Intervals For Machine Learning Results in Python</h1>
+
+<p>by <a href="https://machinelearningmastery.com/author/jasonb/">Jason Brownlee</a> on June 5, 2017 in <a href="https://machinelearningmastery.com/category/machine-learning-process/">Machine Learning Process</a></p>
+
+<p>It is important to both present the expected skill of a machine learning model as well as confidence intervals for that model skill.</p>
+
+<p>Confidence intervals provide a range of model skills and a likelihood that the model skill will fall between the ranges when making predictions on new data. For example, a 95% likelihood of classification accuracy between 70% and 75%.</p>
+
+<p>A robust way to calculate confidence intervals for machine learning algorithms is to use the bootstrap. This is a general technique for estimating statistics that can be used to calculate empirical confidence intervals, regardless of the distribution of skill scores (e.g. non-Gaussian)</p>
+
+<p>In this post, you will discover how to use the bootstrap to calculate confidence intervals for the performance of your machine learning algorithms.</p>
+
+<p>After reading this post, you will know:</p>
+
+<ul>
+  <li>How to estimate confidence intervals of a statistic using the bootstrap.</li>
+  <li>How to apply this method to evaluate machine learning algorithms.</li>
+  <li>How to implement the bootstrap method for estimating confidence intervals in Python.</li>
+</ul>
+
+<p>Let’s get started.</p>
+
+<ul>
+  <li><strong>Update June/2017</strong>: Fixed a bug where the wrong values were provided to numpy.percentile(). Thanks Elie Kawerk.</li>
+</ul>
+
+<h2 id="bootstrap-confidence-intervals">Bootstrap Confidence Intervals</h2>
+
+<p>Calculating confidence intervals with the bootstrap involves two steps:</p>
+
+<ol>
+  <li>Calculate a Population of Statistics</li>
+  <li>Calculate Confidence Intervals</li>
+</ol>
+
+<h3 id="1-calculate-a-population-of-statistics">1. Calculate a Population of Statistics</h3>
+
+<p>The first step is to use the bootstrap procedure to resample the original data a number of times and calculate the statistic of interest.</p>
+
+<p>The dataset is sampled with replacement. This means that each time an item is selected from the original dataset, it is not removed, allowing that item to possibly be selected again for the sample.</p>
+
+<p>The statistic is calculated on the sample and is stored so that we build up a population of the statistic of interest.</p>
+
+<p>The number of bootstrap repeats defines the variance of the estimate, and more is better, often hundreds or thousands.</p>
+
+<p>We can demonstrate this step with the following pseudocode.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">statistics</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bootstraps</span><span class="p">:</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">select_sample_with_replacement</span><span class="p">(</span><span class="n">data</span>
+    <span class="n">stat</span> <span class="o">=</span> <span class="n">calculate_statistic</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="n">statistics</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="2-calculate-confidence-interval">2. Calculate Confidence Interval</h3>
+
+<p>Now that we have a population of the statistics of interest, we can calculate the confidence intervals.</p>
+
+<p>This is done by first ordering the statistics, then selecting values at the chosen percentile for the confidence interval. The chosen percentile in this case is called alpha.</p>
+
+<p>For example, if we were interested in a confidence interval of 95%, then alpha would be 0.95 and we would select the value at the 2.5% percentile as the lower bound and the 97.5% percentile as the upper bound on the statistic of interest.</p>
+
+<p>For example, if we calculated 1,000 statistics from 1,000 bootstrap samples, then the lower bound would be the 25th value and the upper bound would be the 975th value, assuming the list of statistics was ordered.</p>
+
+<p>In this, we are calculating a non-parametric confidence interval that does not make any assumption about the functional form of the distribution of the statistic. This confidence interval is often called the empirical confidence interval.</p>
+
+<p>We can demonstrate this with pseudocode below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ordered</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">statistics</span><span class="p">)</span>
+<span class="n">lower</span> <span class="o">=</span> <span class="n">percentile</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">upper</span> <span class="o">=</span> <span class="n">percentile</span><span class="p">(</span><span class="n">ordered</span><span class="p">,</span> <span class="n">alpha</span><span class="o">+</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="bootstrap-model-performance">Bootstrap Model Performance</h2>
+
+<p>The bootstrap can be used to evaluate the performance of machine learning algorithms.</p>
+
+<p>The size of the sample taken each iteration may be limited to 60% or 80% of the available data. This will mean that there will be some samples that are not included in the sample. These are called out of bag (OOB) samples.</p>
+
+<p>A model can then be trained on the data sample each bootstrap iteration and evaluated on the out of bag samples to give a performance statistic, which can be collected and from which confidence intervals may be calculated.</p>
+
+<p>We can demonstrate this process with the following pseudocode.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">statistics</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bootstraps</span><span class="p">:</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">select_sample_with_replacement</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">stat</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>	<span class="n">statistics</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="calculate-classification-accuracy-confidence-interval">Calculate Classification Accuracy Confidence Interval</h2>
+
+<p>This section demonstrates how to use the bootstrap to calculate an empirical confidence interval for a machine learning algorithm on a real-world dataset using the Python machine learning library scikit-learn.</p>
+
+<p>This section assumes you have Pandas, NumPy, and Matplotlib installed. If you need help setting up your environment, see the tutorial:</p>
+
+<ul>
+  <li><a href="http://machinelearningmastery.com/setup-python-environment-machine-learning-deep-learning-anaconda/">How to Setup a Python Environment for Machine Learning and Deep Learning with Anaconda</a></li>
+</ul>
+
+<p>First, download the <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/pima-indians-diabetes/pima-indians-diabetes.data">Pima Indians dataset</a> and place it in your current working directory with the filename “pima<em>–</em>indians<em>-diabetes.data.csv</em>“.</p>
+
+<p>We will load the dataset using Pandas.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load dataset
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s">'pima-indians-diabetes.data.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p>Next, we will configure the bootstrap. We will use 1,000 bootstrap iterations and select a sample that is 50% the size of the dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># configure bootstrap
+</span><span class="n">n_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.50</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Next, we will iterate over the bootstrap.</p>
+
+<p>The sample will be selected with replacement using the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.utils.resample.html">resample() function</a> from sklearn. Any rows that were not included in the sample are retrieved and used as the test dataset. Next, a decision tree classifier is fit on the sample and evaluated on the test set, a classification score calculated, and added to a list of scores collected across all the bootstraps.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># run bootstrap
+</span><span class="n">stats</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">):</span>	<span class="c1"># prepare train and test sets
+</span>    <span class="n">train</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_size</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">train</span><span class="p">.</span><span class="n">tolist</span><span class="p">()])</span>
+    <span class="c1"># fit model
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">train</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># evaluate model
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">predictions</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Once the scores are collected, a histogram is created to give an idea of the distribution of scores. We would generally expect this distribution to be Gaussian, perhaps with a skew with a symmetrical variance around the mean.</p>
+
+<p>Finally, we can calculate the empirical confidence intervals using the <a href="https://docs.scipy.org/doc/numpy-dev/reference/generated/numpy.percentile.html">percentile() NumPy function</a>. A 95% confidence interval is used, so the values at the 2.5 and 97.5 percentiles are selected.</p>
+
+<p>Putting this all together, the complete example is listed below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">resample</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
+<span class="c1"># load dataset
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="s">'pima-indians-diabetes.data.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">values</span>
+<span class="c1"># configure bootstrap
+</span><span class="n">n_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">n_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.50</span><span class="p">)</span>
+<span class="c1"># run bootstrap
+</span><span class="n">stats</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">):</span>
+  	<span class="c1"># prepare train and test sets
+</span>    <span class="n">train</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_size</span><span class="p">)</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">train</span><span class="p">.</span><span class="n">tolist</span><span class="p">()])</span>
+    <span class="c1"># fit model
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">train</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># evaluate model
+</span>    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">test</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">predictions</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="n">stats</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="c1"># plot scores
+</span><span class="n">pyplot</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># confidence intervals
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.95</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">((</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">lower</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">numpy</span><span class="p">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="p">((</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">upper</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">numpy</span><span class="p">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'%.1f confidence interval %.1f%% and %.1f%%'</span> <span class="o">%</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">lower</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">upper</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Running the example prints the classification accuracy each bootstrap iteration.</p>
+
+<p>A histogram of the 1,000 accuracy scores is created showing a Gaussian-like distribution.</p>
+
+<p>Distribution of Classification Accuracy Using the Bootstrap</p>
+
+<p>Finally, the confidence intervals are reported, showing that there is a 95% likelihood that the confidence interval 64.4% and 73.0% covers the true skill of the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">...</span>
+ <span class="mf">0.646288209607</span>
+ <span class="mf">0.682203389831</span>
+ <span class="mf">0.668085106383</span>
+ <span class="mf">0.673728813559</span>
+ <span class="mf">0.686021505376</span>
+ <span class="mf">95.0</span> <span class="n">confidence</span> <span class="n">interval</span> <span class="mf">64.4</span><span class="o">%</span> <span class="ow">and</span> <span class="mf">73.0</span><span class="o">%</span>
+</code></pre></div></div>
+
+<p>This same method can be used to calculate confidence intervals of any other errors scores, such as root mean squared error for regression algorithms.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span><span class="p">;</span>
+<span class="n">sns</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">color_codes</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"tips"</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"day"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="https://socrateslab.github.io/handbook/assets/img2018/confidence_intervals.png" alt="png" /></p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<p>This section provides additional resources on the bootstrap and bootstrap confidence intervals.</p>
+
+<ul>
+  <li><a href="http://www.amazon.com/dp/0412042312?tag=inspiredalgor-20">An Introduction to the Bootstrap</a>, 1996</li>
+  <li><a href="https://projecteuclid.org/download/pdf_1/euclid.ss/1032280214">Bootstrap Confidence Intervals</a>, Statistical Science, 1996</li>
+  <li>Section 5.2.3, Bootstrap Confidence Intervals, <a href="http://www.amazon.com/dp/0262032252?tag=inspiredalgor-20">Empirical Methods for Artificial Intelligence</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Bootstrapping_(statistics)">Bootstrapping</a> on Wikipedia</li>
+  <li>Section 4.4 Resampling Techniques, <a href="http://www.amazon.com/dp/1461468485?tag=inspiredalgor-20">Applied Predictive Modeling</a></li>
+</ul>
+
+<h2 id="summary">Summary</h2>
+
+<p>In this post, you discovered how to use the bootstrap to calculate confidence intervals for machine learning algorithms.</p>
+
+<p>Specifically, you learned:</p>
+
+<ul>
+  <li>How to calculate the bootstrap estimate of confidence intervals of a statistic from a dataset.</li>
+  <li>How to apply the bootstrap to evaluate machine learning algorithms.</li>
+  <li>How to calculate bootstrap confidence intervals for machine learning algorithms in Python.</li>
+</ul>
+:ET

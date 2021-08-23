@@ -1,0 +1,325 @@
+I"=c<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#问题的提出-" id="markdown-toc-问题的提出-">问题的提出 </a></li>
+  <li><a href="#贝叶斯定理" id="markdown-toc-贝叶斯定理">贝叶斯定理</a></li>
+  <li><a href="#朴素贝叶斯分类" id="markdown-toc-朴素贝叶斯分类">朴素贝叶斯分类</a></li>
+  <li><a href="#naive-bayes" id="markdown-toc-naive-bayes">Naive Bayes</a></li>
+  <li><a href="#note" id="markdown-toc-note">Note</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/a480dab63165c18682d80e1f621f111a.png" alt="bayes" /></p>
+
+<h1 id="问题的提出-">问题的提出 <sup id="fnref:note" role="doc-noteref"><a href="#fn:note" class="footnote" rel="footnote">1</a></sup></h1>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/42a7d8a07672e28d10d24897487340d3.png" alt="class" /></p>
+
+<p>如果想判断未知样本的类别，即，已知它的三个属性X1、X2、X3，判断它是属于第一类（C=1）还是第二类（C=2）。</p>
+
+<ul>
+  <li>$P(C=1|X1,X2,X3)&gt;P(C=2|X1,X2,X3)$，给定数据的X1、X2、X3后，数据属于类别1的概率要大于属于类别2，即说明现有样本支持未知样本属于类别1，判定为类别1。</li>
+  <li>$P(C=1|X1,X2,X3)&lt;P(C=2|X1,X2,X3)$，则说明现有样本支持未知样本属于类别2，判定为类别2。</li>
+</ul>
+
+<p>如何得到$P(C=1|X1,X2,X3)$和$P(C=2|X1,X2,X3)$这两个概率呢？答案是<code class="language-plaintext highlighter-rouge">得不到</code>。但是没关系，因为，只要知道这两个谁大谁小就可以进行判断：</p>
+
+<ul>
+  <li>$P(C=1|X1,X2,X3)&gt;P(C=2|X1,X2,X3)$，则判定类别为1；</li>
+  <li>$P(C=1|X1,X2,X3)&lt;P(C=2|X1,X2,X3)$，则判定类别为2；</li>
+</ul>
+
+<p>贝叶斯定理就提供了方法进行这种比较。</p>
+
+<h1 id="贝叶斯定理">贝叶斯定理</h1>
+
+\[P(C|X) = \frac{ P(X|C)P(C)}{ P(X) }\]
+
+<ul>
+  <li>P(C|X)是给定属性X下，C的<strong>后验概率</strong></li>
+  <li>P(C)是C的<strong>先验概率</strong></li>
+</ul>
+
+<p>该公式被称为<code class="language-plaintext highlighter-rouge">“贝叶斯定理”</code>。</p>
+
+<p>根据贝叶斯定理，我们想找出最大的P(C|X)，由于P(X)对所有类为常数，只要找出最大的P(X|C)P(C)即可，这便是朴素贝叶斯分类的基础。</p>
+
+<h1 id="朴素贝叶斯分类">朴素贝叶斯分类</h1>
+
+<p>朴素贝叶斯分类器采用了属性条件独立性假设：对已知类别，假设所有属性相互独立。<sup id="fnref:zhou" role="doc-noteref"><a href="#fn:zhou" class="footnote" rel="footnote">2</a></sup></p>
+
+\[P(C|X) = \frac{ P(X|C)P(C)}{ P(X) } = \frac{P(C)}{P(X)} \prod_{i = 1}^{d}P(X_i|C)\]
+
+<p>最小化分类错误率: $h^{*}(x) = arg max P(c|x)$</p>
+
+<p>对所有类别来说P(X)相同，因此：</p>
+
+\[h_{naivebayes}^{*}(X) = arg max P(C) \prod_{i=1}^{d} P(X_i|C)\]
+
+<p>利用贝叶斯定理，找出最大的P(X|C)P(C)即可对未知样本进行分类，如max{P(X|C)P(C)}=P(X|C=n)P(C=n)，则说明未知样本属于第n类，其中，</p>
+
+<p>（1）P(C=i)=Si/S，Si是类Ci中的训练样本数，S是训练样本总数；</p>
+
+<p>（2）P(X|C=i)的计算开销可能非常大，因为会涉及到很多属性变量，这里可以做“属性值互相条件独立”的假定，即属性间不存在依赖关系：</p>
+
+<hr />
+<h1 id="naive-bayes">Naive Bayes</h1>
+<hr />
+
+<p>PlayTennis (i.e., decide whether our friend will play tennis or not in a given day) <sup id="fnref:Mitchell" role="doc-noteref"><a href="#fn:Mitchell" class="footnote" rel="footnote">3</a></sup></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#data
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>  
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">}]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>class</th>
+      <th>humidity</th>
+      <th>outlook</th>
+      <th>temp</th>
+      <th>wind</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>hot</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>overcast</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>cool</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>no</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>cool</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>overcast</td>
+      <td>cool</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>sunny</td>
+      <td>cool</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>sunny</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>overcast</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>overcast</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>no</td>
+      <td>high</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="o">=</span><span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span><span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span><span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span><span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the Prob. of class:cls
+</span>
+<span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_val</span><span class="p">,</span><span class="n">cls_name</span><span class="o">=</span><span class="s">"class"</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mf">0.0</span>     
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">cls_val</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The probability of play or not
+</span><span class="n">PY</span><span class="p">,</span> <span class="n">PN</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"yes"</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"no"</span><span class="p">)</span>
+<span class="n">PY</span><span class="p">,</span> <span class="n">PN</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.6428571428571429, 0.35714285714285715)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the Prob(attr|cls)
+</span><span class="k">def</span> <span class="nf">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_val</span><span class="p">,</span><span class="n">attr_name</span><span class="p">,</span><span class="n">attr_val</span><span class="p">,</span><span class="n">cls_name</span><span class="o">=</span><span class="s">"class"</span><span class="p">):</span>
+    <span class="n">count1</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">count2</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">cls_val</span><span class="p">:</span>
+            <span class="n">count1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">attr_val</span><span class="p">:</span>
+                <span class="n">count2</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count2</span><span class="o">/</span><span class="n">count1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The conditional probability of play or not
+</span><span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"yes"</span><span class="p">,</span> <span class="s">"outlook"</span><span class="p">,</span> <span class="s">"sunny"</span><span class="p">),</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"no"</span><span class="p">,</span> <span class="s">"outlook"</span><span class="p">,</span> <span class="s">"sunny"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.2222222222222222, 0.6)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the NB
+</span><span class="k">def</span> <span class="nf">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">test</span><span class="p">,</span><span class="n">cls_y</span><span class="p">,</span><span class="n">cls_n</span><span class="p">):</span>
+    <span class="n">PY</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_y</span><span class="p">)</span>
+    <span class="n">PN</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_n</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">'The probability of play or not:'</span><span class="p">,</span> <span class="n">PY</span><span class="p">,</span><span class="s">'vs.'</span><span class="p">,</span> <span class="n">PN</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">test</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">PY</span> <span class="o">*=</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_y</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">PN</span> <span class="o">*=</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_n</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="s">'--&gt;play or not:--&gt;'</span><span class="p">,</span> <span class="n">PY</span><span class="p">,</span> <span class="n">PN</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">cls_y</span><span class="p">:</span><span class="n">PY</span><span class="p">,</span><span class="n">cls_n</span><span class="p">:</span><span class="n">PN</span><span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#calculate     
+</span><span class="n">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">test</span><span class="p">,</span><span class="s">"yes"</span><span class="p">,</span><span class="s">"no"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The probability of play or not: 0.642857142857 vs. 0.357142857143
+outlook sunny --&gt;play or not:--&gt; 0.142857142857 0.214285714286
+wind strong --&gt;play or not:--&gt; 0.047619047619 0.128571428571
+temp cool --&gt;play or not:--&gt; 0.015873015873 0.0257142857143
+humidity high --&gt;play or not:--&gt; 0.00529100529101 0.0205714285714
+
+
+
+
+
+{'no': 0.020571428571428574, 'yes': 0.005291005291005291}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#calculate  
+</span><span class="n">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span><span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span><span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span><span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">},</span><span class="s">"yes"</span><span class="p">,</span><span class="s">"no"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The probability of play or not: 0.642857142857 vs. 0.357142857143
+outlook sunny --&gt;play or not:--&gt; 0.142857142857 0.214285714286
+wind weak --&gt;play or not:--&gt; 0.0952380952381 0.0857142857143
+temp hot --&gt;play or not:--&gt; 0.021164021164 0.0342857142857
+humidity normal --&gt;play or not:--&gt; 0.0141093474427 0.00685714285714
+
+
+
+
+
+{'no': 0.006857142857142858, 'yes': 0.014109347442680775}
+</code></pre></div></div>
+
+<h1 id="note">Note</h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:note" role="doc-endnote">
+      <p>以下内容来自 【数说工作室】金融数据挖掘之朴素贝叶斯 http://www.ppvke.com/Blog/archives/6431 <a href="#fnref:note" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:zhou" role="doc-endnote">
+      <p>周志华 2016 机器学习 p150-151 <a href="#fnref:zhou" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:Mitchell" role="doc-endnote">
+      <p>Mitchell Machine Learning http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml <a href="#fnref:Mitchell" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

@@ -1,0 +1,2 @@
+I"�<p>Hits算法通过迭代的方法来计算权威度a和导航度h。其中： 1. 节点i的权威度$a_i$利用指向它的节点的在<code class="language-plaintext highlighter-rouge">上一轮</code>的导航度hlast和链接的权重来决定。 2. 节点i的导航度$h_i$利用指向它指向的节点在<code class="language-plaintext highlighter-rouge">这一轮</code>的权威度$a_i$和链接的权重来决定。</p>
+:ET

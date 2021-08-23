@@ -1,0 +1,81 @@
+I"<h2 id="问题">问题</h2>
+<p>小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？</p>
+
+<h2 id="平均最短路径长度的定义">平均最短路径长度的定义</h2>
+<p>给定一个网络G(n, e), n是节点数量，e是链接数量。对于网络中的任意一对节点source s和target t，我们可以计算它们之间的最短距离$d_{s, t}$。将这些距离相加除以$n(n-1)$，就可以得到网络的平均最短路径长度。公式如下<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>：</p>
+
+\[a = \sum \frac{d_{s,t}}{n(n-1)}\]
+
+<h2 id="代码">代码</h2>
+
+<p>首先，生成一个实例网络。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="c1"># 生成一个有向网络
+</span><span class="n">G</span><span class="o">=</span><span class="n">nx</span><span class="p">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="c1">#网络构成
+</span><span class="n">G</span><span class="p">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)])</span>
+<span class="c1">#绘制网络
+</span><span class="n">pos</span><span class="o">=</span><span class="n">nx</span><span class="p">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span> <span class="c1">#设置网络的布局
+</span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/5336451cfec4520b87dd8d05751b00d3.png" alt="avrage—nx-path" /></p>
+
+<p>这样我们生成了一个较为典型的星形有向扩散网络。</p>
+
+<p>来看一下节点之间的最短路径长度：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="c1"># 网络平均最短距离0.181
+</span></code></pre></div></div>
+<p>果然有向网再次出现小于1的平均最短距离。
+按照定义，我们需要统计任意一对节点之间的距离，节点1作为起点与其它节点之间的最短距离的和是10， 2是2， 6是1， 其它节点<code class="language-plaintext highlighter-rouge">不存在</code>最短路径的问题。
+这样 $a =\frac {10 + 2 + 1}{9*8} = 0.181$</p>
+
+<p>上述手工计算过程可以通过nx.all_pairs_shortest_path_length(G)实现。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">all_pairs_shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Out[29]:
+{1: {1: 0, 2: 1, 3: 2, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1},
+ 2: {2: 0, 3: 1, 4: 1},
+ 3: {3: 0},
+ 4: {4: 0},
+ 5: {5: 0},
+ 6: {6: 0, 7: 1},
+ 7: {7: 0},
+ 8: {8: 0},
+ 9: {9: 0}}
+</code></pre></div></div>
+
+<p>由上述结果，可知道对于类似节点3和4之间距离的问题，networkx就是认为不存在的。所以没有列出，测试一下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># 1
+</span><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># 2
+</span><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1">#error: NetworkXNoPath: No path between 4 and 3.
+</span></code></pre></div></div>
+<p>因为有些节点之间距离不存在而不被计算（被认为是0而非无穷大），所以产生了节点数量的平方大于最短距离之和的情况，进而平均最短距离小于1这种反直觉的情况在有向网络中出现了。</p>
+
+<p>当我们把网络转化为无向网络的时候，这种情况就消失了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UG</span><span class="o">=</span><span class="n">G</span><span class="p">.</span><span class="n">to_undirected</span><span class="p">()</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">UG</span><span class="p">)</span> <span class="c1">#1.93
+</span></code></pre></div></div>
+
+<p>对于这种星形扩散网络，很多节点对之间的最短路径并不存在，应该被计算为无穷大，而不是0，所以对于这种网络计算平均最短路径长度没有太大的意义了。与其如此，不如计算所有节点对当中，不存在最短路径长度的比例。</p>
+
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>http://networkx.lanl.gov/reference/generated/networkx.algorithms.shortest_paths.generic.average_shortest_path_length.html <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

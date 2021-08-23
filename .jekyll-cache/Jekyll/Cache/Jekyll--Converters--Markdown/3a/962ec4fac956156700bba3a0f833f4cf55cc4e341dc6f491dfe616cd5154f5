@@ -1,0 +1,382 @@
+I"k�<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#features" id="markdown-toc-features">Features</a>    <ul>
+      <li><a href="#根据url或doi获取文章信息" id="markdown-toc-根据url或doi获取文章信息">根据url或doi获取文章信息</a></li>
+      <li><a href="#下载论文" id="markdown-toc-下载论文">下载论文</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<blockquote>
+  <p>scihub.py is an unofficial API for sci-hub.cc. scihub.py can search for papers on Google Scholars and download papers from sci-hub.cc. It can be imported independently or used from the command-line.</p>
+</blockquote>
+
+<h1 id="features">Features</h1>
+<p>Download specific articles directly or via sci-hub.cc
+Download a collection of articles by passing in file of article identifiers</p>
+
+<p>Search for articles on Google Scholars and download them
+Note: A known limitation of <a href="https://github.com/zaytoun/scihub.py">scihub.py</a> is that captchas show up every now and then, blocking any searches or downloads.</p>
+
+<p>首先，运行以下代码。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+Sci-API Unofficial API
+https://github.com/zaytoun/scihub.py
+
+[Search|Download] research papers from [scholar.google.com|sci-hub.io].
+@author zaytoun
+"""</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">retrying</span> <span class="kn">import</span> <span class="n">retry</span>
+
+<span class="c1"># log config
+</span><span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">'Sci-Hub'</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># constants
+</span><span class="n">SCIHUB_BASE_URL</span> <span class="o">=</span> <span class="s">'http://sci-hub.cc/'</span>
+<span class="n">SCHOLARS_BASE_URL</span> <span class="o">=</span> <span class="s">'https://scholar.google.com/scholar'</span>
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s">'User-Agent'</span><span class="p">:</span> <span class="s">'Mozilla/5.0 (X11; Linux x86_64; rv:27.0) Gecko/20100101 Firefox/27.0'</span><span class="p">}</span>
+<span class="n">AVAILABLE_SCIHUB_BASE_URL</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sci-hub.hk'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.tw'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.la'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.mn'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.name'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.is'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.tv'</span>
+                             <span class="s">'sci-hub.ws'</span>
+                             <span class="s">'www.sci-hub.cn'</span>
+                             <span class="s">'sci-hub.sci-hub.hk'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.sci-hub.tw'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.sci-hub.mn'</span><span class="p">,</span>
+                             <span class="s">'sci-hub.sci-hub.tv'</span><span class="p">,</span>
+                             <span class="s">'tree.sci-hub.la'</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">SciHub</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""
+    SciHub class can search for papers on Google Scholars
+    and fetch/download papers from sci-hub.io
+    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sess</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">HEADERS</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span> <span class="o">=</span> <span class="n">AVAILABLE_SCIHUB_BASE_URL</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s">'http://'</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">'/'</span>
+
+    <span class="k">def</span> <span class="nf">set_proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="p">):</span>
+        <span class="s">'''
+        set proxy for session
+        :param proxy_dict:
+        :return:
+        '''</span>
+        <span class="k">if</span> <span class="n">proxy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">proxies</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">"http"</span><span class="p">:</span> <span class="n">proxy</span><span class="p">,</span>
+                <span class="s">"https"</span><span class="p">:</span> <span class="n">proxy</span><span class="p">,</span> <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_change_base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s">'http://'</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">'/'</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"I'm changing to {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="s">"""
+        Performs a query on scholar.google.com, and returns a dictionary
+        of results in the form {'papers': ...}. Unfortunately, as of now,
+        captchas can potentially prevent searches after a certain limit.
+        """</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s">'papers'</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">SCHOLARS_BASE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'q'</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="s">'start'</span><span class="p">:</span> <span class="n">start</span><span class="p">})</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="s">'err'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Failed to complete search with query %s (connection error)'</span> <span class="o">%</span> <span class="n">query</span>
+                <span class="k">return</span> <span class="n">results</span>
+
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_get_soup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">papers</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'div'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">"gs_r"</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">papers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s">'CaptchaRedirect'</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">content</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s">'err'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Failed to complete search with query %s (captcha)'</span> <span class="o">%</span> <span class="n">query</span>
+                <span class="k">return</span> <span class="n">results</span>
+
+            <span class="k">for</span> <span class="n">paper</span> <span class="ow">in</span> <span class="n">papers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">paper</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'table'</span><span class="p">):</span>
+                    <span class="n">source</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">pdf</span> <span class="o">=</span> <span class="n">paper</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'div'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'gs_ggs gs_fl'</span><span class="p">)</span>
+                    <span class="n">link</span> <span class="o">=</span> <span class="n">paper</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'h3'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'gs_rt'</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">pdf</span><span class="p">:</span>
+                        <span class="n">source</span> <span class="o">=</span> <span class="n">pdf</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'a'</span><span class="p">)[</span><span class="s">'href'</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">link</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'a'</span><span class="p">):</span>
+                        <span class="n">source</span> <span class="o">=</span> <span class="n">link</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'a'</span><span class="p">)[</span><span class="s">'href'</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">results</span><span class="p">[</span><span class="s">'papers'</span><span class="p">].</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s">'name'</span><span class="p">:</span> <span class="n">link</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+                        <span class="s">'url'</span><span class="p">:</span> <span class="n">source</span>
+                    <span class="p">})</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">'papers'</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">results</span>
+
+            <span class="n">start</span> <span class="o">+=</span> <span class="mi">10</span>
+
+    <span class="o">@</span><span class="n">retry</span><span class="p">(</span><span class="n">wait_random_min</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">wait_random_max</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">stop_max_attempt_number</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="s">"""
+        Downloads a paper from sci-hub given an indentifier (DOI, PMID, URL).
+        Currently, this can potentially be blocked by a captcha if a certain
+        limit has been reached.
+        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_save</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'pdf'</span><span class="p">],</span>
+                       <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="n">path</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s">'name'</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="s">"""
+        Fetches the paper by first retrieving the direct link to the pdf.
+        If the indentifier is a DOI, PMID, or URL pay-wall, then use Sci-Hub
+        to access and download paper. Otherwise, just download paper directly.
+        """</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_get_direct_url</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># verify=False is dangerous but sci-hub.io
+</span>            <span class="c1"># requires intermediate certificates to verify
+</span>            <span class="c1"># and requests doesn't know how to download them.
+</span>            <span class="c1"># as a hacky fix, you can add them to your store
+</span>            <span class="c1"># and verifying would work. will fix this later.
+</span>            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">res</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Content-Type'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'application/pdf'</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">_change_base_url</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">CaptchaNeedException</span><span class="p">(</span><span class="s">'Failed to fetch pdf with identifier %s '</span>
+                                           <span class="s">'(resolved url %s) due to captcha'</span> <span class="o">%</span> <span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+                <span class="c1"># return {
+</span>                <span class="c1">#     'err': 'Failed to fetch pdf with identifier %s (resolved url %s) due to captcha'
+</span>                <span class="c1">#            % (identifier, url)
+</span>                <span class="c1"># }
+</span>            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">'pdf'</span><span class="p">:</span> <span class="n">res</span><span class="p">.</span><span class="n">content</span><span class="p">,</span>
+                    <span class="s">'url'</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+                    <span class="s">'name'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">_generate_name</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                <span class="p">}</span>
+
+        <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="nb">ConnectionError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'{} cannot acess,changing'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">available_base_url_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_change_base_url</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s">'err'</span><span class="p">:</span> <span class="s">'Failed to fetch pdf with identifier %s (resolved url %s) due to request exception.'</span>
+                       <span class="o">%</span> <span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+            <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_get_direct_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="s">"""
+        Finds the direct source url for a given identifier.
+        """</span>
+        <span class="n">id_type</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_classify</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">identifier</span> <span class="k">if</span> <span class="n">id_type</span> <span class="o">==</span> <span class="s">'url-direct'</span> \
+            <span class="k">else</span> <span class="bp">self</span><span class="p">.</span><span class="n">_search_direct_url</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_search_direct_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="s">"""
+        Sci-Hub embeds papers in an iframe. This function finds the actual
+        source url which looks something like https://moscow.sci-hub.io/.../....pdf.
+        """</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sess</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_get_soup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">iframe</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'iframe'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">iframe</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">iframe</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">iframe</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'src'</span><span class="p">).</span><span class="n">startswith</span><span class="p">(</span><span class="s">'//'</span><span class="p">)</span> \
+                <span class="k">else</span> <span class="s">'http:'</span> <span class="o">+</span> <span class="n">iframe</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_classify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
+        <span class="s">"""
+        Classify the type of identifier:
+        url-direct - openly accessible paper
+        url-non-direct - pay-walled paper
+        pmid - PubMed ID
+        doi - digital object identifier
+        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">identifier</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'http'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">identifier</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'https'</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">identifier</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'pdf'</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s">'url-direct'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">'url-non-direct'</span>
+        <span class="k">elif</span> <span class="n">identifier</span><span class="p">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="k">return</span> <span class="s">'pmid'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">'doi'</span>
+
+    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="s">"""
+        Save a file give data and a path.
+        """</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_soup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html</span><span class="p">):</span>
+        <span class="s">"""
+        Return html soup.
+        """</span>
+        <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_generate_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+        <span class="s">"""
+        Generate unique filename for paper. Returns a name by calcuating
+        md5 hash of file contents, then appending the last 20 characters
+        of the url which typically provides a good paper identifier.
+        """</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">url</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pdf_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">md5</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">content</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">'%s-%s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">pdf_hash</span><span class="p">,</span> <span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:])</span>
+
+
+<span class="k">class</span> <span class="nc">CaptchaNeedException</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">sh</span> <span class="o">=</span> <span class="n">SciHub</span><span class="p">()</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'SciHub - To remove all barriers in the way of science.'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-d'</span><span class="p">,</span> <span class="s">'--download'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'(DOI|PMID|URL)'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'tries to find and download the paper'</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-f'</span><span class="p">,</span> <span class="s">'--file'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'path'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'pass file with list of identifiers and download each'</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-s'</span><span class="p">,</span> <span class="s">'--search'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'query'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'search Google Scholars'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-sd'</span><span class="p">,</span> <span class="s">'--search_download'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'query'</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">'search Google Scholars and download if possible'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-l'</span><span class="p">,</span> <span class="s">'--limit'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'N'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'the number of search results to limit to'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-o'</span><span class="p">,</span> <span class="s">'--output'</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">'path'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'directory to store papers'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-v'</span><span class="p">,</span> <span class="s">'--verbose'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'increase output verbosity'</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">'store_true'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-p'</span><span class="p">,</span> <span class="s">'--proxy'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'via proxy format like socks5://user:pass@host:port'</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">'store'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">.</span><span class="n">verbose</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">.</span><span class="n">proxy</span><span class="p">:</span>
+        <span class="n">sh</span><span class="p">.</span><span class="n">set_proxy</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">proxy</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">.</span><span class="n">download</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">download</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'%s'</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">'err'</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Successfully downloaded file with identifier %s'</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">download</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">.</span><span class="n">search</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">search</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">limit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'%s'</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s">'err'</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Successfully completed search with query %s'</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">search</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">.</span><span class="n">search_download</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">search_download</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">limit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'%s'</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s">'err'</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Successfully completed search with query %s'</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">search_download</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">paper</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s">'papers'</span><span class="p">]:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="n">paper</span><span class="p">[</span><span class="s">'url'</span><span class="p">],</span> <span class="n">args</span><span class="p">.</span><span class="n">output</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'%s'</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">'err'</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Successfully downloaded file with identifier %s'</span><span class="p">,</span> <span class="n">paper</span><span class="p">[</span><span class="s">'url'</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="p">.</span><span class="nb">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="nb">file</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">identifiers</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">splitlines</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">output</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s">'err'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'%s'</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">'err'</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Successfully downloaded file with identifier %s'</span><span class="p">,</span> <span class="n">identifier</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>接下来，就可以使用以上代码来获取和下载论文信息了。</p>
+
+<p>开始之前，先使用SciHub这个类。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sh</span> <span class="o">=</span> <span class="n">SciHub</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="根据url或doi获取文章信息">根据url或doi获取文章信息</h2>
+
+<p>首先，根据url获取文章信息</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Fetch Paper Information By URL
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">'https://www.nature.com/articles/nature25760'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>可以打印出论文在sci-hub上的url。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'url'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://sci-hub.hk/downloads/ee6a/10.1038@nature25760.pdf
+</code></pre></div></div>
+
+<p>接着，尝试按照doi或许文章信息。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Fetch Paper Information by DOI
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">'10.1145/3132698'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">'url'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://sci-hub.hk/downloads/1b7f/10.1145@3132698.pdf
+</code></pre></div></div>
+
+<h2 id="下载论文">下载论文</h2>
+
+<p>注意：需要指明文章路径；不指定的话，默认下载到根路径。</p>
+
+<p>首先，根据url下载文章pdf</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Download the pdf by URL
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">'https://www.nature.com/articles/nature25760'</span><span class="p">,</span>
+                     <span class="n">path</span><span class="o">=</span><span class="s">'/users/chengjun/downloads/carreer.pdf'</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>然后，测试一下根据doi下载文章pdf</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Download the pdf by DOI
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">sh</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">'10.1145/3132698'</span><span class="p">,</span>
+                     <span class="n">path</span><span class="o">=</span><span class="s">'/users/chengjun/downloads/css.pdf'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>更多使用方法见：https://github.com/zaytoun/scihub.py</p>
+:ET

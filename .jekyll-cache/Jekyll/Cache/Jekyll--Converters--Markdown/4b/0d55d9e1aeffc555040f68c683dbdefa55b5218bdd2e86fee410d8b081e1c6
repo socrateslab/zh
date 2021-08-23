@@ -1,0 +1,2 @@
+I"g<p>在 1999的 一篇文章里, Barabasi 和 Albert 提出了网络增长的优先链接（preferential attachment）模型.他们假设新节点每次携带常数m条边，且每条边链接到老节点的概率与老节点的度成正比。为了获得度分布的解析式，他们在论文原文中用的是平均场方法（mean-field analysis）。</p>
+:ET

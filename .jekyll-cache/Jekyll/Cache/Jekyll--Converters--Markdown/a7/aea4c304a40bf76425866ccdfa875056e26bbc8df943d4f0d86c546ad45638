@@ -1,0 +1,206 @@
+I"aZ<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#真实熵与人类行为可预测性" id="markdown-toc-真实熵与人类行为可预测性">真实熵与人类行为可预测性</a></li>
+  <li><a href="#使用mpmath来计算可预测性" id="markdown-toc-使用mpmath来计算可预测性">使用mpmath来计算可预测性</a></li>
+  <li><a href="#number-of-observations-real-entropy-and-predictability" id="markdown-toc-number-of-observations-real-entropy-and-predictability">Number of observations, Real Entropy, and Predictability</a>    <ul>
+      <li><a href="#ggplot" id="markdown-toc-ggplot">ggplot</a></li>
+      <li><a href="#结论" id="markdown-toc-结论">结论</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h1 id="真实熵与人类行为可预测性">真实熵与人类行为可预测性</h1>
+
+<p>在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示为S; 以一个小时为一个观察窗口，观察一段连续的时间里的人类个体移动轨迹，一个人到过的地点总数是N。</p>
+
+<p>计算真实熵的方法是采用一种称之为Lempel-Ziv的算法来进行估计。</p>
+
+\[E= (\frac{1}{n} \sum_i \Lambda_i )^{-1} ln (n)\]
+
+<p>where $\Lambda_i$ is the length of the shortest substring starting at position i which doesn’t previously appear from position 1 to i-1.</p>
+
+<p>The estimated entropy converges to the real entropy of the time series when n approaches to infinity.<sup id="fnref:lz" role="doc-noteref"><a href="#fn:lz" class="footnote" rel="footnote">1</a></sup></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">small</span><span class="p">,</span> <span class="n">big</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">big</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">small</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">big</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">small</span><span class="p">)]</span> <span class="o">==</span> <span class="n">small</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">actual_entropy</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">sum_gamma</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">contains</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">sequence</span><span class="p">):</span> <span class="c1"># s is not contained in previous sequence
+</span>                <span class="n">sum_gamma</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="n">sequence</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">break</span>
+
+    <span class="n">ae</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sum_gamma</span> <span class="o">/</span> <span class="n">n</span> <span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>            
+    <span class="k">return</span> <span class="n">ae</span>
+</code></pre></div></div>
+
+<p>但是这个算法的计算复杂度比较高，对于观察窗口为秒或者毫秒的长时间序列，很难算出来。一开始我们在stackover flow上提了<a href="https://stackoverflow.com/questions/46296891/entropy-estimator-based-on-the-lempel-ziv-algorithm-using-python">这个问题</a>。后来才发现Song也是按照小时为观察窗口计算的!</p>
+
+<blockquote>
+  <p>To construct a time series for each user we segment the three month observation period into hour-long intervals. Each interval is assigned a tower ID if one is known (i.e. the phone was used in that time interval). If multiple calls were made in a given interval, we choose one of them at random. Finally if no call is made in a given interval, we assign it an ID “?”, implying an unknown location. Thus for each user i we obtain a string of length $L = 24 * 7 * 14 = 2352$ with $N_i + 1$ distinct symbols, each denoting one of the Ni towers visited by the user and one for the missing location “?”. (<a href="http://science.sciencemag.org/content/suppl/2010/02/18/327.5968.1018.DC1">Supporting Online Material</a> for Limits of Predictability in Human Mobility, page 4)</p>
+</blockquote>
+
+<p>基于这种思路，就可以计算出来任何一个时间序列的真实熵。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="n">pl</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<h1 id="使用mpmath来计算可预测性">使用mpmath来计算可预测性</h1>
+
+<p>算出来了真实熵，仅仅把握住了可预测性的一个因素。可预测性与不确定性之间成反比，但也与观察到的地点数量N有关系！根据Song的思路，他们按照<strong>Fano’s inequality</strong>来表示可预测性。</p>
+
+<p>That is, if a user with entropy $S$ moves between $N$ locations, then her or his predictability $P \leqslant P_{max}(S,N)$, where $P_{max}$ is given by</p>
+
+\[S = H(P_{max}) + (1 - P_{max}) log2(N -1)\]
+
+<p>with the <strong>binary entropy function</strong> $H(P_{max}) = - P_{max} log2(P_{max}) - (1 - P_{max}) log2(1 - P_{max})$.</p>
+
+<p>这样就可以把$P_{max}$表示成N和S两个参数的函数，令$P_{max} = x$，也就可以看成$( \frac{1-x}{N-1}) ^{1-x} x^x - 2^{-S} = 0$的方程。</p>
+
+<p>最初，我们尝试<a href="https://stackoverflow.com/questions/46905044/runtimeerror-in-solving-equation-using-sympy/">使用sympy来解这个方程</a>，没有成功。</p>
+
+<p>N and S are constants, for example N = 201 and S = 0.5. I use sympy in python to solve it. The python script is given as following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sympy import *
+
+x=Symbol('x')
+print solve( (((1-x)/200) **(1-x))* x**x - 2**(-0.5), x)
+</code></pre></div></div>
+
+<p>However, there is a RuntimeError: maximum recursion depth exceeded in <strong>instancecheck</strong></p>
+
+<p>I have also tried to use Mathematica, and it can output a result of 0.963</p>
+
+<p>http://www.wolframalpha.com/input/?i=(((1-x)%2F200)+<strong>(1-x))*+x</strong>x+-+2**(-0.5)+%3D+0</p>
+
+<p>在我发起悬赏之后，Izaak van Dongen给出了一个<a href="http://docs.sympy.org/0.7.6/modules/mpmath/calculus/optimization.html#root-finding-findroot">使用mpmath</a>的解决方案：https://stackoverflow.com/questions/46905044/runtimeerror-in-solving-equation-using-sympy/</p>
+
+<p>Mpmath is a Python library for arbitrary-precision floating-point arithmetic. For general information about mpmath, see the project website http://code.google.com/p/mpmath/, 在sympy的网站上也有mpmath的使用手册 http://docs.sympy.org/0.7.6/modules/mpmath/</p>
+
+<blockquote>
+  <p>Specifically, mpmath.findroot seems to do what you want. It takes an actual callable Python object which is the function to find a root of, and a starting value for x.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mpmath</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">201</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">getPredictability</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(((</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">))</span><span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">mpmath</span><span class="p">.</span><span class="n">findroot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">real</span><span class="p">)</span>
+
+<span class="n">getPredictability</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.9639047615927534
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span>  <span class="o">=</span> <span class="mi">201</span>
+<span class="n">slist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span> <span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">slist</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">getPredictability</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">plist</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plist</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1.0,
+ 0.9939185814424049,
+ 0.9869605566060163,
+ 0.9795709141746703,
+ 0.9718658516192474,
+ 0.9639047615927534,
+ 0.955724375464196,
+ 0.9473498380470712,
+ 0.9387994963345618,
+ 0.9300873355592305,
+ 0.9212243585880542]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pl</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">slist</span><span class="p">,</span> <span class="n">plist</span><span class="p">,</span> <span class="s">'g-o'</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$S$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$\Pi{max}$ '</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/handbook/assets//img2017/output_10_0.png" alt="png" /></p>
+
+<h1 id="number-of-observations-real-entropy-and-predictability">Number of observations, Real Entropy, and Predictability</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nlist</span>  <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">slist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span> <span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">nsplist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">nlist</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">slist</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">getPredictability</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+        <span class="n">nsplist</span><span class="p">.</span><span class="n">append</span><span class="p">([</span><span class="n">N</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">p</span><span class="p">])</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nsplist</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">'N'</span><span class="p">,</span> <span class="s">'S'</span><span class="p">,</span> <span class="s">'P'</span><span class="p">])</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'N'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group</span><span class="p">.</span><span class="n">S</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">P</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">"N = "</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'-'</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$S$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$\Pi{max}$ '</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/handbook/assets//img2017/output_12_0.png" alt="png" /></p>
+
+<h2 id="ggplot">ggplot</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">ggplot</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'N'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">N</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#pl.rcParams['figure.figsize'] = (4, 4)
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'S'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'P'</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span> <span class="s">'N'</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> \
+    <span class="o">+</span> <span class="n">geom_point</span><span class="p">()</span> <span class="o">+</span> <span class="n">geom_line</span><span class="p">()</span>\
+    <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s">"$S$"</span><span class="p">)</span> <span class="o">+</span> <span class="n">ylab</span><span class="p">(</span><span class="s">"$\Pi_{max}$"</span><span class="p">)</span> <span class="o">+</span> <span class="n">ggtitle</span><span class="p">(</span><span class="s">"$Predictability$"</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">theme_gray</span><span class="p">()</span>
+<span class="n">t</span><span class="p">.</span><span class="n">_rcParams</span><span class="p">[</span><span class="s">'font.size'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">t</span><span class="p">.</span><span class="n">_rcParams</span><span class="p">[</span><span class="s">'xtick.labelsize'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># xaxis tick label size
+</span><span class="n">t</span><span class="p">.</span><span class="n">_rcParams</span><span class="p">[</span><span class="s">'ytick.labelsize'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># yaxis tick label size
+</span><span class="n">t</span><span class="p">.</span><span class="n">_rcParams</span><span class="p">[</span><span class="s">'axes.labelsize'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># axis label size
+</span>
+<span class="n">p</span> <span class="o">+</span> <span class="n">t</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/handbook/assets//img2017/output_16_0.png" alt="png" /></p>
+
+<h2 id="结论">结论</h2>
+
+<ul>
+  <li>真实熵越大，可预测性越小；</li>
+  <li>在熵不变的条件下，去过的地方越多，可预测性越强。</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:lz" role="doc-endnote">
+      <p>Kontoyiannis I., Algoet P. H., Suhov Yu. M., Wyner A. J. Nonparametric Entropy Estimation for Stationary Processes and Random Fields, with Applications to English Text, IEEE Transactions on Information Theory 44, 1319-1327 (1998). <a href="#fnref:lz" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

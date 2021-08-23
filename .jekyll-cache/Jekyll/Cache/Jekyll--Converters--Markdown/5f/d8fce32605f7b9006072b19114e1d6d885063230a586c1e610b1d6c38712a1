@@ -1,0 +1,186 @@
+I"�r<p>与普通的扩散研究不同，网络扩散开始考虑网络结构对于扩散过程的影响。</p>
+
+<p>这里介绍一个使用R模拟网络扩散的例子。基本的算法非常简单：</p>
+
+<ol>
+  <li>生成一个网络:g(V, E)。</li>
+  <li>随机选择一个或几个节点作为种子（seeds）。</li>
+  <li>每个感染者以概率p（可视作该节点的传染能力,通常表示为$\beta$）影响与其相连的节点。</li>
+</ol>
+
+<p>其实这是一个最简单的SI模型在网络中的实现。S表示可感染（susceptible）, I表示被感染（infected）。SI模型描述了个体的状态从S到I之间的转变。因为形式简单，SI模型是可以求出其解析解的。考虑一个封闭的群体，没有出生、死亡和迁移。并假设个体是均匀混合的（homogeneous mixing),也就是要求个体的地理分布均匀，且被感染的概率也相同(T. G. Lewis, 2011)。那么β表示传染率（transmission rate)。SI模型可以表达为：</p>
+
+\[\frac{dS}{dt}=-\beta SI\]
+
+\[\frac{dI}{dt}=\beta SI\]
+
+<p>且满足 I + S = 1，那么以上方程\(\frac{dI}{dt}=\beta SI\)可以表达为：</p>
+
+\[\frac{dI}{dt}=\beta I(1-I)\]
+
+<p>解这个微分方程，我们可以得到累计增长曲线的表达式。有趣的是，这是一个logistic增长，具有明显的S型曲线（S-shaped curve）特征。该模型在初期跨越临界点之后增长较快，后期则变得缓慢。 因而可以用来描述和拟合创新扩散过程（diffusion of innovations）。</p>
+
+<p>当然，对疾病传播而言，SI模型是非常初级的（naive），主要因为受感染的个体以一定的概率恢复健康，或者继续进入可以被感染状态(S，据此扩展为SIS模型)或者转为免疫状态（R,据此扩展为SIR模型）。 免疫表示为R，用$\gamma$代表免疫概率（removal or recovery rate)。对于信息扩散而言，这种考虑暂时是不需要的。</p>
+
+<p>第一步，生成网络。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">igraph</span><span class="p">)</span>
+<span class="c1"># generate a social graph
+</span><span class="n">size</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># 规则网
+</span><span class="n">g</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="n">tree</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="mi">2</span><span class="p">);</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="n">star</span><span class="p">(</span><span class="n">size</span><span class="p">);</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="n">full</span><span class="p">(</span><span class="n">size</span><span class="p">);</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="n">ring</span><span class="p">(</span><span class="n">size</span><span class="p">);</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">connect</span><span class="p">.</span><span class="n">neighborhood</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">ring</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="mi">2</span><span class="p">);</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="c1"># 最近邻耦合网络
+</span>
+<span class="c1"># 随机网络
+</span><span class="n">g</span> <span class="o">=</span> <span class="n">erdos</span><span class="p">.</span><span class="n">renyi</span><span class="p">.</span><span class="n">game</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># 小世界网络
+</span><span class="n">g</span> <span class="o">=</span> <span class="n">rewire</span><span class="p">.</span><span class="n">edges</span><span class="p">(</span><span class="n">erdos</span><span class="p">.</span><span class="n">renyi</span><span class="p">.</span><span class="n">game</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="p">)</span>
+<span class="c1"># 无标度网络
+</span><span class="n">g</span> <span class="o">=</span> <span class="n">barabasi</span><span class="p">.</span><span class="n">game</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">;</span> <span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>第二步，随机选取一个或n个种子。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#  initiate the diffusers
+</span><span class="n">seeds_num</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">set</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2014</span><span class="p">);</span> <span class="n">diffusers</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">),</span><span class="n">seeds_num</span><span class="p">)</span> <span class="p">;</span> <span class="n">diffusers</span>
+<span class="n">infected</span> <span class="o">=</span><span class="nb">list</span><span class="p">()</span>
+<span class="n">infected</span><span class="p">[[</span><span class="mi">1</span><span class="p">]]</span><span class="o">=</span> <span class="n">diffusers</span>
+</code></pre></div></div>
+
+<p>第三步，在这个简单的例子中，每个节点的传染能力是0.5，即与其相连的节点以0.5的概率被其感染。在R中的实现是通过抛硬币的方式来实现的。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># for example, set percolation probability = 0.5
+</span><span class="n">coins</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+<span class="n">sample</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="n">rep</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>显然，这很容易扩展到更一般的情况，比如节点的平均感染能力是0.128，那么可以这么写：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="mf">0.128</span>
+<span class="n">coins</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">*</span><span class="mi">1000</span><span class="p">),</span> <span class="n">rep</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span><span class="p">))</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+<span class="n">sample</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="n">rep</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>当然最重要的一步是要能按照“时间”更新网络节点被感染的信息。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># function for updating the diffusers
+</span><span class="n">update_diffusers</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">diffusers</span><span class="p">){</span>
+  <span class="n">nearest_neighbors</span> <span class="o">=</span> <span class="n">neighborhood</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">diffusers</span><span class="p">)</span>
+  <span class="n">nearest_neighbors</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">frame</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">unlist</span><span class="p">(</span><span class="n">nearest_neighbors</span><span class="p">)))</span>
+  <span class="n">nearest_neighbors</span> <span class="o">=</span> <span class="n">subset</span><span class="p">(</span><span class="n">nearest_neighbors</span><span class="p">,</span> <span class="err">!</span><span class="p">(</span><span class="n">nearest_neighbors</span><span class="p">[,</span><span class="mi">1</span><span class="p">]</span><span class="o">%</span><span class="ow">in</span><span class="o">%</span><span class="n">diffusers</span><span class="p">))</span>
+  <span class="c1"># toss the coins
+</span>  <span class="n">toss</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">tossing</span> <span class="o">=</span> <span class="n">NULL</span>
+	<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="ow">in</span> <span class="mi">1</span><span class="p">:</span><span class="n">freq</span> <span class="p">)</span> <span class="n">tossing</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="n">rep</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>
+	<span class="n">tossing</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">tossing</span><span class="p">)</span>
+	<span class="k">return</span> <span class="p">(</span><span class="n">tossing</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="n">keep</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">lapply</span><span class="p">(</span><span class="n">nearest_neighbors</span><span class="p">[,</span><span class="mi">2</span><span class="p">],</span> <span class="n">toss</span><span class="p">))</span>
+  <span class="n">new_infected</span> <span class="o">=</span> <span class="k">as</span><span class="p">.</span><span class="n">numeric</span><span class="p">(</span><span class="k">as</span><span class="p">.</span><span class="n">character</span><span class="p">(</span><span class="n">nearest_neighbors</span><span class="p">[,</span><span class="mi">1</span><span class="p">][</span><span class="n">keep</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">]))</span>
+  <span class="n">diffusers</span> <span class="o">=</span> <span class="n">unique</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">diffusers</span><span class="p">,</span> <span class="n">new_infected</span><span class="p">))</span>
+  <span class="k">return</span><span class="p">(</span><span class="n">diffusers</span><span class="p">)</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<p>完成了以上三步。准备好了吗，现在开始开启扩散过程！</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Start the contagion!
+</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="p">[[</span><span class="n">i</span><span class="p">]])</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">){</span>
+  <span class="n">infected</span><span class="p">[[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">update_diffusers</span><span class="p">(</span><span class="n">infected</span><span class="p">[[</span><span class="n">i</span><span class="p">]]))</span>
+  <span class="n">cat</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="p">[[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>先看看S曲线吧：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># "growth_curve"
+</span><span class="n">num_cum</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">lapply</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="err">［</span><span class="n">x</span><span class="err">］</span><span class="p">)</span> <span class="p">))</span>
+<span class="n">p_cum</span> <span class="o">=</span> <span class="n">num_cum</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">num_cum</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">i</span>
+
+<span class="n">png</span><span class="p">(</span><span class="nb">file</span> <span class="o">=</span> <span class="s">"./temporal_growth_curve.png"</span><span class="p">,</span>
+	<span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+	<span class="n">units</span><span class="o">=</span><span class="s">"in"</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">p_cum</span><span class="o">~</span><span class="n">time</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s">"b"</span><span class="p">)</span>
+<span class="n">dev</span><span class="p">.</span><span class="n">off</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://farm8.staticflickr.com/7299/12845959103_e19cd9cd99_n.jpg" alt="" /></p>
+
+<p>为了可视化这个扩散的过程，我们用红色来标记被感染者。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># generate a palette
+</span><span class="n">E</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span> <span class="o">=</span> <span class="s">"blueviolet"</span>
+<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span> <span class="o">=</span> <span class="s">"white"</span>
+<span class="nb">set</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2014</span><span class="p">);</span> <span class="n">layout</span><span class="p">.</span><span class="n">old</span> <span class="o">=</span> <span class="n">layout</span><span class="p">.</span><span class="n">fruchterman</span><span class="p">.</span><span class="n">reingold</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span><span class="p">[</span><span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">%</span><span class="ow">in</span><span class="o">%</span><span class="n">diffusers</span><span class="p">]</span> <span class="o">=</span> <span class="s">"red"</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span><span class="n">layout</span><span class="p">.</span><span class="n">old</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>使用谢益辉开发的animation的R包可视化。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">animation</span><span class="p">)</span>
+
+<span class="n">saveGIF</span><span class="p">({</span>
+  <span class="n">ani</span><span class="p">.</span><span class="n">options</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">convert</span> <span class="o">=</span> <span class="n">shQuote</span><span class="p">(</span><span class="s">"C:/Program Files/ImageMagick-6.8.8-Q16/convert.exe"</span><span class="p">))</span>
+  <span class="c1"># start the plot
+</span>  <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">m</span> <span class="o">&lt;=</span> <span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="p">)){</span>
+	<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span> <span class="o">=</span> <span class="s">"white"</span>
+	<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span><span class="p">[</span><span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">%</span><span class="ow">in</span><span class="o">%</span><span class="n">infected</span><span class="p">[[</span><span class="n">m</span><span class="p">]]]</span> <span class="o">=</span> <span class="s">"red"</span>
+	<span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span><span class="n">layout</span><span class="p">.</span><span class="n">old</span><span class="p">)</span>
+	<span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p><img src="http://farm4.staticflickr.com/3806/12826172695_368a6f50a2_o.gif" alt="" /></p>
+
+<p><img src="http://farm3.staticflickr.com/2848/12826237753_d8c97b1019_o.gif" alt="" /></p>
+
+<p><img src="http://farm4.staticflickr.com/3729/12826584654_c84452f397_o.gif" alt="" /></p>
+
+<p><img src="http://farm3.staticflickr.com/2851/12826173505_34649f488d_o.gif" alt="" /></p>
+
+<p><img src="http://farm8.staticflickr.com/7391/12826173255_574e471023_o.gif" alt="" /></p>
+
+<p><img src="http://farm4.staticflickr.com/3675/12826584484_7c6f35380c_o.gif" alt="" /></p>
+
+<p><img src="http://farm8.staticflickr.com/7432/12826173045_ef3548ec04_o.gif" alt="" /></p>
+
+<p>如同在Netlogo里一样，我们可以把网络扩散与增长曲线同时展示出来：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">saveGIF</span><span class="p">({</span>
+  <span class="n">ani</span><span class="p">.</span><span class="n">options</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">convert</span> <span class="o">=</span> <span class="n">shQuote</span><span class="p">(</span><span class="s">"C:/Program Files/ImageMagick-6.8.8-Q16/convert.exe"</span><span class="p">))</span>
+  <span class="c1"># start the plot
+</span>  <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">m</span> <span class="o">&lt;=</span> <span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="p">)){</span>
+	<span class="c1"># start the plot
+</span>	<span class="n">layout</span><span class="p">(</span><span class="n">matrix</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">byrow</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span> <span class="n">widths</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">heights</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+	<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span> <span class="o">=</span> <span class="s">"white"</span>
+	<span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="err">$</span><span class="n">color</span><span class="p">[</span><span class="n">V</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">%</span><span class="ow">in</span><span class="o">%</span><span class="n">infected</span><span class="p">[[</span><span class="n">m</span><span class="p">]]]</span> <span class="o">=</span> <span class="s">"red"</span>
+	<span class="n">num_cum</span> <span class="o">=</span> <span class="n">unlist</span><span class="p">(</span><span class="n">lapply</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">m</span><span class="p">,</span> <span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="n">length</span><span class="p">(</span><span class="n">infected</span><span class="p">[[</span><span class="n">x</span><span class="p">]])</span> <span class="p">))</span>
+	<span class="n">p_cum</span> <span class="o">=</span> <span class="n">num_cum</span><span class="o">/</span><span class="n">size</span>
+	<span class="n">p</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p_cum</span><span class="p">))</span>
+	<span class="n">time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">m</span>
+	<span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span><span class="n">layout</span><span class="p">.</span><span class="n">old</span><span class="p">,</span> <span class="n">edge</span><span class="p">.</span><span class="n">arrow</span><span class="p">.</span><span class="n">size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+	<span class="n">title</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="s">"Scale-free Network </span><span class="se">\n</span><span class="s"> Day"</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+	<span class="n">plot</span><span class="p">(</span><span class="n">p_cum</span><span class="o">~</span><span class="n">time</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s">"b"</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="s">"CDF"</span><span class="p">,</span> <span class="n">xlab</span> <span class="o">=</span> <span class="s">"Time"</span><span class="p">,</span>
+		 <span class="n">xlim</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+	<span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="o">~</span><span class="n">time</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s">"h"</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="s">"PDF"</span><span class="p">,</span> <span class="n">xlab</span> <span class="o">=</span> <span class="s">"Time"</span><span class="p">,</span>
+		 <span class="n">xlim</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">),</span> <span class="n">ylim</span> <span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">frame</span><span class="p">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+	<span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">},</span> <span class="n">ani</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">800</span><span class="p">,</span> <span class="n">ani</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://farm4.staticflickr.com/3672/12848749413_7f9da8b8c7_o.gif" alt="" /></p>
+:ET

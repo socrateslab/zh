@@ -1,0 +1,51 @@
+I"i<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#参考文献" id="markdown-toc-参考文献">参考文献</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p>Jiezhong Qiu于2016年在WWW会议上发表了题为 The Lifecycle and Cascade of WeChat Social Messaging Groups的论文。<sup id="fnref:qiu" role="doc-noteref"><a href="#fn:qiu" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>wechat是一种social messaging groups，基于手机的app应用，虽然市场占有率还没有whatsapp多，但是增长趋势非常惊人。</p>
+
+<p>微信的数据一直以来比较难获得，清华大学和香港科技大学杨强团队、康奈尔大学与微信数据部门合作。</p>
+
+<p>long-term and short-term groups are inherently distinct.</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/d2259f67bda9f10a1061a0196a0e4218.png" alt="long-short-group" /></p>
+
+<p>“Beside studying the friendship structure, we also discuss the group formation processes, namely by investigating the group membership invitation cascading tree structure. We start with defining the group cascade tree below.”</p>
+
+<p><strong>Wiener index</strong>, is useful for disambiguating between shallow, broadcast-like diffusion and the deep branching structures.</p>
+
+<p>Wiener index is defined by the average distance between any two nodes in the cascade tree. For example, the cascade trees in Fig- ure 4(a) and Figure 4(b) have Wiener indexes of 3.99 and 1.83, respectively.</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/6a1232e626c94bba46428bbcb700d5b6.png" alt="graphical-example-wechat" /></p>
+
+<p>For instance, the <strong>big dotted circle</strong> in Figure 6 encompasses all the current members within a group.</p>
+
+<p>There are two essential steps behind each invitation:</p>
+<ul>
+  <li>1) a member in a group become active (denoted by blue in Figure 6), and</li>
+  <li>2) the active member selects his/her friends (denoted by red in Figure 6) into the group chat.</li>
+</ul>
+
+<p><strong>Invitation Interval</strong> is defined as the time inter- val between any two consecutive invitations from a group member.</p>
+
+<p>Additionally, First Invitation Latency is defined as the interval be- tween the timestamp at which a user joins a group (invited by some existing member) and the timestamp when he/she, for the first time, invites another friend to the same group.</p>
+
+<p>we develop a membership cascade model and demonstrate the effectiveness by achieving AUC of 95.31% in predicting inviter, and an AUC of 98.66% in predicting invitee.</p>
+
+<h1 id="参考文献">参考文献</h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:qiu" role="doc-endnote">
+      <p>Qiu, J., Li, Y., Tang, J., Lu, Z., Ye, H., &amp; Chen, B., et al. (2016). The Lifecycle and Cascade of WeChat Social Messaging Groups. International Conference on World Wide Web (pp.311-320). International World Wide Web Conferences Steering Committee. <a href="#fnref:qiu" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET
