@@ -4,7 +4,6 @@
 
 Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your personal site, blog, or portfolio on GitHub or self-hosting on your own server. As the name implies --- styling is purposely minimalistic to be enhanced and customized by you :smile:.
 
-<<<<<<< HEAD
 ## Customization
 
 - fork and change the repo name
@@ -15,9 +14,8 @@ Minimal Mistakes is a flexible two-column Jekyll theme. Perfect for hosting your
 See what's new in the [CHANGELOG](CHANGELOG.md).
 
 :sparkles: Minimal Mistakes is now available as a [Ruby gem](https://rubygems.org/gems/minimal-mistakes-jekyll). Consult the [Quick-Start Guide](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/) and [this blog post](https://mmistakes.github.io/minimal-mistakes/jekyll/gemified-theme-beta/) to learn how to upgrade.
-=======
+
 :sparkles: See what's new in the [CHANGELOG](CHANGELOG.md).
->>>>>>> mmistakes/master
 
 [![Minimal Mistakes live preview][2]][1]
 
