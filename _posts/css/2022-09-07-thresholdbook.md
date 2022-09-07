@@ -17,8 +17,6 @@ tags:
 ---
 
 
-## 跨越网络的门槛: 社交媒体上的信息扩散
-
 
 ![image](https://user-images.githubusercontent.com/543384/188857848-ca547dc2-7af0-48b3-8c07-537fe0c42209.png)
 
