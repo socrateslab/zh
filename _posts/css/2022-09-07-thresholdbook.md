@@ -20,8 +20,7 @@ tags:
 ## 跨越网络的门槛: 社交媒体上的信息扩散
 
 
-
-https://mmbiz.qpic.cn/mmbiz_png/WvZZ689QqoOJzfquT7okib1s5KhFqrflLUsvO0WTJk7ibQjRXFYdSVkTBxKnnkT5XUGpYic08mS11Kq27Uz5zoWNw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1
+![image](https://user-images.githubusercontent.com/543384/188857848-ca547dc2-7af0-48b3-8c07-537fe0c42209.png)
 
 信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（information aggregator）和搜索引擎（search engine）为基础。用户可以使用社交媒体等信息共享网站提交、转发和评论新闻等类型的信息。信息共享已经开始从简单的信息扩散向公众的参与过程转变。信息共享网站的出现及其与公众的相互作用，对信息扩散的机制产生了深刻的影响，并带来了很多新的、亟须解决的问题和困惑。
 
