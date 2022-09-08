@@ -1,0 +1,1004 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>利用python实现naive bayes算法 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="贝叶斯开创了统计学的贝叶斯学派，用先验知识和逻辑推理来处理不确定命题，与古老的频率学派分庭抗礼，频率学派只从数据中获得信息，完全不考虑先验知识，即人的经验。本文尝试利用python实现朴素贝叶斯分类。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="利用python实现naive bayes算法">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/python-bayes/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/python-bayes/">
+
+
+
+  <meta property="og:description" content="贝叶斯开创了统计学的贝叶斯学派，用先验知识和逻辑推理来处理不确定命题，与古老的频率学派分庭抗礼，频率学派只从数据中获得信息，完全不考虑先验知识，即人的经验。本文尝试利用python实现朴素贝叶斯分类。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="利用python实现naive bayes算法">
+  <meta name="twitter:description" content="贝叶斯开创了统计学的贝叶斯学派，用先验知识和逻辑推理来处理不确定命题，与古老的频率学派分庭抗礼，频率学派只从数据中获得信息，完全不考虑先验知识，即人的经验。本文尝试利用python实现朴素贝叶斯分类。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/python-bayes/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-1.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-06-09T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-1.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          利用python实现naive bayes算法
+
+        
+      </h1>
+      
+        <p class="page__lead">贝叶斯开创了统计学的贝叶斯学派，用先验知识和逻辑推理来处理不确定命题，与古老的频率学派分庭抗礼，频率学派只从数据中获得信息，完全不考虑先验知识，即人的经验。本文尝试利用python实现朴素贝叶斯分类。
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="利用python实现naive bayes算法">
+    <meta itemprop="description" content="贝叶斯开创了统计学的贝叶斯学派，用先验知识和逻辑推理来处理不确定命题，与古老的频率学派分庭抗礼，频率学派只从数据中获得信息，完全不考虑先验知识，即人的经验。本文尝试利用python实现朴素贝叶斯分类。">
+    <meta itemprop="datePublished" content="June 09, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#问题的提出-" id="markdown-toc-问题的提出-">问题的提出 </a></li>
+  <li><a href="#贝叶斯定理" id="markdown-toc-贝叶斯定理">贝叶斯定理</a></li>
+  <li><a href="#朴素贝叶斯分类" id="markdown-toc-朴素贝叶斯分类">朴素贝叶斯分类</a></li>
+  <li><a href="#naive-bayes" id="markdown-toc-naive-bayes">Naive Bayes</a></li>
+  <li><a href="#note" id="markdown-toc-note">Note</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/a480dab63165c18682d80e1f621f111a.png" alt="bayes" /></p>
+
+<h1 id="问题的提出-">问题的提出 <sup id="fnref:note" role="doc-noteref"><a href="#fn:note" class="footnote" rel="footnote">1</a></sup></h1>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/42a7d8a07672e28d10d24897487340d3.png" alt="class" /></p>
+
+<p>如果想判断未知样本的类别，即，已知它的三个属性X1、X2、X3，判断它是属于第一类（C=1）还是第二类（C=2）。</p>
+
+<ul>
+  <li>$P(C=1|X1,X2,X3)&gt;P(C=2|X1,X2,X3)$，给定数据的X1、X2、X3后，数据属于类别1的概率要大于属于类别2，即说明现有样本支持未知样本属于类别1，判定为类别1。</li>
+  <li>$P(C=1|X1,X2,X3)&lt;P(C=2|X1,X2,X3)$，则说明现有样本支持未知样本属于类别2，判定为类别2。</li>
+</ul>
+
+<p>如何得到$P(C=1|X1,X2,X3)$和$P(C=2|X1,X2,X3)$这两个概率呢？答案是<code class="language-plaintext highlighter-rouge">得不到</code>。但是没关系，因为，只要知道这两个谁大谁小就可以进行判断：</p>
+
+<ul>
+  <li>$P(C=1|X1,X2,X3)&gt;P(C=2|X1,X2,X3)$，则判定类别为1；</li>
+  <li>$P(C=1|X1,X2,X3)&lt;P(C=2|X1,X2,X3)$，则判定类别为2；</li>
+</ul>
+
+<p>贝叶斯定理就提供了方法进行这种比较。</p>
+
+<h1 id="贝叶斯定理">贝叶斯定理</h1>
+
+\[P(C|X) = \frac{ P(X|C)P(C)}{ P(X) }\]
+
+<ul>
+  <li>P(C|X)是给定属性X下，C的<strong>后验概率</strong></li>
+  <li>P(C)是C的<strong>先验概率</strong></li>
+</ul>
+
+<p>该公式被称为<code class="language-plaintext highlighter-rouge">“贝叶斯定理”</code>。</p>
+
+<p>根据贝叶斯定理，我们想找出最大的P(C|X)，由于P(X)对所有类为常数，只要找出最大的P(X|C)P(C)即可，这便是朴素贝叶斯分类的基础。</p>
+
+<h1 id="朴素贝叶斯分类">朴素贝叶斯分类</h1>
+
+<p>朴素贝叶斯分类器采用了属性条件独立性假设：对已知类别，假设所有属性相互独立。<sup id="fnref:zhou" role="doc-noteref"><a href="#fn:zhou" class="footnote" rel="footnote">2</a></sup></p>
+
+\[P(C|X) = \frac{ P(X|C)P(C)}{ P(X) } = \frac{P(C)}{P(X)} \prod_{i = 1}^{d}P(X_i|C)\]
+
+<p>最小化分类错误率: $h^{*}(x) = arg max P(c|x)$</p>
+
+<p>对所有类别来说P(X)相同，因此：</p>
+
+\[h_{naivebayes}^{*}(X) = arg max P(C) \prod_{i=1}^{d} P(X_i|C)\]
+
+<p>利用贝叶斯定理，找出最大的P(X|C)P(C)即可对未知样本进行分类，如max{P(X|C)P(C)}=P(X|C=n)P(C=n)，则说明未知样本属于第n类，其中，</p>
+
+<p>（1）P(C=i)=Si/S，Si是类Ci中的训练样本数，S是训练样本总数；</p>
+
+<p>（2）P(X|C=i)的计算开销可能非常大，因为会涉及到很多属性变量，这里可以做“属性值互相条件独立”的假定，即属性间不存在依赖关系：</p>
+
+<hr />
+<h1 id="naive-bayes">Naive Bayes</h1>
+<hr />
+
+<p>PlayTennis (i.e., decide whether our friend will play tennis or not in a given day) <sup id="fnref:Mitchell" role="doc-noteref"><a href="#fn:Mitchell" class="footnote" rel="footnote">3</a></sup></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#data
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>  
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"overcast"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"yes"</span> <span class="p">},</span>
+    <span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"rain"</span><span class="p">,</span> <span class="s">"temp"</span><span class="p">:</span><span class="s">"mild"</span><span class="p">,</span> <span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span> <span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">,</span> <span class="s">"class"</span><span class="p">:</span><span class="s">"no"</span> <span class="p">}]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>class</th>
+      <th>humidity</th>
+      <th>outlook</th>
+      <th>temp</th>
+      <th>wind</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>hot</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>overcast</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>cool</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>no</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>cool</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>overcast</td>
+      <td>cool</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>no</td>
+      <td>high</td>
+      <td>sunny</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>sunny</td>
+      <td>cool</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>sunny</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>yes</td>
+      <td>high</td>
+      <td>overcast</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>yes</td>
+      <td>normal</td>
+      <td>overcast</td>
+      <td>hot</td>
+      <td>weak</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>no</td>
+      <td>high</td>
+      <td>rain</td>
+      <td>mild</td>
+      <td>strong</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test</span><span class="o">=</span><span class="p">{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span><span class="s">"temp"</span><span class="p">:</span><span class="s">"cool"</span><span class="p">,</span><span class="s">"humidity"</span><span class="p">:</span><span class="s">"high"</span><span class="p">,</span><span class="s">"wind"</span><span class="p">:</span><span class="s">"strong"</span><span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the Prob. of class:cls
+</span>
+<span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_val</span><span class="p">,</span><span class="n">cls_name</span><span class="o">=</span><span class="s">"class"</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mf">0.0</span>     
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">cls_val</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The probability of play or not
+</span><span class="n">PY</span><span class="p">,</span> <span class="n">PN</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"yes"</span><span class="p">),</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"no"</span><span class="p">)</span>
+<span class="n">PY</span><span class="p">,</span> <span class="n">PN</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.6428571428571429, 0.35714285714285715)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the Prob(attr|cls)
+</span><span class="k">def</span> <span class="nf">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_val</span><span class="p">,</span><span class="n">attr_name</span><span class="p">,</span><span class="n">attr_val</span><span class="p">,</span><span class="n">cls_name</span><span class="o">=</span><span class="s">"class"</span><span class="p">):</span>
+    <span class="n">count1</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">count2</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">cls_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">cls_val</span><span class="p">:</span>
+            <span class="n">count1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">==</span> <span class="n">attr_val</span><span class="p">:</span>
+                <span class="n">count2</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count2</span><span class="o">/</span><span class="n">count1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The conditional probability of play or not
+</span><span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"yes"</span><span class="p">,</span> <span class="s">"outlook"</span><span class="p">,</span> <span class="s">"sunny"</span><span class="p">),</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">"no"</span><span class="p">,</span> <span class="s">"outlook"</span><span class="p">,</span> <span class="s">"sunny"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.2222222222222222, 0.6)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Calculate the NB
+</span><span class="k">def</span> <span class="nf">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">test</span><span class="p">,</span><span class="n">cls_y</span><span class="p">,</span><span class="n">cls_n</span><span class="p">):</span>
+    <span class="n">PY</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_y</span><span class="p">)</span>
+    <span class="n">PN</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_n</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">'The probability of play or not:'</span><span class="p">,</span> <span class="n">PY</span><span class="p">,</span><span class="s">'vs.'</span><span class="p">,</span> <span class="n">PN</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">test</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">PY</span> <span class="o">*=</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_y</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">PN</span> <span class="o">*=</span> <span class="n">PT</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">cls_n</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="s">'--&gt;play or not:--&gt;'</span><span class="p">,</span> <span class="n">PY</span><span class="p">,</span> <span class="n">PN</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">cls_y</span><span class="p">:</span><span class="n">PY</span><span class="p">,</span><span class="n">cls_n</span><span class="p">:</span><span class="n">PN</span><span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#calculate     
+</span><span class="n">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">test</span><span class="p">,</span><span class="s">"yes"</span><span class="p">,</span><span class="s">"no"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The probability of play or not: 0.642857142857 vs. 0.357142857143
+outlook sunny --&gt;play or not:--&gt; 0.142857142857 0.214285714286
+wind strong --&gt;play or not:--&gt; 0.047619047619 0.128571428571
+temp cool --&gt;play or not:--&gt; 0.015873015873 0.0257142857143
+humidity high --&gt;play or not:--&gt; 0.00529100529101 0.0205714285714
+
+
+
+
+
+{'no': 0.020571428571428574, 'yes': 0.005291005291005291}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#calculate  
+</span><span class="n">NB</span><span class="p">(</span><span class="n">data</span><span class="p">,{</span><span class="s">"outlook"</span><span class="p">:</span><span class="s">"sunny"</span><span class="p">,</span><span class="s">"temp"</span><span class="p">:</span><span class="s">"hot"</span><span class="p">,</span><span class="s">"humidity"</span><span class="p">:</span><span class="s">"normal"</span><span class="p">,</span><span class="s">"wind"</span><span class="p">:</span><span class="s">"weak"</span><span class="p">},</span><span class="s">"yes"</span><span class="p">,</span><span class="s">"no"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The probability of play or not: 0.642857142857 vs. 0.357142857143
+outlook sunny --&gt;play or not:--&gt; 0.142857142857 0.214285714286
+wind weak --&gt;play or not:--&gt; 0.0952380952381 0.0857142857143
+temp hot --&gt;play or not:--&gt; 0.021164021164 0.0342857142857
+humidity normal --&gt;play or not:--&gt; 0.0141093474427 0.00685714285714
+
+
+
+
+
+{'no': 0.006857142857142858, 'yes': 0.014109347442680775}
+</code></pre></div></div>
+
+<h1 id="note">Note</h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:note" role="doc-endnote">
+      <p>以下内容来自 【数说工作室】金融数据挖掘之朴素贝叶斯 http://www.ppvke.com/Blog/archives/6431 <a href="#fnref:note" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:zhou" role="doc-endnote">
+      <p>周志华 2016 机器学习 p150-151 <a href="#fnref:zhou" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:Mitchell" role="doc-endnote">
+      <p>Mitchell Machine Learning http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml <a href="#fnref:Mitchell" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-06-09T00:00:00+00:00">June 09, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E5%88%A9%E7%94%A8python%E5%AE%9E%E7%8E%B0naive+bayes%E7%AE%97%E6%B3%95%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-bayes%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-bayes%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-bayes%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-bayes%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/algorithm/understanding-hits/" class="pagination--pager" title="理解HITS算法
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/algorithm/fitting-powerlaw/" class="pagination--pager" title="使用powerlaw拟合重尾分布
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/python-bayes/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/python-bayes";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/python-bayes/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/python-bayes"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

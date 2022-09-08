@@ -1,0 +1,1010 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>ROC分析与统计检验 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="ROC分析与统计检验">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/ROC-analysis/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/ROC-analysis/">
+
+
+
+  <meta property="og:description" content="pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="ROC分析与统计检验">
+  <meta name="twitter:description" content="pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/ROC-analysis/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-4.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-11-05T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-4.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          ROC分析与统计检验
+
+        
+      </h1>
+      
+        <p class="page__lead">pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ROC分析与统计检验">
+    <meta itemprop="description" content="pROC是一个进行deLong显著性检验的R包。本文介绍计算AUC、绘制ROC曲线、并进行显著性检验。">
+    <meta itemprop="datePublished" content="November 05, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#百度百科敏感度特异度" id="markdown-toc-百度百科敏感度特异度">百度百科：敏感度、特异度</a></li>
+  <li><a href="#mtcars数据" id="markdown-toc-mtcars数据">mtcars数据</a></li>
+  <li><a href="#roc曲线" id="markdown-toc-roc曲线">ROC曲线</a></li>
+  <li><a href="#显著性检验" id="markdown-toc-显著性检验">显著性检验</a></li>
+  <li><a href="#reference" id="markdown-toc-reference">Reference</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<blockquote>
+  <p>pROC is a R package for visualizing, smoothing and comparing receiver operating characteristic (ROC) curves.<sup id="fnref:tom" role="doc-noteref"><a href="#fn:tom" class="footnote" rel="footnote">1</a></sup> <sup id="fnref:robin" role="doc-noteref"><a href="#fn:robin" class="footnote" rel="footnote">2</a></sup></p>
+</blockquote>
+
+<p>The (Partial) area under the curve (AUC) can be compared with statistical tests based on U-statistics or bootstrap. <sup id="fnref:delong" role="doc-noteref"><a href="#fn:delong" class="footnote" rel="footnote">3</a></sup> Confidence intervals can be computed for (p)AUC or ROC curves. Sample size / power computation for one or two ROC curves are available.</p>
+
+<h1 id="百度百科敏感度特异度">百度百科：敏感度、特异度</h1>
+
+<p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+
+<p><a href="https://baike.baidu.com/item/%E5%88%97%E8%81%94%E8%A1%A8">列联表</a>如下表所示，1代表正类，0代表负类。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+      <th>预测</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>1</td>
+      <td>0</td>
+      <td>合计</td>
+    </tr>
+    <tr>
+      <td>实际</td>
+      <td>1</td>
+      <td>True Positive（TP）</td>
+      <td>False Negative（FN）</td>
+      <td>Actual Positive(TP+FN)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>0</td>
+      <td>False Positive（FP)</td>
+      <td>True Negative(TN)</td>
+      <td>Actual Negative(FP+TN)</td>
+    </tr>
+    <tr>
+      <td>合计</td>
+      <td> </td>
+      <td>Predicted Positive(TP+FP)</td>
+      <td>Predicted Negative(FN+TN)</td>
+      <td>TP+FP+FN+TN</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>从列联表引入两个新名词。其一是真正类率(true positive rate ,TPR), 计算公式为<em>TPR=TP</em>/ (<em>TP</em>+ <em>FN</em>)，刻画的是<a href="https://baike.baidu.com/item/%E5%88%86%E7%B1%BB%E5%99%A8">分类器</a>所识别出的 正实例占所有正实例的比例。另外一个是假正类率(false positive rate, FPR),计算公式为<em>FPR= FP / (FP + TN)，</em>计算的是分类器错认为正类的负实例占所有负实例的比例。还有一个真负类率（True Negative Rate，TNR），也称为specificity,计算公式为TNR=<em>TN</em>/ (<em>FP</em>+ <em>TN</em>) = 1 - <em>FPR</em>。</p>
+
+<p>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阈值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阈值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例的比例，即TPR，但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，在此引入ROC。</p>
+
+<p>Receiver Operating Characteristic,翻译为”接受者操作特性曲线”，够拗口的。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即假正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+
+<p>下表是一个逻辑回归得到的结果。将得到的实数值按大到小划分成10个个数 相同的部分。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Percentile</th>
+      <th>实例数</th>
+      <th>正例数</th>
+      <th>1-特异度(%)</th>
+      <th>敏感度(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10</td>
+      <td>61797</td>
+      <td>4879</td>
+      <td>2.73</td>
+      <td>34.64</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>61797</td>
+      <td>2804</td>
+      <td>9.80</td>
+      <td>54.55</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>61797</td>
+      <td>2165</td>
+      <td>18.22</td>
+      <td>69.92</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>61797</td>
+      <td>1506</td>
+      <td>28.01</td>
+      <td>80.62</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>61797</td>
+      <td>987</td>
+      <td>38.90</td>
+      <td>87.62</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>61797</td>
+      <td>529</td>
+      <td>50.74</td>
+      <td>91.38</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td>61797</td>
+      <td>365</td>
+      <td>62.93</td>
+      <td>93.97</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>61797</td>
+      <td>294</td>
+      <td>75.26</td>
+      <td>96.06</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td>61797</td>
+      <td>297</td>
+      <td>87.59</td>
+      <td>98.17</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>61797</td>
+      <td>258</td>
+      <td>100.00</td>
+      <td>100.00</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>其正例数为此部分里实际的正类数。也就是说，将逻辑回归得到的结 果按从大到小排列，倘若以前10%的数值作为阈值，即将前10%的实例都划归为正类，6180个。其中，正确的个数为4879个，占所有正类的 4879/14084<em>100%=34.64%，即敏感度；另外，有6180-4879=1301个负实例被错划为正类，占所有负类的1301 /47713</em>100%=2.73%,即1-特异度。以这两组值分别作为y值（敏感度）和x值（1-特异度），在excel中作散点图，就可以得到ROC曲线。</p>
+
+<h1 id="mtcars数据">mtcars数据</h1>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>mpg<dbl></dbl></th>
+      <th>cyl<dbl></dbl></th>
+      <th>disp<dbl></dbl></th>
+      <th>hp<dbl></dbl></th>
+      <th>drat<dbl></dbl></th>
+      <th>wt<dbl></dbl></th>
+      <th>qsec<dbl></dbl></th>
+      <th>vs<dbl></dbl></th>
+      <th>am<dbl></dbl></th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mazda RX4</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.620</td>
+      <td>16.46</td>
+      <td>0</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Mazda RX4 Wag</td>
+      <td>21.0</td>
+      <td>6</td>
+      <td>160</td>
+      <td>110</td>
+      <td>3.90</td>
+      <td>2.875</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Datsun 710</td>
+      <td>22.8</td>
+      <td>4</td>
+      <td>108</td>
+      <td>93</td>
+      <td>3.85</td>
+      <td>2.320</td>
+      <td>18.61</td>
+      <td>1</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Hornet 4 Drive</td>
+      <td>21.4</td>
+      <td>6</td>
+      <td>258</td>
+      <td>110</td>
+      <td>3.08</td>
+      <td>3.215</td>
+      <td>19.44</td>
+      <td>1</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Hornet Sportabout</td>
+      <td>18.7</td>
+      <td>8</td>
+      <td>360</td>
+      <td>175</td>
+      <td>3.15</td>
+      <td>3.440</td>
+      <td>17.02</td>
+      <td>0</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Valiant</td>
+      <td>18.1</td>
+      <td>6</td>
+      <td>225</td>
+      <td>105</td>
+      <td>2.76</td>
+      <td>3.460</td>
+      <td>20.22</td>
+      <td>1</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="roc曲线">ROC曲线</h1>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">pROC</span><span class="p">)</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">am</span><span class="p">,</span><span class="w"> </span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+
+</span></code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets//img2017/Rplot1.jpeg" alt="png" /></p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">))</span><span class="w">
+</span><span class="n">plot.roc</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">wt</span><span class="p">,</span><span class="n">mtcars</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="s2">"1"</span><span class="p">)</span><span class="w">
+</span><span class="n">lines.roc</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">am</span><span class="p">,</span><span class="n">mtcars</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="s1">'2'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets//img2017/Rplot2.jpeg" alt="png" /></p>
+
+<h1 id="显著性检验">显著性检验</h1>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">roc</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">wt</span><span class="p">,</span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+</span><span class="n">r2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">roc</span><span class="p">(</span><span class="n">vs</span><span class="o">~</span><span class="n">am</span><span class="p">,</span><span class="n">mtcars</span><span class="p">)</span><span class="w">
+</span><span class="n">roc.test</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">,</span><span class="w"> </span><span class="n">boot.n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2000</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|===========================================| 100%
+
+	Bootstrap test for two correlated ROC curves
+
+data:  r1 and r2
+D = 4.5831, boot.n = 2000, boot.stratified =
+1, p-value = 4.581e-06
+alternative hypothesis: true difference in AUC is not equal to 0
+sample estimates:
+AUC of roc1 AUC of roc2
+  0.8412698   0.5833333
+</code></pre></div></div>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">roc.test</span><span class="p">(</span><span class="n">roc1</span><span class="p">,</span><span class="w"> </span><span class="n">roc2</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="s2">"venkatraman"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|===========================================| 100%
+
+Venkatraman's test for two paired ROC curves
+
+data:  roc1 and roc2
+E = 578, boot.n = 2000, p-value = 0.024
+alternative hypothesis: true difference in AUC is not equal to 0
+</code></pre></div></div>
+
+<h1 id="reference">Reference</h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:tom" role="doc-endnote">
+      <p>Tom Fawcett (2006) “An introduction to ROC analysis”. Pattern Recognition Letters 27, 861–874. DOI: 10.1016/j.patrec.2005.10.010. <a href="#fnref:tom" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:robin" role="doc-endnote">
+      <p>Xavier Robin, Natacha Turck, Alexandre Hainard, et al. (2011) “pROC: an open-source package for R and S+ to analyze and compare ROC curves”. BMC Bioinformatics, 7, 77. DOI: 10.1186/1471-2105-12-77. <a href="#fnref:robin" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:delong" role="doc-endnote">
+      <p>Elisabeth R. DeLong, David M. DeLong and Daniel L. Clarke-Pearson (1988) “Comparing the areas under two or more correlated receiver operating characteristic curves: a nonparametric approach”. Biometrics 44, 837–845. <a href="#fnref:delong" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-11-05T00:00:00+00:00">November 05, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=ROC%E5%88%86%E6%9E%90%E4%B8%8E%E7%BB%9F%E8%AE%A1%E6%A3%80%E9%AA%8C%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2FROC-analysis%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2FROC-analysis%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2FROC-analysis%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2FROC-analysis%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/python/predicatability/" class="pagination--pager" title="真实熵与人类行为可预测性
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/python-data-cleaning/" class="pagination--pager" title="使用python进行数据清洗
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/ROC-analysis/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/ROC-analysis";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/ROC-analysis/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/ROC-analysis"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

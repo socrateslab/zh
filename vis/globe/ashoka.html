@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Ashoka Fellows' Global Locations</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/globe/static/css/reset.css">
+        <link rel="stylesheet" href="/globe/static/css/defaults.css">
+        <link rel="stylesheet" href="/globe/static/css/globe.css">
+    </head>
+    <body>
+
+    <div id="container"></div>
+
+    <div id="info">
+        <a href="http://www.chromeexperiments.com/globe">WebGL Globe</a> <span class="bull">&bull;</span>
+        Created by <a href="http://github.com/chengjun/">Chengjun</a> <span class="bull">&bull;</span>
+        Data from <a href="https://www.ashoka.org/fellows">Ashoka Website</a>
+    </div>
+
+    <div id="currentInfo">
+        <span id="year1990" class="year"></span>
+        <span id="year1995" class="year"></span>
+        <span id="year2000" class="year"></span>
+    </div>
+
+    <div id="title">
+        <h2 id="title">
+            Social Entrepreneurs Worldwide
+        </h2>
+
+        <p id="explanation">
+		
+            Ashoka is the largest network of social entrepreneurs worldwide. Ashoka Fellows are leading social entrepreneurs who we recognize to have innovative solutions to social problems and the potential to change patterns across society. 
+			They demonstrate unrivaled commitment to bold new ideas and prove that compassion, creativity, and collaboration are tremendous forces for change. 
+			Ashoka Fellows work in over 70 countries around the globe in every area of human need.
+            
+        </p>
+
+        <p id="explanation">
+			In this visualization, each pillar stands for one country. By the year of 2013, there are 2334 fellows from 76 countries. 
+			The top 3 countries are India (N = 303), Brazil (N = 286), and United States(N = 160).
+        </p>
+
+    </div>
+    
+    <!--
+    <a href="https://github.com/aaasen/github_globe"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+     -->
+     
+    <script type="text/javascript" src="/globe/static/js/Three/ThreeWebGL.js"></script>
+    <script type="text/javascript" src="/globe/static/js/Three/ThreeExtras.js"></script>
+    <script type="text/javascript" src="/globe/static/js/Three/RequestAnimationFrame.js"></script>
+    <script type="text/javascript" src="/globe/static/js/Three/Detector.js"></script>
+    <script type="text/javascript" src="/globe/static/js/Tween.js"></script>
+    <script type="text/javascript" src="/globe/static/js/globe.js"></script>
+
+    <script type="text/javascript">
+
+        if(!Detector.webgl){
+            Detector.addGetWebGLMessage();
+        } else {
+
+            var years = ['1990','1995','2000'];
+            var container = document.getElementById('container');
+            var globe = new DAT.Globe(container);
+            console.log(globe);
+            var i, tweens = [];
+
+            var settime = function(globe, t) {
+                return function() {
+                    new TWEEN.Tween(globe).to({time: t/years.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+                    var y = document.getElementById('year'+years[t]);
+                    if (y.getAttribute('class') === 'year active') {
+                        return;
+                    }
+                    var yy = document.getElementsByClassName('year');
+                    for(i=0; i<yy.length; i++) {
+                        yy[i].setAttribute('class','year');
+                    }
+                    y.setAttribute('class', 'year active');
+                };
+            };
+
+            for(var i = 0; i<years.length; i++) {
+                var y = document.getElementById('year'+years[i]);
+                y.addEventListener('mouseover', settime(globe,i), false);
+            }
+
+            var xhr;
+            TWEEN.start();
+
+
+            xhr = new XMLHttpRequest();
+            xhr.open('GET', '/globe/data/ashoka_locations.json', true);
+            xhr.onreadystatechange = function(e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        window.data = data;
+                        for (i=0;i<data.length;i++) {
+                            globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
+                        }
+                        globe.createPoints();
+                        settime(globe,0)();
+                        globe.animate();
+                    }
+                }
+            };
+            xhr.send(null);
+        }
+
+    </script>
+
+    </body>
+
+</html>

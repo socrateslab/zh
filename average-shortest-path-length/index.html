@@ -1,0 +1,757 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>使用networkx计算平均最短路径长度 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="问题小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="使用networkx计算平均最短路径长度">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/average-shortest-path-length/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/average-shortest-path-length/">
+
+
+
+  <meta property="og:description" content="问题小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="使用networkx计算平均最短路径长度">
+  <meta name="twitter:description" content="问题小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？">
+  <meta name="twitter:url" content="https://socrateslab.github.io/average-shortest-path-length/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2014-11-07T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="使用networkx计算平均最短路径长度">
+    <meta itemprop="description" content="问题小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？">
+    <meta itemprop="datePublished" content="November 07, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">使用networkx计算平均最短路径长度
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h2 id="问题">问题</h2>
+<p>小可老师给我提了一个问题：为什么一个微博扩散网络的平均最短路径长度是0.001？</p>
+
+<h2 id="平均最短路径长度的定义">平均最短路径长度的定义</h2>
+<p>给定一个网络G(n, e), n是节点数量，e是链接数量。对于网络中的任意一对节点source s和target t，我们可以计算它们之间的最短距离$d_{s, t}$。将这些距离相加除以$n(n-1)$，就可以得到网络的平均最短路径长度。公式如下<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>：</p>
+
+\[a = \sum \frac{d_{s,t}}{n(n-1)}\]
+
+<h2 id="代码">代码</h2>
+
+<p>首先，生成一个实例网络。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="c1"># 生成一个有向网络
+</span><span class="n">G</span><span class="o">=</span><span class="n">nx</span><span class="p">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="c1">#网络构成
+</span><span class="n">G</span><span class="p">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)])</span>
+<span class="c1">#绘制网络
+</span><span class="n">pos</span><span class="o">=</span><span class="n">nx</span><span class="p">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span> <span class="c1">#设置网络的布局
+</span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/5336451cfec4520b87dd8d05751b00d3.png" alt="avrage—nx-path" /></p>
+
+<p>这样我们生成了一个较为典型的星形有向扩散网络。</p>
+
+<p>来看一下节点之间的最短路径长度：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="c1"># 网络平均最短距离0.181
+</span></code></pre></div></div>
+<p>果然有向网再次出现小于1的平均最短距离。
+按照定义，我们需要统计任意一对节点之间的距离，节点1作为起点与其它节点之间的最短距离的和是10， 2是2， 6是1， 其它节点<code class="language-plaintext highlighter-rouge">不存在</code>最短路径的问题。
+这样 $a =\frac {10 + 2 + 1}{9*8} = 0.181$</p>
+
+<p>上述手工计算过程可以通过nx.all_pairs_shortest_path_length(G)实现。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">all_pairs_shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Out[29]:
+{1: {1: 0, 2: 1, 3: 2, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1},
+ 2: {2: 0, 3: 1, 4: 1},
+ 3: {3: 0},
+ 4: {4: 0},
+ 5: {5: 0},
+ 6: {6: 0, 7: 1},
+ 7: {7: 0},
+ 8: {8: 0},
+ 9: {9: 0}}
+</code></pre></div></div>
+
+<p>由上述结果，可知道对于类似节点3和4之间距离的问题，networkx就是认为不存在的。所以没有列出，测试一下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># 1
+</span><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># 2
+</span><span class="n">nx</span><span class="p">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1">#error: NetworkXNoPath: No path between 4 and 3.
+</span></code></pre></div></div>
+<p>因为有些节点之间距离不存在而不被计算（被认为是0而非无穷大），所以产生了节点数量的平方大于最短距离之和的情况，进而平均最短距离小于1这种反直觉的情况在有向网络中出现了。</p>
+
+<p>当我们把网络转化为无向网络的时候，这种情况就消失了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UG</span><span class="o">=</span><span class="n">G</span><span class="p">.</span><span class="n">to_undirected</span><span class="p">()</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span><span class="n">UG</span><span class="p">)</span> <span class="c1">#1.93
+</span></code></pre></div></div>
+
+<p>对于这种星形扩散网络，很多节点对之间的最短路径并不存在，应该被计算为无穷大，而不是0，所以对于这种网络计算平均最短路径长度没有太大的意义了。与其如此，不如计算所有节点对当中，不存在最短路径长度的比例。</p>
+
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>http://networkx.lanl.gov/reference/generated/networkx.algorithms.shortest_paths.generic.average_shortest_path_length.html <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#networkx" class="page__taxonomy-item" rel="tag">networkx</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#python" class="page__taxonomy-item" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-11-07T00:00:00+00:00">November 07, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E4%BD%BF%E7%94%A8networkx%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%9D%87%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Faverage-shortest-path-length%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Faverage-shortest-path-length%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Faverage-shortest-path-length%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Faverage-shortest-path-length%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/book-error/" class="pagination--pager" title="译稿勘误:有向三元组的类型
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/attention-flow-network/" class="pagination--pager" title="注意力流网络分析的三个维度
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/average-shortest-path-length/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/average-shortest-path-length";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/average-shortest-path-length/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/average-shortest-path-length"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

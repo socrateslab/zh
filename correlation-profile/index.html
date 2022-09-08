@@ -1,0 +1,870 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>演员网络中的度相关：随机洗牌的影响 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="演员网络中的度相关：随机洗牌的影响">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/correlation-profile/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/correlation-profile/">
+
+
+
+  <meta property="og:description" content="演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="演员网络中的度相关：随机洗牌的影响">
+  <meta name="twitter:description" content="演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/correlation-profile/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-09-30T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="演员网络中的度相关：随机洗牌的影响">
+    <meta itemprop="description" content="演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。">
+    <meta itemprop="datePublished" content="September 30, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">演员网络中的度相关：随机洗牌的影响
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>演员网络是一个被广泛研究的网络数据。这个数据的规模很大，分析起来并不如想得那么简单。我们首先读取数据。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">delete</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="n">cm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="kn">from</span> <span class="nn">scipy.stats.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan2</span><span class="p">,</span> <span class="n">radians</span>
+<span class="kn">import</span> <span class="nn">Image</span>
+
+<span class="c1"># refreshing results
+</span><span class="k">def</span> <span class="nf">flushPrint</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\r</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'%s'</span> <span class="o">%</span> <span class="n">variable</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># user mobility in real and virtual world
+</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># counter
+</span><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">'/Users/chengjun/bigdata/actor.dat.gz.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">flushPrint</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">strip</span><span class="p">().</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="n">W</span><span class="p">[</span> <span class="nb">tuple</span><span class="p">(</span> <span class="nb">sorted</span><span class="p">(</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>然后，构造网络。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">W</span><span class="p">:</span>
+    <span class="n">G</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="n">W</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)])</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</code></pre></div></div>
+<p>‘Name: \nType: Graph\nNumber of nodes: 382219\nNumber of edges: 1259892\nAverage degree:   6.5925’</p>
+
+<p>需要指出的是这个网络当中含有多个子图。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">graphs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="p">.</span><span class="n">connected_component_subgraphs</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+</code></pre></div></div>
+<p>我们感兴趣的是其中的度相关情况，即构成链接的每个节点的度之间的相关。需要注意的是，这个时候需要考虑零模型的情况，即剔除随机网络的影响。S Maslov, K Sneppen 2002年的时候，在Science杂志上发表了一篇论文专门讨论这种情况。</p>
+
+<p>calculated the likelihood P(K0,K1) that two proteins with connectivities K0 and K1 are connected to each other by a link and compared it to the same quantity Pr(K0,K1) measured in a randomized version of the same network. In this “null model” network, all proteins have exactly the same connectivity as in the original one, whereas the choice of their interaction partners is totally random.</p>
+
+<p>得到度相关矩阵后，可以采用热力图的形式进行展示，为了使得展示更容易观察，采用高斯过滤的方法对矩阵进行处理。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#P(K0,K1)
+</span><span class="k">def</span> <span class="nf">getNKK</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">maxd</span><span class="p">):</span>
+    <span class="n">nkk</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">maxd</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxd</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">g</span><span class="p">.</span><span class="n">edges</span><span class="p">():</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">nkk</span><span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="n">nkk</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">nkk</span>
+
+<span class="k">def</span> <span class="nf">matrixToList</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[];</span><span class="n">y</span> <span class="o">=</span> <span class="p">[];</span><span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="p">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="p">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span><span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">y</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">z</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>   
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+
+<span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="n">ndi</span>
+
+<span class="k">def</span> <span class="nf">grid_density_gaussian_filter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">kx</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span>
+    <span class="n">ky</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="n">imgw</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">border</span><span class="p">)</span>
+    <span class="n">imgh</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">border</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">imgh</span><span class="p">,</span><span class="n">imgw</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">zi</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">ix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">xi</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span> <span class="n">kx</span><span class="p">)</span> <span class="o">+</span> <span class="n">border</span>
+        <span class="n">iy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">yi</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span> <span class="o">*</span> <span class="n">ky</span><span class="p">)</span> <span class="o">+</span> <span class="n">border</span>
+        <span class="n">iz</span> <span class="o">=</span> <span class="n">zi</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ix</span> <span class="o">&lt;</span> <span class="n">imgw</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">iy</span> <span class="o">&lt;</span> <span class="n">imgh</span><span class="p">:</span>
+            <span class="n">img</span><span class="p">[</span><span class="n">iy</span><span class="p">][</span><span class="n">ix</span><span class="p">]</span> <span class="o">+=</span> <span class="n">zi</span> <span class="c1"># this could be a problem.
+</span>    <span class="k">return</span> <span class="n">ndi</span><span class="p">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">r</span><span class="p">))</span>  <span class="c1">## gaussian convolution
+</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
+
+<span class="k">def</span> <span class="nf">plotHeatMap</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="c1"># generate data
+</span>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">matrixToList</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+
+    <span class="c1"># data points range
+</span>    <span class="n">data_ymin</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="mf">0.001</span>
+    <span class="n">data_ymax</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">data_xmin</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mf">0.001</span>
+    <span class="n">data_xmax</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># view area range
+</span>    <span class="n">view_ymin</span> <span class="o">=</span> <span class="n">data_ymin</span>
+    <span class="n">view_ymax</span> <span class="o">=</span> <span class="n">data_ymax</span>
+    <span class="n">view_xmin</span> <span class="o">=</span> <span class="n">data_xmin</span>
+    <span class="n">view_xmax</span> <span class="o">=</span> <span class="n">data_xmax</span>
+
+    <span class="n">zd</span> <span class="o">=</span> <span class="n">grid_density_gaussian_filter</span><span class="p">(</span><span class="n">view_xmin</span><span class="p">,</span> <span class="n">view_ymin</span><span class="p">,</span> <span class="n">view_xmax</span><span class="p">,</span> <span class="n">view_ymax</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">zd</span> <span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s">'lower'</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">view_xmin</span><span class="p">,</span> <span class="n">view_xmax</span><span class="p">,</span> <span class="n">view_ymin</span><span class="p">,</span> <span class="n">view_ymax</span><span class="p">])</span><span class="c1"># norm = LogNorm()
+</span>    <span class="c1">#plt.xscale('log'),plt.yscale('log')
+</span>    <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$K_{1}$'</span><span class="p">);</span> <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$K_{0}$'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">shuffleNetwork</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="kn">import</span> <span class="nn">timeit</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">.</span><span class="n">default_timer</span><span class="p">()</span>
+    <span class="c1">#Your statements here
+</span>    <span class="n">nx</span><span class="p">.</span><span class="n">double_edge_swap</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="n">nswap</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">max_tries</span><span class="o">=</span><span class="mi">400000000</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">.</span><span class="n">default_timer</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="n">maxd</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">().</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">nkk</span> <span class="o">=</span> <span class="n">getNKK</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">maxd</span><span class="p">)</span>    
+    <span class="n">nrk</span> <span class="o">=</span> <span class="n">getNKK</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">maxd</span><span class="p">)</span>
+    <span class="n">rkk</span> <span class="o">=</span> <span class="n">nkk</span><span class="o">/</span><span class="n">nrk</span>
+    <span class="k">return</span> <span class="n">nkk</span><span class="p">,</span> <span class="n">nrk</span><span class="p">,</span> <span class="n">rkk</span>
+</code></pre></div></div>
+<p>这样我们可以得到nkk， nrk， rkk</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nkk</span><span class="p">,</span> <span class="n">nrk</span><span class="p">,</span> <span class="n">rkk</span> <span class="o">=</span> <span class="n">shuffleNetwork</span><span class="p">(</span><span class="n">graphs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+<p>画出来看看：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s">'white'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plotHeatMap</span><span class="p">(</span><span class="n">rkk</span><span class="p">,</span> <span class="s">'Correlation Profile'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotHeatMap</span><span class="p">(</span><span class="n">nkk</span><span class="p">,</span> <span class="s">'Original'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plotHeatMap</span><span class="p">(</span><span class="n">nrk</span><span class="p">,</span> <span class="s">'Reshuffled'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/798b31bd2c2455f772e774af87461cad.png" alt="k1k2" /></p>
+
+<p>当然了，我们可以考虑另一种情况，即一个节点的度为k，它的邻居的平均度是$&lt;k_{nn}&gt;$, 那么他们之间是什么关系呢？</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">degreeCor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="n">lab</span><span class="p">,</span><span class="n">mar</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">=</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">g</span><span class="p">.</span><span class="n">nodes</span><span class="p">():</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">g</span><span class="p">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">k</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+        <span class="n">l</span><span class="p">[</span><span class="n">g</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">i</span><span class="p">)].</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>   
+    <span class="n">x</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mar</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">lab</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">numpoints</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">);</span> <span class="n">ax</span><span class="p">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s">'&lt;knn(k)&gt; '</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'k'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>显然，如下图所示，经过彻底洗牌之后的网络不再具有同质性。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">g</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">.</span><span class="n">default_timer</span><span class="p">()</span>
+<span class="c1">#Your statements here
+</span><span class="n">nx</span><span class="p">.</span><span class="n">double_edge_swap</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="n">nswap</span><span class="o">=</span><span class="mi">9000000</span><span class="p">,</span> <span class="n">max_tries</span><span class="o">=</span><span class="mi">4000000000</span><span class="p">)</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">.</span><span class="n">default_timer</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s">'white'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">degreeCor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="s">'Actors'</span><span class="p">,</span><span class="s">'bs'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">degreeCor</span><span class="p">(</span><span class="n">H</span><span class="p">,</span><span class="n">ax</span><span class="p">,</span><span class="s">'shuffled'</span><span class="p">,</span><span class="s">'gv'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/4d1f2ea9918c3492acb9d60e5132bf1a.png" alt="correlation_shuffling" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E5%BA%A6%E7%9B%B8%E5%85%B3" class="page__taxonomy-item" rel="tag">度相关</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E7%BD%91%E7%BB%9C" class="page__taxonomy-item" rel="tag">网络</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-09-30T00:00:00+00:00">September 30, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E6%BC%94%E5%91%98%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%BA%A6%E7%9B%B8%E5%85%B3%EF%BC%9A%E9%9A%8F%E6%9C%BA%E6%B4%97%E7%89%8C%E7%9A%84%E5%BD%B1%E5%93%8D%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fcorrelation-profile%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fcorrelation-profile%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fcorrelation-profile%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fcorrelation-profile%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/attention-flow-network/" class="pagination--pager" title="注意力流网络分析的三个维度
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/%E4%BC%A0%E6%92%AD%E7%BD%91%E7%BB%9C/network-dynamics-ba/" class="pagination--pager" title="网络增长动力学：BA模型
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/correlation-profile/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/correlation-profile";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/correlation-profile/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/correlation-profile"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

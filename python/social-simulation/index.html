@@ -1,0 +1,1173 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Introduction to Social Simulation with Python - 计算传播网</title>
+
+
+
+
+<meta name="description" content="Source code and materials for the tutorial ‘Introduction to Simulation: Complex social dynamics in a few lines of code’. The tutorial was held on 11th July, 2016 within the Digital Humanities conference at Krakow, Poland.">
+
+
+
+
+<meta name="author" content="Xavier Rubio-Campillo">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="Introduction to Social Simulation with Python">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/python/social-simulation/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/python/social-simulation/">
+
+
+
+  <meta property="og:description" content="Source code and materials for the tutorial ‘Introduction to Simulation: Complex social dynamics in a few lines of code’. The tutorial was held on 11th July, 2016 within the Digital Humanities conference at Krakow, Poland.">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="Introduction to Social Simulation with Python">
+  <meta name="twitter:description" content="Source code and materials for the tutorial ‘Introduction to Simulation: Complex social dynamics in a few lines of code’. The tutorial was held on 11th July, 2016 within the Digital Humanities conference at Krakow, Poland.">
+  <meta name="twitter:url" content="https://socrateslab.github.io/python/social-simulation/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-gallery-image-2-th.jpg">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@Xavier Rubio-Campillo">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-16.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-04-20T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-16.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          Introduction to Social Simulation with Python
+
+        
+      </h1>
+      
+        <p class="page__lead">Source code and materials for the tutorial ‘Introduction to Simulation: Complex social dynamics in a few lines of code’. The tutorial was held on 11th July, 2016 within the <strong>Digital Humanities conference</strong> at Krakow, Poland.
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/logo.jpg" class="author__avatar" alt="计算传播网" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">计算传播网</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Computational Communication
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Nanjing</span>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://computational-communication.com" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:computational.communication@gmail.com">
+            <meta itemprop="email" content="computational.communication@gmail.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.weibo.com/http://weibo.com/p/10080843f915e125a13c116fe1854bc43ccf0a/home" itemprop="sameAs">
+            <i class="fa fa-fw fa-weibo" aria-hidden="true"></i> Weibo
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introduction to Social Simulation with Python">
+    <meta itemprop="description" content="Source code and materials for the tutorial ‘Introduction to Simulation: Complex social dynamics in a few lines of code’. The tutorial was held on 11th July, 2016 within the Digital Humanities conference at Krakow, Poland.">
+    <meta itemprop="datePublished" content="April 20, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Author: <a href="http://www.ed.ac.uk/history-classics-archaeology/about-us/staff-profiles/profile_tab1_academic.php?uun=xrubioc&amp;search=2">Xavier Rubio-Campillo</a></p>
+
+<p>https://github.com/xrubio/simulationdh （View it on <a href="http://nbviewer.jupyter.org/github/xrubio/simulationdh/blob/v1.1/doc/DH2016tutorial.ipynb">nbviewr</a>)</p>
+
+<p>The tutorial was held on 11th July, 2016 within the <strong>Digital Humanities conference</strong> at Krakow, Poland. It is recommended to begin by taking a look at the introductory presentation at <a href="https://github.com/xrubio/simulationdh">doc/slides.pdf</a>. The second step would be to setup the environment and follow the tutorial at doc/DHtutorial.pdf. You can finally check the result against the code found in src/DHworkshop.py and extend the model to solve the challenges defined at the end of slides.pdf</p>
+
+<p>We will create a model depicting <strong>competition between two cultural traits</strong> within a common population. This is a typical <strong>cultural dynamics</strong> scenario where individuals must adopt one option amongst two or more mutually exclusive options (i.e. religion, elections, football teams). In this case we are interested in situations when you have to choose one option (e.g., you cannot practice two religions), but more complex versions with individuals adopting more than one trait can easily be developed.</p>
+
+<blockquote>
+  <p>Individuals can change their choice over time. The decision is based on the payoff of each trait.</p>
+</blockquote>
+
+<p>This payoff is a measure of the relative interest of the trait, based on:</p>
+
+<p>a) how many people exhibits the trait and</p>
+
+<p>b) the attractiveness of the trait.</p>
+
+<p>An example of this dynamic could be a competition between two different religions. The number of people practicing a belief makes this belief more appealing. However, some beliefs could be intrinsically more interesting for some individuals so part of the population could adopt them even if they are a minority. Finally, social norms are not static so the attractiveness of specific beliefs can vary over time.</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/f801e211a3cf1f0275214fc73d2fb5a0.png" alt="path_intro" /></p>
+
+<p>Time is divided in discrete steps starting at t = 0.</p>
+
+<p>At each step t the two populations At and Bt are updated as individuals move from A to B and from B to A. Take into accout that the value here can be negative meaning that more people move from B to A.</p>
+
+<p>At+1=At+ΔAB</p>
+
+<p>Bt+1=Bt−ΔAB</p>
+
+<p>Let’s see how we can express it in code.</p>
+
+<p>First, we need to define the number of individuals in the population. Say we want to start with 100 people. The text after a hash symbol is just a comment so you can skip it for now, but in general it is a good idea to keep documenting the code as you write.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1"># total population size
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Then, we decide on how many believers of each cultural option (religion) we want to start with.
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>    <span class="c1"># initial number of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">A</span> <span class="c1"># initial number of believers A
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># variation has not been defined yet.
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>  
+</code></pre></div></div>
+
+<p>So let’s calculate <strong>variation</strong> based on the population switching trait based on a comparison between payoffs. For example if B has higher payoff then A then we should get something like this:</p>
+
+<h3 id="delta_a-rightarrow-b--a-payoff_a-rightarrow-b---payoff_b-rightarrow-a">\(\Delta_{A \rightarrow B} = A (Payoff_{A \rightarrow B} - Payoff_{B \rightarrow A})\)</h3>
+
+<p>So the proportion of population A that switches to B is proportional to the difference between payoffs. As we mentioned the payoff of a trait is determined by the population exhibiting the competing trait as well as its intrinsic attractiveness.</p>
+
+<p>To define the payoff we need to implement the following competition equations:</p>
+
+<h3 id="payoff_b-rightarrow-a--fraca_tn-fract_at_a--t_b">\(Payoff_{B \rightarrow A} = \frac{A_t}{N} \frac{T_A}{T_A + T_B}\)</h3>
+
+<h3 id="payoff_a-rightarrow-b--fracb_tn-fract_bt_a--t_b">\(Payoff_{A \rightarrow B} = \frac{B_t}{N} \frac{T_B}{T_A + T_B}\)</h3>
+
+<ul>
+  <li>The first term is the proportion of the entire population N holding a particular cultural trait (At/N for A and Bt/N for B).</li>
+  <li>The second element of the equations is the balance between the attractiveness of both ideas (TA and TB) expressed as the attractiveness of the given trait in respect to the total ‘available’ attractiveness (TA+TB).</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">payoff</span><span class="p">(</span><span class="n">believers</span><span class="p">,</span> <span class="n">Tx</span><span class="p">,</span><span class="n">Ty</span><span class="p">):</span>    
+    <span class="n">proportionBelievers</span> <span class="o">=</span> <span class="n">believers</span><span class="o">/</span><span class="n">N</span>
+    <span class="n">attraction</span> <span class="o">=</span> <span class="n">Tx</span><span class="o">/</span><span class="p">(</span><span class="n">Ty</span> <span class="o">+</span> <span class="n">Tx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">proportionBelievers</span> <span class="o">*</span> <span class="n">attraction</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># temporal dimension
+</span><span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># initial time
+</span>
+<span class="c1"># init populations
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>          <span class="c1"># population size
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>           <span class="c1"># initial population of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="n">A</span>             <span class="c1"># initial population of believers B
+</span>
+<span class="c1"># additional params
+</span><span class="n">Ta</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># initial attractiveness of option A
+</span><span class="n">Tb</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># initial attractiveness of option B
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>         <span class="c1"># strength of the transmission process
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># calculate the payoff for change of believers A and B in the current time step       
+</span><span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+<span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+<span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+<span class="n">difference</span>
+
+<span class="c1"># the proportion of population B that switches to A is proportional to the difference between payoffs.
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># when difference &gt; 0, B will switch to A
+# Else, A will switch to B.
+</span>
+<span class="c1"># B -&gt; A   
+</span><span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+<span class="c1"># A -&gt; B        
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+<span class="n">variation</span>
+
+<span class="c1"># when variation &gt; 0, B will switch to A
+# Else, A will switch to B.
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># control the pace of change with alpha
+</span><span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># calculate the payoff for change of believers A and B in the current time step       
+</span>    <span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+    <span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+
+    <span class="c1"># B -&gt; A   
+</span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># A -&gt; B        
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+    <span class="c1"># control the pace of change with alpha
+</span>    <span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>  
+
+    <span class="c1"># update the population    
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<h2 id="tracing-the-changes">Tracing the changes</h2>
+
+<ul>
+  <li>First, add the initial number of believers to their respective lists.</li>
+  <li>Second, we also need to update the number of believers for each step.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># initialisation
+</span><span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># initial time
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>           <span class="c1"># population size
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>              <span class="c1"># initial proportion of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="n">A</span>             <span class="c1"># initial proportion of believers B
+</span>
+<span class="n">Ta</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># initial attractiveness of option A
+</span><span class="n">Tb</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># initial attractiveness of option B
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>         <span class="c1"># strength of the transmission process
+</span>
+<span class="c1"># initialise the list used for plotting
+</span><span class="n">believersA</span> <span class="o">=</span> <span class="p">[]</span>    
+<span class="n">believersB</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># add the initial populations
+</span><span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># calculate the payoff for change of believers A and B in the current time step       
+</span>    <span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+    <span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+
+        <span class="c1"># B -&gt; A   
+</span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># A -&gt; B        
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+    <span class="c1"># control the pace of change with alpha
+</span>    <span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>  
+
+    <span class="c1"># update the population    
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>   
+
+    <span class="c1"># save the values to a list for plotting    
+</span>    <span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>      <span class="c1"># plotting library
+</span><span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>              <span class="c1"># makes the graphs look pretty
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the results    
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersA</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'A'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersB</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'B'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$Time$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$Number$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/cb201bbf89d946a001e6f724b63dfba6.png" alt="social simulation 1" /></p>
+
+<h2 id="let-the-attractiveness-of-each-optio-change-through-time">Let the attractiveness of each optio change through time.</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">attractiveness</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">):</span>
+    <span class="n">Ka</span> <span class="o">=</span> <span class="mf">0.1</span>  
+    <span class="n">Kb</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">Ta</span> <span class="o">=</span> <span class="n">Ta</span> <span class="o">+</span> <span class="n">Ka</span>
+    <span class="n">Tb</span> <span class="o">=</span> <span class="n">Tb</span> <span class="o">+</span> <span class="n">Kb</span>
+    <span class="k">return</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># initialisation
+</span><span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># initial time
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>           <span class="c1"># population size
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>              <span class="c1"># initial proportion of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="n">A</span>             <span class="c1"># initial proportion of believers B
+</span>
+<span class="n">Ta</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># initial attractiveness of option A
+</span><span class="n">Tb</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># initial attractiveness of option B
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>         <span class="c1"># strength of the transmission process
+</span>
+<span class="c1"># initialise the list used for plotting
+</span><span class="n">believersA</span> <span class="o">=</span> <span class="p">[]</span>    
+<span class="n">believersB</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># add the initial populations
+</span><span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># update attractiveness
+</span>    <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span> <span class="o">=</span> <span class="n">attractiveness</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>
+    <span class="c1"># calculate the payoff for change of believers A and B in the current time step           
+</span>    <span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+    <span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+
+        <span class="c1"># B -&gt; A   
+</span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># A -&gt; B        
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+    <span class="c1"># control the pace of change with alpha
+</span>    <span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>  
+
+    <span class="c1"># update the population    
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>   
+
+    <span class="c1"># save the values to a list for plotting    
+</span>    <span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the results    
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersA</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'A'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersB</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'B'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$Time$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$Number$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/f01ee4996485d9653dc2104ce5784764.png" alt="social simulation 2" /></p>
+
+<p>There are a number of functions we can use to dynamically change the ‘attractiveness’ of each trait.
+Try the following ones:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span> <span class="c1"># stick this line at the beginning of the script alongside other 'imports'
+</span>
+
+<span class="k">def</span> <span class="nf">attractiveness2</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">):</span>
+    <span class="c1"># temporal autocorrelation with stochasticity (normal distribution)
+</span>    <span class="c1"># we get 2 samples from a normal distribution N(0,1)
+</span>    <span class="n">Ka</span><span class="p">,</span> <span class="n">Kb</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># compute the difference between Ks
+</span>    <span class="n">diff</span> <span class="o">=</span> <span class="n">Ka</span><span class="o">-</span><span class="n">Kb</span>
+    <span class="c1"># apply difference of Ks to attractiveness
+</span>    <span class="n">Ta</span> <span class="o">+=</span> <span class="n">diff</span>
+    <span class="n">Tb</span> <span class="o">-=</span> <span class="n">diff</span>
+    <span class="k">return</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span>
+
+<span class="k">def</span> <span class="nf">attractiveness3</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">):</span>
+    <span class="c1">#  anti-conformism dynamics (more population means less attractiveness)
+</span>
+    <span class="c1"># both values initialized at 0
+</span>    <span class="n">Ka</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">Kb</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># first we sample gamma with mean=last popSize of A times relevance    
+</span>    <span class="n">diffPop</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">believersA</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+    <span class="c1"># we sustract from this value the same computation for population B
+</span>    <span class="n">diffPop</span> <span class="o">=</span> <span class="n">diffPop</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">believersB</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+
+    <span class="c1"># if B is larger then we need to increase the attractiveness of A
+</span>    <span class="k">if</span> <span class="n">diffPop</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">Ka</span> <span class="o">=</span> <span class="o">-</span><span class="n">diffPop</span>
+    <span class="c1"># else A is larger and we need to increase the attractiveness of B
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Kb</span> <span class="o">=</span> <span class="n">diffPop</span>
+
+    <span class="c1"># change current values
+</span>    <span class="n">Ta</span> <span class="o">=</span> <span class="n">Ta</span> <span class="o">+</span> <span class="n">Ka</span>
+    <span class="n">Tb</span> <span class="o">=</span> <span class="n">Tb</span> <span class="o">+</span> <span class="n">Kb</span>
+
+    <span class="k">return</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span>
+</code></pre></div></div>
+
+<h3 id="temporal-autocorrelation-with-stochasticity-normal-distribution">temporal autocorrelation with stochasticity (normal distribution)</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># initialisation
+</span><span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># initial time
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>           <span class="c1"># population size
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>              <span class="c1"># initial proportion of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="n">A</span>             <span class="c1"># initial proportion of believers B
+</span>
+<span class="n">Ta</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># initial attractiveness of option A
+</span><span class="n">Tb</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># initial attractiveness of option B
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>         <span class="c1"># strength of the transmission process
+</span>
+<span class="c1"># initialise the list used for plotting
+</span><span class="n">believersA</span> <span class="o">=</span> <span class="p">[]</span>    
+<span class="n">believersB</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># add the initial populations
+</span><span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># update attractiveness
+</span>    <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span> <span class="o">=</span> <span class="n">attractiveness2</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>
+    <span class="c1"># calculate the payoff for change of believers A and B in the current time step           
+</span>    <span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+    <span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+
+        <span class="c1"># B -&gt; A   
+</span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># A -&gt; B        
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+    <span class="c1"># control the pace of change with alpha
+</span>    <span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>  
+
+    <span class="c1"># update the population    
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>   
+
+    <span class="c1"># save the values to a list for plotting    
+</span>    <span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the results    
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersA</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'A'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersB</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'B'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$Time$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$Number$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/e85d25a5ffcccde3f7f1db1e531bfc9b.png" alt="social simulation 4" /></p>
+
+<h3 id="anti-conformism-dynamics-more-population-means-less-attractiveness">anti-conformism dynamics (more population means less attractiveness)</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># initialisation
+</span><span class="n">MAX_TIME</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># initial time
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>           <span class="c1"># population size
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">65</span>              <span class="c1"># initial proportion of believers A
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">N</span><span class="o">-</span><span class="n">A</span>             <span class="c1"># initial proportion of believers B
+</span>
+<span class="n">Ta</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># initial attractiveness of option A
+</span><span class="n">Tb</span> <span class="o">=</span> <span class="mf">2.0</span>            <span class="c1"># initial attractiveness of option B
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>         <span class="c1"># strength of the transmission process
+</span>
+<span class="c1"># initialise the list used for plotting
+</span><span class="n">believersA</span> <span class="o">=</span> <span class="p">[]</span>    
+<span class="n">believersB</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># add the initial populations
+</span><span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">MAX_TIME</span><span class="p">:</span>
+    <span class="c1"># update attractiveness
+</span>    <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span> <span class="o">=</span> <span class="n">attractiveness3</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>
+    <span class="c1"># calculate the payoff for change of believers A and B in the current time step           
+</span>    <span class="n">variationBA</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">)</span>      
+    <span class="n">variationAB</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Ta</span><span class="p">)</span>     
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">variationBA</span> <span class="o">-</span> <span class="n">variationAB</span>
+
+        <span class="c1"># B -&gt; A   
+</span>    <span class="k">if</span> <span class="n">difference</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># A -&gt; B        
+</span>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">variation</span> <span class="o">=</span> <span class="n">difference</span><span class="o">*</span><span class="n">A</span>
+
+    <span class="c1"># control the pace of change with alpha
+</span>    <span class="n">variation</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">variation</span>  
+
+    <span class="c1"># update the population    
+</span>    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">variation</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="n">variation</span>   
+
+    <span class="c1"># save the values to a list for plotting    
+</span>    <span class="n">believersA</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">believersB</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+    <span class="c1"># advance time to next iteration
+</span>    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the results    
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersA</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'A'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">believersB</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">'B'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$Time$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$Number$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/460f04a96f3f350e29a98933e0470662.png" alt="social simulation 4" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#culture-dynamics" class="page__taxonomy-item" rel="tag">culture dynamics</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/categories/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-04-20T00:00:00+00:00">April 20, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=Introduction+to+Social+Simulation+with+Python%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython%2Fsocial-simulation%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython%2Fsocial-simulation%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython%2Fsocial-simulation%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython%2Fsocial-simulation%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/python/exponential-truncated-power-law/" class="pagination--pager" title="Fitting exponential truncated power law using Python
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/%E6%95%B0%E6%8D%AE%E6%96%B0%E9%97%BB/dj2017/" class="pagination--pager" title="2017数据新闻比赛
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/python/social-simulation/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/python/social-simulation";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/python/social-simulation/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/python/social-simulation"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

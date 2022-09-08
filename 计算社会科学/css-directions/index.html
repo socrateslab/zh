@@ -1,0 +1,897 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Computational Social Science: Exciting Progress and Future Directions - 计算传播网</title>
+
+
+
+
+<meta name="description" content="In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science.">
+
+
+
+
+<meta name="author" content="Duncan J. Watts">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="Computational Social Science: Exciting Progress and Future Directions">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions/">
+
+
+
+  <meta property="og:description" content="In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science.">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="Computational Social Science: Exciting Progress and Future Directions">
+  <meta name="twitter:description" content="In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science.">
+  <meta name="twitter:url" content="https://socrateslab.github.io/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-gallery-image-1-th.jpg">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@Duncan J. Watts">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-29.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-01-21T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-29.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          Computational Social Science: Exciting Progress and Future Directions
+
+        
+      </h1>
+      
+        <p class="page__lead">In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science.
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/logo.jpg" class="author__avatar" alt="计算传播网" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">计算传播网</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Computational Communication
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Nanjing</span>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://computational-communication.com" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:computational.communication@gmail.com">
+            <meta itemprop="email" content="computational.communication@gmail.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.weibo.com/http://weibo.com/p/10080843f915e125a13c116fe1854bc43ccf0a/home" itemprop="sameAs">
+            <i class="fa fa-fw fa-weibo" aria-hidden="true"></i> Weibo
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Computational Social Science: Exciting Progress and Future Directions">
+    <meta itemprop="description" content="In spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science.">
+    <meta itemprop="datePublished" content="January 21, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#why-is-social-science-hard" id="markdown-toc-why-is-social-science-hard">Why Is Social Science Hard?</a></li>
+  <li><a href="#the-emergence-of-computational-social-science" id="markdown-toc-the-emergence-of-computational-social-science">The Emergence of Computational Social Science</a></li>
+  <li><a href="#challenges-and-opportunities-for-computational-social-science" id="markdown-toc-challenges-and-opportunities-for-computational-social-science">Challenges and Opportunities for Computational Social Science</a>    <ul>
+      <li><a href="#creating-a-social-supercollider" id="markdown-toc-creating-a-social-supercollider">Creating a Social Supercollider</a></li>
+      <li><a href="#expanding-virtual-labs" id="markdown-toc-expanding-virtual-labs">Expanding Virtual Labs</a></li>
+      <li><a href="#putting-the-social-in-computational-social-science" id="markdown-toc-putting-the-social-in-computational-social-science">Putting the “Social” in Computational Social Science</a></li>
+      <li><a href="#new-institutions-for-computational-social-science" id="markdown-toc-new-institutions-for-computational-social-science">New Institutions for Computational Social Science</a></li>
+    </ul>
+  </li>
+  <li><a href="#conclusion" id="markdown-toc-conclusion">Conclusion</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a>    <ul>
+      <li><a href="#footnotes" id="markdown-toc-footnotes">FOOTNOTES</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<p>Duncan J. Watts. (2013) Computational Social Science: Exciting Progress and Future Directions. The Bridge on Frontiers of Engineering 43:4 <sup id="fnref:watts2017" role="doc-noteref"><a href="#fn:watts2017" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>The past 15 years have witnessed a remarkable increase in both the scale and scope of social and behavioral data available to researchers. Over the same period, and driven by the same explosion in data, the study of social phenomena has increasingly become the province of computer scientists, physicists, and other “hard” scientists. Papers on social networks and related topics appear routinely in top science journals and computer science conferences; network science research centers and institutes are sprouting up at top universities; and funding agencies from DARPA to NSF have moved quickly to embrace what is being called <code class="language-plaintext highlighter-rouge">computational social science</code>.</p>
+
+<p class="notice--warning">Against these exciting developments stands a stubborn fact: in spite of many thousands of published papers, there’s been surprisingly little progress on the “big” questions that motivated the field of computational social science—questions concerning systemic risk in financial systems, problem solving in complex organizations, and the dynamics of epidemics or social movements, among others.</p>
+
+<p>Of the many reasons for this state of affairs, I concentrate here on three. First, social science problems are almost always more difficult than they seem. Second, the data required to address many problems of interest to social scientists remain difficult to assemble. And third, thorough exploration of complex social problems often requires the complementary application of multiple research traditions—statistical modeling and simulation, social and economic theory, lab experiments, surveys, ethnographic fieldwork, historical or archival research, and practical experience—many of which will be unfamiliar to any one researcher. In addition to explaining the particulars of these challenges, I sketch out some ideas for addressing them.</p>
+
+<h2 id="why-is-social-science-hard">Why Is Social Science Hard?</h2>
+
+<p>By definition, “social” phenomena are less about the behavior of individuals than of collections of individuals in groups, crowds, organizations, markets, classes, and even entire societies, all of which interact with each other via networks of information and influence, which in turn change over time. As a result, social systems—like complex systems in physics and biology—exhibit “emergent” behavior, meaning that the behavior of entities at one “scale” of reality is not easily traced to the properties of the entities at the scale below (Anderson 1972). Firms, for example, can exhibit highly stable identities and cultures even as the particular employees who work in them change completely over time, just as you remain you even as the cells in your body turn over during the course of your lifetime. Conversely, the stock market, the economy, or a political regime can collapse suddenly and unexpectedly even as the various players and background conditions remain the same.</p>
+
+<p>Complicating matters further, emergent properties can be both the cause and the effect of social change. Sometimes, that is, the decisions of corporations or even governments may depend critically on the personal interests of a handful of executives, whereas at other times the behavior of those same individuals may be powerfully constrained by the corporate or political culture to which they belong.</p>
+
+<p>Nor is <code class="language-plaintext highlighter-rouge">emergence</code> as simple as one scale of reality aggregating to another. Rather, in many problems of interest to social scientists, the actions of individuals, firms, regulatory and government agencies, markets, and political institutions may all play important roles. Moreover, because these different types of actors not only exist at different scales (firms comprise individuals, markets comprise firms and individuals, etc.) but also may interact with each other in important ways, problems of this type require one to consider events, actors, and forces across multiple scales simultaneously.</p>
+
+<p>Given the unavoidably multiscale, complex, and emergent nature of social phenomena, it is not surprising that theories of social behavior and change have been difficult to work out in any realistic detail. Compounding this theoretical difficulty are two separate but related empirical difficulties. First, it has been impossible to collect observational data on the scale of hundreds of millions, or even tens of thousands, of individuals. Second, because cause and effect can be difficult to infer from observational data alone, experimental studies are also necessary. Yet experiments involving, say, the performance of an organization with a particular structure, or the popularity of songs in a single instance of a cultural market, represent the collective behavior of hundreds or even thousands of individuals, designs that are clearly impossible to implement in a physical lab (Zelditch 1969).</p>
+
+<h2 id="the-emergence-of-computational-social-science">The Emergence of Computational Social Science</h2>
+
+<p>In light of these three interrelated difficulties—(1) the complexity of the theoretical issues confronting social science, (2) the difficulty of obtaining the relevant observational data, and (3) the difficulty of manipulating large-scale social organizations experimentally—it is hardly surprising that progress in social science has been slow relative to that in the physical, engineering, and biological sciences, in particular over the past century. But the computing revolution of the past two decades—a revolution that has dramatically increased not only the speed and memory of computers themselves but also the scale and scope of social data that can now be analyzed—has the potential to revolutionize traditional social science, leading arguably to a new paradigm of “computational social science”1 (Lazer et al. 2009).</p>
+
+<p>The most prominent strand of research in computational social science leverages communication technologies—including email, social networking and microblogging services, and cellphones—as well as online games, ecommerce sites, and other Internet-enabled services. All of these devices and services generate digital signals, often referred to as digital exhaust or digital breadcrumbs, from which inferences can be made about individual and/or collective behavior. In this way, it is increasingly possible to observe the actions and interactions of hundreds of millions of individuals in real time as well as over time.</p>
+
+<p>Data derived from instant messaging services and social networking sites, for example, have been used to construct networks of hundreds of millions of nodes, analysis of which (Leskovec and Horvitz 2008; Ugander et al. 2011) has confirmed earlier conjectures about the topology of large social networks (Newman 2003; Watts and Strogatz 1998). Other studies have mined email data to estimate the microlevel rules describing new tie formation (Kossinets and Watts 2006) or used blog networks to measure the propensity to join new groups (Backstrom et al. 2006). Others still have mapped the diffusion of online content (Bakshy et al. 2009; Dow et al. 2013; Goel et al. 2012; Leskovec et al. 2007; Sun et al. 2009) or conducted massive randomized field experiments to estimate the causal effects of social influence on adoption (Aral and Walker 2011), voter turnout (Bond et al. 2012), or likelihood to share content (Bakshy et al. 2012).</p>
+
+<p>A less well explored but also important strand of research uses the web to create “virtual labs”: controlled environments for the conduct of “macrosociological” experiments (Hedstrom 2006). Although early efforts relied on volunteers (Dodds et al. 2003; Salganik et al. 2006), an important recent development in this field has been the use of crowdsourcing sites such as Amazon’s Mechanical Turk to recruit and pay subjects, analogous to the longstanding tradition in behavioral science of recruiting from college student populations (Mason and Watts 2009).</p>
+
+<p>One important advance due to crowdsourced virtual labs has been resolution of the synchronicity problem to ensure that N subjects will arrive contemporaneously and remain engaged in the experiment for its duration (Suri and Watts 2011), thereby allowing for networked experimental designs. Another advantage is that experiments can be designed, launched, and executed on a much shorter timescale than has been historically feasible, and on a lower cost basis (Wang et al. 2012). Finally, by shrinking the hypothesis-testing cycle—the lag between analyzing one set of experimental results and running the next set of experiments—from months or years to days or even hours, crowdsourced virtual lab experiments can dramatically expand the range of conditions that can be studied.</p>
+
+<h2 id="challenges-and-opportunities-for-computational-social-science">Challenges and Opportunities for Computational Social Science</h2>
+
+<p>As impressive as its recent accomplishments have been, computational social science faces a number of pressing challenges if it is to address the important questions of social science in a meaningful way. For example, organizational and interorganizational problem solving, collective action and decision making, the relationship between deliberation, governance, and democracy, the emergence of disruptive technologies, and the rise of new political or cultural movements are all core social scientific questions, but they have received little attention from computational social science largely on the grounds of limits to current data sources, platforms, or methods. In the following sections I describe three challenges and suggest some directions for future progress.</p>
+
+<h3 id="creating-a-social-supercollider">Creating a Social Supercollider</h3>
+
+<p>First, the dominant digital exhaust model of data collection imposes important limitations on the type of research questions that can be answered.</p>
+
+<p>Consider, for example, the problem of measuring how friends influence each other’s purchase behavior, a question that is of great interest to social scientists as well as to marketers, policymakers, and other change agents. Answering such a question requires the ability to observe both the complete friendship network (already a difficult task) and the shopping behavior of everyone in the network. Using existing systems, one might obtain an approximation of the friendship network by using, say, Facebook data or mining email logs, while ecommerce sites or retailer databases may show how much individuals are spending on particular products. Currently, however, it is extremely difficult to combine even two such sources of data, and of course there are many different modes of communication and many different places to make purchases.</p>
+
+<p>Generalizing beyond this one example, many questions of interest to social scientists require studying the relation between different modes of social action and interaction—for example, search data to infer intent, network data to infer relationships, ecommerce data to infer choices, and social media data to infer opinions—but these modes are generally recorded and stored separately, often by different companies. A major breakthrough for computational social science, therefore, would be a “social supercollider”: a facility that combines multiple streams of data, creating richer and more realistic portraits of individual behavior and identity, while retaining the benefits of massive scale.</p>
+
+<p>Against this considerable promise stands the equally pressing concern of protecting individual privacy. Privacy is already an important issue for all industries that collect digital information about their consumers; however, for the same reason that the social supercollider would be so powerful a scientific tool—namely that it would put all the pieces together—it raises far more serious questions about individual privacy even than are posed by existing commercial platforms. These questions have in fact already been raised by recent revelations of the National Security Agency’s Prism project, which also appears to be an attempt to combine data from multiple sources. Construction and management of anything like a social supercollider would therefore have to proceed under the strictest scrutiny, with respect to both governance and the end uses of the data.</p>
+
+<h3 id="expanding-virtual-labs">Expanding Virtual Labs</h3>
+
+<p>A second challenge for computational social science concerns the continued development of experimental macrosociology. Perhaps surprisingly, the major limitation to existing experimental designs is not technical but rather logistical—namely, the difficulty of recruiting large numbers of subjects in a reliable and cost-effective manner. For example, the largest synchronous virtual lab experiments to date have not exceeded N=36, largely because of the practical difficulty of recruiting more than that number at any single time.</p>
+
+<p>One potential solution to this problem would be to construct a large, persistent, and well-documented panel of subjects—potentially hundreds of thousands of individuals—who might participate in many experiments over months or years. Increasing the scale of experiments from dozens to thousands of simultaneous participants would fundamentally alter the types of experiments that could be run—making it possible to, for example, study the proverbial army in a lab (Zelditch 1969). By allowing researchers to specify their sampling frame in advance, another advantage of a large persistent subject set would be to facilitate investigations of variation in behavior by demographic, national, or racial group.</p>
+
+<p>Such a panel would also enable the study of entirely novel questions about the connections between individual attributes and behavior as well as between different elements of behavior itself. Do people who contribute generously to public goods games behave in any characteristic way when participating in a collaborative problem-solving exercise or in an exchange network?</p>
+
+<p>Finally, beyond virtual lab experiments, a panel of this scale and duration could be of great value for survey research and randomized field experiments.</p>
+
+<h3 id="putting-the-social-in-computational-social-science">Putting the “Social” in Computational Social Science</h3>
+
+<p>A final challenge for computational social science is that, in spite of many thousands of papers published on topics related to social networks, financial crises, crowdsourcing, influence and adoption, group formation, and so on, relatively few are published in traditional social science journals or even attempt to engage seriously with social scientific literature. The result is that much of computational social science has effectively evolved in isolation from the rest of social science, largely ignoring much of what social scientists have to say about the same topics, and largely being ignored by them in return.</p>
+
+<p>It is unclear who is to blame for this state of affairs—computer scientists for being presumptuous, social scientists for being defensive, or both—and even whether it is a bad thing. Perhaps all interdisciplinary fields start out as ugly ducklings and have to become swans on their own, not by making friends with existing fields but by outcompeting them. My view, however, is that meaningful progress on important problems will require serious engagement between the communities, each of which has much to offer the other: computer scientists have technical capabilities that are of great potential benefit to social scientists, and  the latter’s deep subject matter knowledge is essential in order to ask the right questions and to formulate even simple models in ways that address these questions.</p>
+
+<h3 id="new-institutions-for-computational-social-science">New Institutions for Computational Social Science</h3>
+
+<p>Unfortunately, harnessing the complementary strengths of multiple research communities is easier said than done. Consider, for example, the problem of managing systemic risk in financial systems. On the one hand, simple and elegant models of financial crises that are inspired by the analogy of contagion in networks (Delli Gatti et al. 2012; Gai and Kapadia 2010; May and Arinaminpathy 2010; Nier et al. 2007) turn out to omit certain features of real banking systems—for example, that banks “create” money by expanding their balance sheets or that prices must adjust so that markets will clear—that are critical to understanding recent crises. On the other hand, descriptively accurate accounts of real financial crises tend to be so complex and multifaceted (Brunnermeier 2009; Financial Crisis Inquiry Commission 2011; Gorton 2012; Hellwig 2009) that it is difficult even for experts to agree on which mechanisms are the most important and therefore what features are critical to include in even a simple model.</p>
+
+<p>The existence of diverse and even incommensurate literatures on the same topic is a surprisingly common problem in social science, and resolving it requires substantial investment in time as well as considerable diversity of expertise. As no one individual is likely to satisfy this requirement, interdisciplinary teams of researchers who have both the resources and the incentives to engage in long-term, high-risk collaborations seem increasingly necessary. Such collaborations are also challenging, however, in light of the cultural and language differences that separate disciplines like computer science from the social sciences, as well the wide variations in publication norms and timescales. Finally, to be successful computational and experimental research designs must be coordinated with methods drawn from the theoretical, survey, and ethnographic traditions of social science.</p>
+
+<p>Deep and significant progress in social science, in other words, will require not only new data and methods but also new institutions that are designed from the ground up to foster long-term, large-scale, multidisciplinary, multimethod, problem-oriented social science research. To succeed, such an institution will require substantial investment, on a par with existing institutes for mind, brain, and behavior, genomics, or cancer, as well as the active cooperation of industry and government partners.</p>
+
+<p>The current and justifiable excitement surrounding computational social science presents an opportune moment to engage in such an undertaking.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Driven by new sources of data, ever-increasing computing power, and the interest of computer scientists, social science is becoming a computational discipline much as biology did in the late 1990s. As exciting and important as this development is, however, social science is not and should not become a subfield of computer science or “data science.” Just as in computational biology, the computational element of computational social science should remain in service to the substantive and substantial questions of social science.</p>
+
+<p>Achieving this goal will require significant investments in new sources of data, new platforms for organizing existing data, and new institutional arrangements for fostering team-based interdisciplinary research. Although somewhat novel for social science, which has long operated on the model of the single-authored book or paper, the research lab model is familiar from the biological and medical sciences, and with the appropriate commitment could revolutionize social science in the 21st century.</p>
+
+<h2 id="references">References</h2>
+
+<p>Anderson PW. 1972. More is different. Science 177:393–396.</p>
+
+<p>Aral S, Walker D. 2011. Creating social contagion through viral product design: A randomized trial of peer influence in networks. Management Science 57(9):1623–1639.</p>
+
+<p>Backstrom L, Huttenlocher D, Kleinberg J, Lan X. 2006. Group formation in large social networks: Membership, growth, and evolution. In: Proceedings of the 12th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Philadelphia. p 44–54.</p>
+
+<p>Bakshy E, Karrer B, Adamic LA. 2009. Social influence and the diffusion of user-created content. In: Proceedings of the 10th ACM Conference on Electronic Commerce, Association of Computing Machinery, Stanford, California.</p>
+
+<p>Bakshy E, Rosenn I, Marlow C, Adamic L. 2012. The role of social networks in information diffusion. In Proceedings of the 21st International ACM Conference on World Wide Web, Lyon, France. p 519–528.</p>
+
+<p>Bond RM, Fariss CJ, Jones JJ, Kramer AD, Marlow C, Settle JE, Fowler JH. 2012. A 61-million-person experiment in social influence and political mobilization. Nature 489:295–298.</p>
+
+<p>Brunnermeier MK. 2009. Deciphering the liquidity and credit crunch 2007-2008. Journal of Economic Perspectives 23:77–100.</p>
+
+<p>Delli Gatti D, Gallegati M, Greenwald B, Stiglitz J, Battiston S. 2012. Liaisons dangereuses: Increasing connectivity, risk sharing and systemic risk. Journal of Economic Dynamics and Control 36:1121–1141.</p>
+
+<p>Dodds PS, Muhamad R, Watts DJ. 2003. An experimental study of search in global social networks. Science 301:827–829.</p>
+
+<p>Dow PA, Adamic LA, Friggeri A. 2013. The anatomy of large Facebook cascades. In Proceedings of the Seventh International AAAI Conference on Weblogs and Social Media, Cambridge, MA.</p>
+
+<p>Financial Crisis Inquiry Commission. 2011. Financial Crisis Inquiry Report: Final Report of the National Commission on the Causes of the Financial and Economic Crisis in the United States. Washington: Government Printing Office.</p>
+
+<p>Gai P, Kapadia S. 2010. Contagion in financial networks. Proceedings of the Royal Society A: Mathematical, Physical and Engineering Science 466:2401–2423.</p>
+
+<p>Goel S, Watts DJ, Goldstein DG. 2012. The structure of online diffusion networks. In Proceedings of the 13th ACM Conference on Electronic Commerce, Valencia, Spain. p 623–638.</p>
+
+<p>Gorton GB. 2012. Misunderstanding Financial Crises: Why We Don’t See Them Coming. New York: Oxford University Press.</p>
+
+<p>Hedstrom P. 2006. Experimental macro sociology: Predicting the next best seller. Science 311(5762):786–787.</p>
+
+<p>Hellwig MF. 2009. Systemic risk in the financial sector: An analysis of the subprime-mortgage financial crisis. De Economist 157:129–207.</p>
+
+<p>Kossinets G, Watts DJ. 2006. Empirical analysis of an evolving social network. Science 311:88–90.</p>
+
+<p>Lazer D, Pentland A, Adamic L, Aral S, Barabasi AL, Brewer D, Christakis N, Contractor N, Fowler J, Gutmann M. 2009. Computational social science. Science 323(5915):721–723.</p>
+
+<p>Leskovec J, Adamic LA, Huberman BA. 2007. The dynamics of viral marketing. ACM Transactions on the Web 1(1):1–46.</p>
+
+<p>Leskovec J, Horvitz E. 2008. Planetary-scale views on a large instant-messaging network. In Proceedings of the 17th International World Wide Web Conference, Beijing, China.</p>
+
+<p>Mason W, Watts DJ. 2009. Financial incentives and the performance of crowds. Proceedings of the ACM SIGKDD Workshop on Human Computation, Paris. p 77–85.</p>
+
+<p>May RM, Arinaminpathy N. 2010. Systemic risk: The dynamics of model banking systems. Journal of the Royal Society Interface 7:823–838.</p>
+
+<p>Newman MEJ. 2003. The structure and function of complex networks. SIAM Review 45:167–256.</p>
+
+<p>Nier E, Yang J, Yorulmazer T, Alentorn A. 2007. Network models and financial stability. Journal of Economic Dynamics and Control 31:2033–2060.</p>
+
+<p>Salganik MJ, Dodds PS, Watts DJ. 2006. Experimental study of inequality and unpredictability in an artificial cultural market. Science 311:854–856.</p>
+
+<p>Sun ES, Rosenn I, Marlow CA, Lento TM. 2009. Gesundheit! Modeling contagion through Facebook news feed. In International Conference on Weblogs and Social Media, AAAI, San Jose.</p>
+
+<p>Suri S, Watts DJ. 2011. Cooperation and contagion in web-based, networked public goods experiments. PLoS One 6(3):e16836.</p>
+
+<p>Ugander J, Karrer B, Backstrom L, Marlow C. 2011. The anatomy of the Facebook social graph. arXiv 1111.4503.</p>
+
+<p>Wang J, Suri S, Watts DJ. 2012. Cooperation and assortativity with dynamic partner updating supporting information. Proceedings of the National Academy of Sciences U S A 109(36):14363–14368.</p>
+
+<p>Watts DJ, Strogatz SH. 1998. Collective dynamics of “small-world” networks. Nature 393:440–442.</p>
+
+<p>Zelditch M. 1969. Can you really study an army in the laboratory? In: Etzioni A, ed. A Sociological Reader on Complex Organizations. Boston: Holt, Rinehart and Winston. p 528–539.</p>
+
+<h3 id="footnotes">FOOTNOTES</h3>
+
+<p>1 “Computational social science” is a contested label, referring in some quarters to simulation of agent-based models (see, for example, http://computationalsocialscience.org/) and in others strictly to the analysis of computationally challenging datasets (http://research.microsoft.com/en-us/groups/cssnyc/). Here I use the term somewhat liberally to refer to the emerging intersection of the social and computational sciences, an intersection that includes analysis of web-scale observational data, virtual lab–style experiments, and computational modeling.</p>
+
+<p>About the Author: Duncan J. Watts is a principal researcher at Microsoft Research.</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:watts2017" role="doc-endnote">
+      <p>Duncan J. Watts. (2013) Computational Social Science: Exciting Progress and Future Directions. The Bridge on Frontiers of Engineering 43:4 <a href="#fnref:watts2017" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#social-science" class="page__taxonomy-item" rel="tag">social science</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#watts" class="page__taxonomy-item" rel="tag">Watts</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/categories/#%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6" class="page__taxonomy-item" rel="tag">计算社会科学</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-01-21T00:00:00+00:00">January 21, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=Computational+Social+Science%3A+Exciting+Progress+and+Future+Directions%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E8%25AE%25A1%25E7%25AE%2597%25E7%25A4%25BE%25E4%25BC%259A%25E7%25A7%2591%25E5%25AD%25A6%2Fcss-directions%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E8%25AE%25A1%25E7%25AE%2597%25E7%25A4%25BE%25E4%25BC%259A%25E7%25A7%2591%25E5%25AD%25A6%2Fcss-directions%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E8%25AE%25A1%25E7%25AE%2597%25E7%25A4%25BE%25E4%25BC%259A%25E7%25A7%2591%25E5%25AD%25A6%2Fcss-directions%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E8%25AE%25A1%25E7%25AE%2597%25E7%25A4%25BE%25E4%25BC%259A%25E7%25A7%2591%25E5%25AD%25A6%2Fcss-directions%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/solution-oriented-social-science/" class="pagination--pager" title="Should social science be more solution-oriented?
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/common-sense/" class="pagination--pager" title="Common Sense and Sociological Explanations
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/%E8%AE%A1%E7%AE%97%E7%A4%BE%E4%BC%9A%E7%A7%91%E5%AD%A6/css-directions"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

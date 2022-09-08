@@ -1,0 +1,833 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>标度行为的几何模型 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="标度行为的几何模型">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/geometric-network-model/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/geometric-network-model/">
+
+
+
+  <meta property="og:description" content="这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="标度行为的几何模型">
+  <meta name="twitter:description" content="这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/geometric-network-model/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-5.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-01-18T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-5.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          标度行为的几何模型
+
+        
+      </h1>
+      
+        <p class="page__lead">这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）。
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="标度行为的几何模型">
+    <meta itemprop="description" content="这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）。">
+    <meta itemprop="datePublished" content="January 18, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#网络模拟" id="markdown-toc-网络模拟">网络模拟</a></li>
+  <li><a href="#basic-implementation" id="markdown-toc-basic-implementation">Basic implementation</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p>张江等提出了一个几何网络模型，该模型主要强调了一种空间受限的链接机制。模型假设：每个时间点$t$ 一个新的节点 $P$ 出现在几何空间里的一个随机的位置, 如果 $P$ 在至少一个老节点$Q$的几何半径$r$的范围内，$P$ 才会被加入该网络，否则就会被删除。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/c2386f54ace597b90525c29f36fb42c2.png" alt="geometric-grpah-model" /></p>
+
+<p>具体而言：</p>
+
+<ul>
+  <li>网络的增长来源于新节点点的加入；</li>
+  <li>新节点落入几何空间中的位置是随机的，但是只有当新节点的位置处于至少某一个老节点的半径中时，新节点才会被真正加入进来，否则则会被删除。</li>
+  <li>新节点与老节点之间建立链接的方式可以分为至少四种方式：
+    <ul>
+      <li>任意一个老节点，只要新节点在它的半径内，就与之建立链接；</li>
+      <li>对于那些新节点在其半径内的老节点，新节点只与链接最多的那个建立链接；</li>
+      <li>对于那些新节点在其半径内的老节点，新节点只与链接最少的那个建立链接；</li>
+      <li>对于那些新节点在其半径内的老节点，新节点以一定的概率选择只与链接最多的那个建立链接，或者只与链接最少的那个建立链接；</li>
+    </ul>
+  </li>
+</ul>
+
+<p>这个几何模型，不仅适用于物理空间，也适用于抽象空间（abstracted space）。前者包括城市、因特网的autonomous systems、大脑，后者包括相似性空间（similarity space，如引文网络、科学合作网络、在线社区）、语义空间、生态位空间（niche space）</p>
+
+<h2 id="网络模拟">网络模拟</h2>
+
+<p>可以采用python作为编程环境来实现这个过程。首先导入一下常用的科学计算、网络算法和绘图的包。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">leastsq</span>
+<span class="kn">from</span> <span class="nn">rtree</span> <span class="kn">import</span> <span class="n">index</span> <span class="c1">#必备包，为了让模型加速
+</span></code></pre></div></div>
+
+<p>之后我们来定义一个模型初始化的函数，输入L、d、r三个参数。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">initiate</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
+  <span class="c1"># input: L range, d dimension, r radius
+</span>  <span class="c1"># generate nodes that carry coordinates
+</span>  <span class="n">coordinate</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">L</span><span class="o">/</span><span class="mi">2</span>
+  <span class="n">nodelist</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:{</span><span class="mi">1</span><span class="p">:</span><span class="n">coordinate</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="mi">0</span><span class="p">}}</span>
+  <span class="c1"># 1: coordinate, 3: borning time, 4: In degree, 5: out degree
+</span>
+  <span class="c1"># Create 2D index, Using Rtree to accelerate
+</span>  <span class="n">p</span> <span class="o">=</span> <span class="n">index</span><span class="p">.</span><span class="n">Property</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">d</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">:</span>
+      <span class="n">p</span><span class="p">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">d</span>
+  <span class="k">else</span><span class="p">:</span>
+      <span class="n">p</span><span class="p">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">idxnd</span> <span class="o">=</span> <span class="n">index</span><span class="p">.</span><span class="n">Index</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+  <span class="n">limitt</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">nodelist</span><span class="p">:</span>
+      <span class="n">ele</span><span class="o">=</span><span class="n">nodelist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+      <span class="n">xs</span><span class="o">=</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">rectangle1</span><span class="o">=</span><span class="n">xs</span><span class="o">-</span><span class="n">r</span>
+      <span class="n">rectangle2</span><span class="o">=</span><span class="n">xs</span><span class="o">+</span><span class="n">r</span>
+      <span class="k">if</span> <span class="n">d</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+          <span class="n">idxnd</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,[</span><span class="n">rectangle1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">rectangle2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">idxnd</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">r_</span><span class="p">[</span><span class="n">rectangle1</span><span class="p">,</span><span class="n">rectangle2</span><span class="p">]))</span>
+      <span class="n">limitt</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">r_</span><span class="p">[</span><span class="n">rectangle1</span><span class="p">,</span><span class="n">rectangle2</span><span class="p">]</span>
+  <span class="c1"># nodelist: a list of nodes, idxnd: Rtree indices, limitt: Rectangle boundary
+</span>  <span class="k">return</span> <span class="p">(</span><span class="n">nodelist</span><span class="p">,</span><span class="n">idxnd</span><span class="p">,</span><span class="n">limitt</span><span class="p">)</span>
+</code></pre></div></div>
+<p>接下来，可以定义一个网络模型生长迭代的函数onestep。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">onestep</span><span class="p">(</span><span class="n">nodelist</span><span class="p">,</span><span class="n">idxnd</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">network</span><span class="p">,</span><span class="n">limit</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
+  <span class="c1">#计算几何图占方形区域面积
+</span>  <span class="n">aa</span><span class="o">=</span><span class="mi">1</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+      <span class="n">aa</span><span class="o">=</span><span class="n">aa</span><span class="o">*</span><span class="p">(</span><span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">]</span><span class="o">-</span><span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="n">locallambda</span><span class="o">=</span><span class="n">aa</span><span class="o">/</span><span class="p">(</span><span class="n">L</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
+  <span class="c1"># Bias sample the area of aa (valid area) to accelerate.
+</span>  <span class="c1"># And the average time interval between two random valid nodes
+</span>  <span class="c1"># follow an exponential distribution, some time can generated virtually
+</span>  <span class="n">time</span><span class="o">+=</span><span class="n">random</span><span class="p">.</span><span class="n">expovariate</span><span class="p">(</span><span class="n">locallambda</span><span class="p">)</span>
+  <span class="c1"># Generate a random node within the valid area
+</span>  <span class="n">newpoint</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">()</span><span class="o">*</span><span class="p">(</span><span class="n">limit</span><span class="p">[</span><span class="n">d</span><span class="o">+</span><span class="n">v</span><span class="p">]</span><span class="o">-</span><span class="n">limit</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="o">+</span><span class="n">limit</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)])</span>
+
+  <span class="c1">#Search for neighbors
+</span>  <span class="k">if</span> <span class="n">d</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">hits</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">idxnd</span><span class="p">.</span><span class="n">intersection</span><span class="p">((</span><span class="n">newpoint</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">newpoint</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+  <span class="k">else</span><span class="p">:</span>
+      <span class="n">hits</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">idxnd</span><span class="p">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">r_</span><span class="p">[</span><span class="n">newpoint</span><span class="p">,</span><span class="n">newpoint</span><span class="p">])))</span>
+  <span class="n">neighbors</span><span class="o">=</span><span class="p">{}</span>
+  <span class="n">newedges</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hits</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+          <span class="n">node</span><span class="o">=</span><span class="n">nodelist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+          <span class="n">distance</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">newpoint</span><span class="p">)</span>
+          <span class="k">if</span> <span class="n">distance</span><span class="o">&lt;</span><span class="n">r</span><span class="p">:</span>
+              <span class="n">ind</span><span class="o">=</span><span class="n">i</span>
+              <span class="n">neighbors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">ind</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># Real adding nodes and links
+</span>      <span class="n">nodelist</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nodelist</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="n">newpoint</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="n">time</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)}</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+          <span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">newpoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">r</span><span class="p">)</span>
+          <span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">]</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">limit</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">],</span><span class="n">newpoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">r</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">:</span>
+          <span class="n">node</span><span class="o">=</span><span class="n">nodelist</span><span class="p">[</span><span class="n">nd</span><span class="p">]</span>
+          <span class="n">node</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">node</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+          <span class="n">newedges</span><span class="o">=</span><span class="n">newedges</span><span class="o">+</span><span class="mi">1</span>
+      <span class="k">if</span> <span class="n">d</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+          <span class="n">idxnd</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodelist</span><span class="p">),[</span><span class="n">newpoint</span><span class="o">-</span><span class="n">r</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">newpoint</span><span class="o">+</span><span class="n">r</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+      <span class="k">else</span><span class="p">:</span>
+          <span class="n">rectangle1</span><span class="o">=</span><span class="n">newpoint</span><span class="o">-</span><span class="n">r</span><span class="p">;</span>
+          <span class="n">rectangle2</span><span class="o">=</span><span class="n">newpoint</span><span class="o">+</span><span class="n">r</span><span class="p">;</span>
+          <span class="n">rectangle</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">r_</span><span class="p">[</span><span class="n">rectangle1</span><span class="p">,</span><span class="n">rectangle2</span><span class="p">];</span>
+          <span class="n">idxnd</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodelist</span><span class="p">),</span><span class="n">rectangle</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">nodelist</span><span class="p">,</span><span class="n">idxnd</span><span class="p">,</span><span class="n">newedges</span><span class="p">,</span><span class="n">network</span><span class="p">,</span><span class="n">limit</span><span class="p">,</span><span class="n">time</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="basic-implementation">Basic implementation</h2>
+
+<p>接下来可以按照给定的参数来进行模拟了。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">L</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">10</span> <span class="c1"># Hypercube length
+</span><span class="n">maxnode</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="c1">#The wanted number of nodes
+</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="c1">#spatial dimension
+</span><span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="c1">#interaction area;
+</span><span class="n">ndlist</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span><span class="n">limit</span><span class="o">=</span><span class="n">initiate</span><span class="p">(</span><span class="n">L</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+
+<span class="n">t</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">edges</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">network</span><span class="o">=</span><span class="p">{};</span>
+
+<span class="n">time</span><span class="o">=</span><span class="mi">1</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ndlist</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">maxnode</span><span class="p">:</span>
+<span class="n">ndlist</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span><span class="n">newedge</span><span class="p">,</span><span class="n">network</span><span class="p">,</span><span class="n">limit</span><span class="p">,</span><span class="n">time</span><span class="o">=</span><span class="n">onestep</span><span class="p">(</span><span class="n">ndlist</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">network</span><span class="p">,</span><span class="n">limit</span><span class="p">,</span><span class="n">time</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">newedge</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+    <span class="n">edges</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">r_</span><span class="p">[</span><span class="n">edges</span><span class="p">,</span><span class="n">edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">newedge</span><span class="p">];</span>
+<span class="k">if</span> <span class="n">np</span><span class="p">.</span><span class="n">remainder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">ndlist</span><span class="p">)</span>
+<span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p><a href="http://wiki.swarma.net/index.php/匹配生长随机几何图模型">匹配生長隨機幾何圖模型</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-01-18T00:00:00+00:00">January 18, 2016</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E6%A0%87%E5%BA%A6%E8%A1%8C%E4%B8%BA%E7%9A%84%E5%87%A0%E4%BD%95%E6%A8%A1%E5%9E%8B%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fgeometric-network-model%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fgeometric-network-model%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fgeometric-network-model%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fgeometric-network-model%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/newsmap-intro/" class="pagination--pager" title="新闻地图项目与gdelt数据介绍
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/zhiwei-china/" class="pagination--pager" title="知微：到底是什么在影响中国2015
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/geometric-network-model/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/geometric-network-model";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/geometric-network-model/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/geometric-network-model"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

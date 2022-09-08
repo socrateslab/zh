@@ -1,0 +1,918 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>男女选秀弥漫与娱乐机器轰鸣 ——试对《人民日报》的娱乐话语进行文本挖掘与可视化 （2005-2016） - 计算传播网</title>
+
+
+
+
+<meta name="description" content="本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。">
+
+
+
+
+<meta name="author" content="张昕之">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="男女选秀弥漫与娱乐机器轰鸣 ——试对《人民日报》的娱乐话语进行文本挖掘与可视化 （2005-2016）">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/people-daily-topic-models/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/people-daily-topic-models/">
+
+
+
+  <meta property="og:description" content="本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="男女选秀弥漫与娱乐机器轰鸣 ——试对《人民日报》的娱乐话语进行文本挖掘与可视化 （2005-2016）">
+  <meta name="twitter:description" content="本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/people-daily-topic-models/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-3.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-04-26T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-3.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          男女选秀弥漫与娱乐机器轰鸣 ——试对《人民日报》的娱乐话语进行文本挖掘与可视化 （2005-2016）
+
+        
+      </h1>
+      
+        <p class="page__lead">本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/bio-photo.jpg" class="author__avatar" alt="张昕之" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">张昕之</h3>
+    
+      <p class="author__bio" itemprop="description">
+        开往红磡
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="男女选秀弥漫与娱乐机器轰鸣 ——试对《人民日报》的娱乐话语进行文本挖掘与可视化 （2005-2016）">
+    <meta itemprop="description" content="本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。">
+    <meta itemprop="datePublished" content="April 26, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#一研究背景政治与娱乐之相爱相杀" id="markdown-toc-一研究背景政治与娱乐之相爱相杀">一、研究背景：政治与娱乐之相爱相杀</a></li>
+  <li><a href="#二针对内地官媒话语的研究举隅" id="markdown-toc-二针对内地官媒话语的研究举隅">二、针对内地官媒话语的研究举隅</a></li>
+  <li><a href="#三人民日报与文本挖掘词频分析与主题建模topic-modeling" id="markdown-toc-三人民日报与文本挖掘词频分析与主题建模topic-modeling">三、《人民日报》与文本挖掘——词频分析与主题建模（topic modeling）</a>    <ul>
+      <li><a href="#分析文本的获取" id="markdown-toc-分析文本的获取">分析文本的获取</a></li>
+      <li><a href="#使用r进行数据分析" id="markdown-toc-使用r进行数据分析">使用R进行数据分析</a>        <ul>
+          <li><a href="#词频分析" id="markdown-toc-词频分析">词频分析</a></li>
+        </ul>
+      </li>
+      <li><a href="#主题建模" id="markdown-toc-主题建模">主题建模</a></li>
+    </ul>
+  </li>
+  <li><a href="#四对主题建模的可视化初探" id="markdown-toc-四对主题建模的可视化初探">四、对主题建模的可视化初探</a>    <ul>
+      <li><a href="#references" id="markdown-toc-references">References</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h1 id="一研究背景政治与娱乐之相爱相杀">一、研究背景：政治与娱乐之相爱相杀</h1>
+
+<p>政经与娱乐似乎总是一对相爱相杀的苦主。如果信奉《娱乐之死》（Amusing Ourselves to Death）的主旨，那么娱乐是莫谈国事的麻醉剂；如果信奉Lifestyle Politics，那么看似与政经无关的内容一样发人深省。在某些以市场导向的国家（见Hallin &amp; Mancini (2004)的划分），万般皆商，布什和川普都可以上电视胡说八道，有媲美电影<em>Spotlight</em>主角的记者，也有如电影<em>Nightcrawler</em>男主角这样的骗子，一切矛盾都是交易（马克吐温说：我们可以用金钱买到最好的政府；肯尼迪还说，人是生而不平等的），总有办法大事化小、小事化了，彼此相安无事。</p>
+
+<p>然而在以意识形态为主导的威权体制（authoritarian state）下，男女相爱莺歌燕舞似乎总显得不合时宜。 以前苏联为例子，Zhu（2001）曾援引美籍俄裔社会学家 Vladimir Shlapentokh (1986) 有关“苏维埃意识形态功能”（functions of Soviet ideology）的论述来解释当时前苏联媒介三方面的功能：一道德、二合法化、三命令。Zhu（2001）概括道（p.6)：所谓媒介“道德功能”就是“说服人民接受国家或社会的利益，超越个人利益以及要求人民为整体的利益而牺牲个人”，所谓“合法化功能”就是要求“人民接受制度的合法性和当权者的领导地位，并且不从事任何实际的反对行动”，至于“命令功能”则是“对那些服从或逃避思想意识运动者实施奖赏或制裁。” 不难发现，如果将此和施拉姆（1964）对媒介功能的论述生硬对照，施拉姆论述中一条非常重要的大众媒介的“娱乐休闲消遣”功能不见踪影。</p>
+
+<h1 id="二针对内地官媒话语的研究举隅">二、针对内地官媒话语的研究举隅</h1>
+<p>针对如今（八十年代末至今）内地，有一系列针对媒体角色、媒介话语的出色的研究。 如He (2000) 的论述，主旨大思想岌岌可危，然而大环境不变、市场化却以雨后春笋的当今，媒体被迫一奴侍二主：一方面要严守宣传纪律，另一方面又要与早已原罪满满的商业巨擘和驱逐蝇头小利的投机者厮杀，否则只能与江南皮革厂一样倒闭。Lee, He, and Huang (2006， 2007) 以及Zhao (2000) 等学者援引西方市场-媒介关系的论述细致分析了内地媒体和市场的互动关系。
+而在媒介话语方面，Ng, Ye, and Lee (2011) 曾经分析了党报《人民日报》对于“全球化”的话语。 其立意很直接：在社会主义（或者未来的共产主义）的主导下，大谈特谈带着万恶资本主义的“全球化”、蔚蓝色是不正确的，否则怎么向和资本主义战斗终生的马克思恩格等前辈交代？然而众所周知，拥抱全球化、与国际接轨、加入WTO是官方力推的政策并为之付出了大量艰辛，这组矛盾在党报上如何自圆其说的？研究者发现党报强调中国是国际社会的一部分、全球化是积极健康的等话语，维护了其话语的正统性。
+受之前这类研究——党媒-社会-市场三者的关系——的启发，本小小研究试图考察“宣传”与“娱乐”、“坚守把握主旨思想”与“向钱进”之间看似不可调和的矛盾，是如何在党媒上中和的。在当今内地的大环境下，正如为了迎接上级检查、讨好领导而弄虚作假毫无底线一样，媒体一样可以为了金钱和收视率毫无底线。而与地方媒体和商业小报不同，党媒对待“娱乐”“选秀”乃至“文化产业”的态度就很重要，不是简单地说支持不支持，这背后体现的是官方对待社会议题的决策：一方面，“娱乐”是媒介市场化的重要手段，中介化的（mediated，　见media spectacle的论述）“娱乐”可以强有力鼓励消费、拉动经济（用脑了喝六个核桃渴了喝金罐加多宝想唱歌了喝猛牛酸酸乳）、发展文化产业、对外走出去、对内不折腾；而另一方面，正如之前已经指出的，娱乐选秀和官方的意识形态——虽然不能说有本质上的冲突——但是仍然是格格不入的。娱乐的靡靡之音麻木人的心灵让人不再关注国家大事，娱乐没有底线、哗众取宠、催熟儿童、恶搞伴娘、自拍炫富、污；更糟糕的是，娱乐营造大V，演唱会有大屏幕，可迅速号召群众，海选、草根、万众参与、程序透明、选举、投票，这些词语在当下总显得有些刺眼和让人担忧 （注：尽管Meng (2009) 的论述以及Cui and Lee (2010) 富有洞察的访谈已经告诉我们，这种担忧其实是我们多氯了）。
+注意，这几方面虽然不在一个分析层面上（前者是事实和结果，中者是基于归纳之上的道德判断，后者是基于演绎的假设），把它们并列起来打擂台确有诡辩之嫌，但是党媒在这个问题上的话语再现（the discursive representation）确实形成了一个经验上的悖论（an empirical puzzle）：党媒对于娱乐选秀节目的话语是怎样的？——究竟是视其为拯救市场的灵丹妙药而加以赞颂发扬、还是道德沦丧的洪水猛兽而加以鞭笞禁止？</p>
+
+<h1 id="三人民日报与文本挖掘词频分析与主题建模topic-modeling">三、《人民日报》与文本挖掘——词频分析与主题建模（topic modeling）</h1>
+
+<p>方法上，本研究选取了内地媒介市场化的代表节目形态之一，选秀节目，作为分析的对象；而选秀节目如雨后春笋，秉着见微知著的精神，又选取了“音乐类选秀节目”作为分析的重点。本研究通过中文LDA主题模型的方法，分析党报《人民日报》过去１２年间对音乐类选秀节目的话语主题，从而归纳其主旨，并对结果进行可视化。对数据和方法汇报如下：
+一，在“人民日报国内版全文光盘”数据库采用关键词检索相关报道，关键词包括两类：第一类是节目形态的关键词，如“真人秀” (n=166，表示全库第一次搜索的返回结果)；“选秀节目” (n=121)；第二类是节目名称，节目名称来自于对国内音乐类选秀节目的论述，包括“ 超级女声” (n=32)；“快乐女声” (n=2)，“快乐男声” (n=11)；“超级男声”(n=3)，“中国好声音”(n=141)；“中国达人秀” (n=23)，“梦想中国” (ch28, n=26)，“加油好男儿”(n=1)；“绝对唱响”(n=1)；“第一次心动”(n=4)；“青春之星”(n=2)；“中国最强音”(n=14)； “最美和声”(n=9)，“中国好歌曲”(n=16) 。所有新闻、专题报道、以及评论都包括在内。删除重复篇目及毫不相关篇目之后，得最终分析样本378 篇。报道的时间包括2003年 到2016年，即涵盖了最早火起来的《超级女声》 以及新近热播的《中国好声音》的时间段。
+二、将报道文本进行预处理后， 采用了一种文本挖掘的方法：LDA主题模型(topic modeling)。 接下来，将报告详细的技术处理方法，包括代码、解释说明，和相应的结论。需要指出，本文的技术分析基本参照了本网另一位成员谈和的文章<code>《LDAvis——用R做中文LDA主题模型可视化分析》</code>以及王成军博士的文章<code>《对《政府工作报告》进行文本挖掘》</code>，特此鸣谢。本文旨在用相似的方法分析《人民日报 》，在代码上以复制（replicate） 为主，所有代码运行的结果、以及对结果的讨论，全部为本文之责（故以下技术部分，所有本研究的做法一律用第一人称“我”表示）。</p>
+
+<h2 id="分析文本的获取">分析文本的获取</h2>
+
+<p>首先把检索得出的文章合并到一个文档里，我的做法是每行一个自然段。这里有三点需要注意：1）检索文章使用的是手动下载保存的方法，没有使用爬虫程序（因为图书馆帐号不欢迎此类程序），因此在数据获取方面，我的方法比较低能； 2）将378个文档合并成一个文档，我使用的是word的merge file功能（insert – object – text）， 这个功能比较好操作，但是注意每次merge的文档有数量限制， R和python应该有相应的包； 3）保存为txt文档时，注意使用UTF-8 作为encoding。</p>
+
+<h2 id="使用r进行数据分析">使用R进行数据分析</h2>
+<p>进入R， 安装和加载所需要的包。代码如下：</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">＃</span><span class="n">安装三个包</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">本文中</span><span class="err">，</span><span class="n">所有长注释</span><span class="w">
+</span><span class="c1"># 写在相应代码之前，</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"jiebaR"</span><span class="p">)</span><span class="err">　＃“</span><span class="n">结巴</span><span class="err">”，</span><span class="n">一个较多人推荐的中文分词插件</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"lda"</span><span class="p">)</span><span class="err">　＃</span><span class="n">LDA</span><span class="err">，</span><span class="n">处理主题模型</span><span class="w">
+</span><span class="n">install.packages</span><span class="p">(</span><span class="s2">"LDAvis"</span><span class="p">)</span><span class="w">  </span><span class="c1"># 用于可视化</span><span class="w">
+</span><span class="err">＃</span><span class="n">加载</span><span class="err">　</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">jiebaR</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">lda</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">LDAvis</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>接下来创建分词器，加载词典， 这里在文件选取上用了<code>file.choose()</code>，从而使得文档调用变成了点窗口的方式，初学者可能对长路经不习惯。 另外，我暂时没有加载所谓的“用户词典”，仅仅是加载了“停用词典” ，在“停用词典”里，我添加了年份、“人民日报”、“作者”、“版面”等与主题无关的词以及节目名称。</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cutter</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">worker</span><span class="p">(</span><span class="n">bylines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="n">stop_word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file.choose</span><span class="p">())</span><span class="w">
+</span></code></pre></div></div>
+
+<p>现在载入需要分析的文本</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">comments_seg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cutter</span><span class="p">[</span><span class="n">file.choose</span><span class="p">()]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>这一步执行完之后，（在和分析文本的同一文件夹内）会生成一个txt，如我这个就叫做party_master_merged.segment.2016-04-26_11_51_24.txt. 就是分好的词。
+接下来的几步，以及代码的注释，完全和与谈和（2015）的帖子相同，再次表示感谢。同时我自己增加了一些注意事项，新手可以吸取我复制这些代码时的教训。
+以下这几行代码是读取分词结果，注意，要选取上一步生成的文件、即分词的结果，而不要选取原始的文本</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">comments_segged</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readLines</span><span class="p">(</span><span class="n">file.choose</span><span class="p">(),</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">)</span><span class="w">
+</span><span class="n">comments</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.list</span><span class="p">(</span><span class="n">comments_segged</span><span class="p">)</span><span class="w">
+</span><span class="n">doc.list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="nf">as.character</span><span class="p">(</span><span class="n">comments</span><span class="p">),</span><span class="n">split</span><span class="o">=</span><span class="s2">" "</span><span class="p">)</span><span class="w">
+</span><span class="n">term.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">unlist</span><span class="p">(</span><span class="n">doc.list</span><span class="p">))</span><span class="w">
+</span><span class="n">term.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="n">term.table</span><span class="p">,</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  
+</span></code></pre></div></div>
+
+<p>这个term table 就是词频排序。然后我依照谈和的帖子的操作，把单个的字和出现小于5次的词删除。读者可自行调整，比如“污”这个意味深长的单字就不见了。</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">del</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">term.table</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">5</span><span class="o">|</span><span class="w"> </span><span class="n">nchar</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">term.table</span><span class="p">))</span><span class="o">&lt;</span><span class="m">2</span><span class="w">   </span><span class="c1">#把不符合要求的筛出来，使用了一个“或”语句 ( |)</span><span class="w">
+</span><span class="n">term.table</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">term.table</span><span class="p">[</span><span class="o">!</span><span class="n">del</span><span class="p">]</span><span class="w">   </span><span class="c1">#把不符合要求的、也就是集合（del）里的元素，从table里去掉</span><span class="w">
+</span><span class="n">vocab</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">term.table</span><span class="p">)</span><span class="w">    </span><span class="c1">#创建词库，用于下一步分析</span><span class="w">
+</span></code></pre></div></div>
+
+<p>大家可以对比一下执行上一面一段代码之前和之后的词频。使用head()命令可以看一个数据的表头。大家可以感受一下表一和表二的区别。</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">term.table</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>表一：筛除单个的字和出现小于5次的词之前排名前五名的词</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>节目 中国 文化 中 年 观众
+2243 2166 1702 1279 939 824
+</code></pre></div></div>
+
+<p>表二：筛除之后</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>节目 中国 文化 观众 发展 电视
+2243 2166 1702 824 816 796
+</code></pre></div></div>
+
+<h3 id="词频分析">词频分析</h3>
+<p>下面进行词频分析， 使用<code>head</code>命令一览排名前50的词语：</p>
+
+<p>表三：排名前50的词语（《人民日报》， 2003-2016）</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>节目（2243），中国（2166），文化（1702），观众（824），发展（816），电视（796），音乐（712），社会（614），媒体（554），创新（498），市场（498），娱乐（496），声音（486），内容（477），选秀（465），生活（452），模式（451），艺术（407），电视台（405），卫视（395），孩子（375），工作（370），电影（363），制作（348），传统（342），时代（342），网络（339），明星（338），一种（323），品牌（321），传播（318），全国（297），收视率（295），电视节目（294），创作（293），播出（292），国家（291），原创（284），方式（281），世界（281），精神（280），产业（278），平台（277），新闻（263），文艺（262），作品（259），企业（257），互联网（252），演出（251），国际（246）
+</code></pre></div></div>
+
+<p>单纯看这个表格意思不大。然而，如果将此列表与之前王成军做的47年间的《政府工作报告》关键词加以比较，我们惊讶地欧亨利一般地发现，过去半个世纪以来出现在国务院《政府工作报告》之首的“发展”一词，同样出现在党报对娱乐选秀节目的报道中，且排名第五（816次），仅次于节目、中国、文化、观众。 更加夺目的是，若干涉及国计民生重大发展的词汇，如“创新”、“社会”“中国”，“工作”，“国际”，“企业”等，同样是两个语篇中共同的高频词。</p>
+
+<p>表四：排名前50的词语（《政府工作报告》， 1969-2016）</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>发展（139）， 建设（68）， 经济（67）， 改革（62）， 推进（62）， 创新（56）， 加快（42）， 加强（41）， 政府（40）， 促进（37）， 实施（36）， 增长（36）， 企业（35）， 政策（35）， 推动（34）， 社会（34）， 中国（32）， 提高（31）， 我们（30）， 全面（28）， 完善（27）， 扩大（26）， 工作（26）， 制度（26）， 实现（25）， 就业（24）， 人民（24）， 支持（24）， 坚持（23）， 我国（22）， 国家（21）， 一批（21）， 创业（21）， 安全（21）， 农村（20）， 合作（20）， 国际（20）， 继续（19）， 地方（19）， 服务（19）， 投资（19）， 积极（19）， 取得（19）， 基本（18）， 落实（18）， 加大（18）， 机制（18）， 今年（18）， 地区（17）， 问题（17）
+</code></pre></div></div>
+
+<p>因此，一个仓促的结论似乎是这样的：仅词频这个角度来说，党媒对于音乐选秀类节目的话语似乎更倾向于市场化的一面，并且将选秀节目拓展至国家发展的一部分，并将之与国家宏观调控发展的策略进行接合（articulation）。 如刚才所展示的，创新、社会、国际、市场、模式、卫视、制作、网络、收视率、产业这一系列只可能出现在新闻联播头条的、与张学友张国荣张家辉张涵宇张惠妹张少涵张含韵张雨琪章子怡邓紫琪等毫无关系的词语，赫然榜上。 不过，在政府工作报告中的高频词，如建设、经济、改革、推进、农村等基础建设的议题则暂时没有出现。</p>
+
+<h2 id="主题建模">主题建模</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get.terms</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">match</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">vocab</span><span class="p">)</span><span class="w">  
+  </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">index</span><span class="p">[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span><span class="w">    </span><span class="n">rbind</span><span class="p">(</span><span class="nf">as.integer</span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="nf">as.integer</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">index</span><span class="p">))))</span><span class="w">   
+</span><span class="p">}</span><span class="w">
+</span><span class="n">documents</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lapply</span><span class="p">(</span><span class="n">doc.list</span><span class="p">,</span><span class="w"> </span><span class="n">get.terms</span><span class="p">)</span><span class="w">
+
+</span><span class="n">K</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w">   </span><span class="c1">#主题数 – 这一步可以任意指定</span><span class="w">
+</span><span class="n">G</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5000</span><span class="w">    </span><span class="c1">#迭代次数 – 我不知道这一步的意思是什么</span><span class="w">
+</span><span class="n">alpha</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.10</span><span class="w">   
+</span><span class="n">eta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.02</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">lda</span><span class="p">)</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">360</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>完成以上工作后，可以一窥结果。注意到 <code>lda.collapsed.gibbs.sampler</code> 这个命令下的各个参数，根据理论，应该是可变的，读者可以自行调节比对不同参数下的结果。我尝试了两种主题模型的方法，一为析出10个主题，一为析出5个主题，其他参数维持不变。代码如下，注意这段代码的运行时间略长（大约4 分钟左右，对于惯用SPSS和STATA的人来说这个时间不短）：</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fit10</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lda.collapsed.gibbs.sampler</span><span class="p">(</span><span class="n">documents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">documents</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">vocab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vocab</span><span class="p">,</span><span class="w"> </span><span class="n">num.iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">eta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eta</span><span class="p">,</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">burnin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">compute.log.likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">fit5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lda.collapsed.gibbs.sampler</span><span class="p">(</span><span class="n">documents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">documents</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">vocab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vocab</span><span class="p">,</span><span class="w"> </span><span class="n">num.iterations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="n">eta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eta</span><span class="p">,</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">burnin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">compute.log.likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>下面，处理并展示结果，使用<code>top.topic.words</code> 命令，前两个参数的意思是（以第一行为例）：抽取fit10这个结果中的主题，20表示每个主题下展示10个词语。</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top.words10</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">top.topic.words</span><span class="p">(</span><span class="n">fit10</span><span class="o">$</span><span class="n">topics</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">by.score</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">top.words5</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">top.topic.words</span><span class="p">(</span><span class="n">fit5</span><span class="o">$</span><span class="n">topics</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">by.score</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">top.words</span><span class="w">
+</span><span class="n">top.words5</span><span class="w">
+</span></code></pre></div></div>
+
+<p>结果如下，10个主题看起来是这样：
+表五：主题模型：析出10个主题，每个主题下10个词语</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[,1]     [,2]     [,3]   [,4]   [,5]  [,6]   [,7]   [,8]    [,9]    [,10]   
+[1,] "媒体" "中国" "音乐" "文化" "节目" "生活" "记者" "孩子" "节目" "品牌"  
+[2,] "互联网" "文化" "演出" "工作" "娱乐" "梦想" "北京" "电影" "卫视" "市场"  
+[3,] "网络" "世界" "观众" "群众" "选秀" "真实" "科普" "儿童" "电视" "企业"  
+[4,] "内容" "传统" "歌手" "发展" "文化" "故事" "评论" "学生" "播出" "加多"  
+[5,] "视频" "文学" "歌曲" "改革" "社会" "一种" "活动" "阿富汗" "模式" "发展"  
+[6,] "平台" "民族" "中国" "建设" "电视" "观众" "24" "学习" "电视台" "中国"  
+[7,] "音乐" "历史" "春晚" "创新" "观众" "社会" "休假" "家长" "中国" "创新"  
+[8,] "用户" "作家" "比赛" "干部" "媒体" "精神" "新疆" "记者" "制作" "产业"  
+[9,] "传播" "新西兰" "舞台" "社会" "明星" "情感" "文艺" "教育" "电视节目" "经济"  
+[10,] "网站" "时代" "艺术" "管理" "收视率" "人生" "本报" "美国" "频道" "文化产业"
+</code></pre></div></div>
+
+<p>表六：主题模型：析出5个主题，每个主题下10个词语</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[,1]   [,2]   [,3]     [,4]     [,5]      
+[1,] "发展" "文化" "电影" "孩子" "节目"  
+[2,] "文化" "生活" "媒体" "记者" "电视"  
+[3,] "品牌" "社会" "互联网" "演出" "卫视"  
+[4,] "工作" "作品" "视频" "北京" "选秀"  
+[5,] "创新" "音乐" "网络" "学生" "收视率"  
+[6,] "建设" "创作" "音乐" "上海" "播出"  
+[7,] "企业" "艺术" "内容" "活动" "电视台"  
+[8,] "改革" "精神" "用户" "工作" "观众"  
+[9,] "服务" "时代" "平台" "台湾" "明星"  
+[10,] "加多" "民族" "产业" "阿富汗" "电视节目"
+</code></pre></div></div>
+
+<p>可以大致看出，党媒对于娱乐选秀的话语主题可以比较武断地大致分为四大类： 1）文化产业发展（发展、品牌、改革、服务）； 2）新媒体与媒介融合（电影、互联网、视频、用户、平台）， 3）媒介的社会影响与国际影响（孩子、演出、北京、阿富汗、美国），以及 4）节目形态（选秀、明星、电视节目）等。</p>
+
+<h1 id="四对主题建模的可视化初探">四、对主题建模的可视化初探</h1>
+<p>最后，对以上主题进行可视化。代码如下（同样的，感谢谈和（2015）的帖子）</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">theta</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">apply</span><span class="p">(</span><span class="n">fit10</span><span class="o">$</span><span class="n">document_sums</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">alpha</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="w">  
+</span><span class="n">phi</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">apply</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">fit10</span><span class="o">$</span><span class="n">topics</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">eta</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="w">  
+</span><span class="n">term.frequency</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.integer</span><span class="p">(</span><span class="n">term.table</span><span class="p">)</span><span class="w">   
+</span><span class="n">doc.length</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="p">]))</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">LDAvis</span><span class="p">)</span><span class="w">
+</span><span class="n">json</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createJSON</span><span class="p">(</span><span class="n">phi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w">
+                   </span><span class="n">doc.length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc.length</span><span class="p">,</span><span class="w"> </span><span class="n">vocab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vocab</span><span class="p">,</span><span class="w">
+                   </span><span class="n">term.frequency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">term.frequency</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">json</span><span class="p">)</span><span class="w">
+</span><span class="n">serVis</span><span class="p">(</span><span class="n">json</span><span class="p">,</span><span class="w"> </span><span class="n">out.dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'./vis'</span><span class="p">,</span><span class="w"> </span><span class="n">open.browser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>执行完以上命令之后，系统会生成一个文件夹，用Firefox打开index.html文件，就可以见到下图，如图一所示：</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/da222cad2fad1cb5fd6fb270b7cf192e.png" alt="topic-graph1" /></p>
+
+<p>图二是针对之前的十个主题进行的分布（我注意到，这里的主题编号和之前R生成的十个主题有一点不一样，比如这里的主题2，应该是之前表五中的主题5，我不知道是否我运算的问题，但是经过比对之后发现两者大致相同），旨在可视化以下内容：主题与主题之间的关系如何？主题与主题之间的距离如何？将鼠标移到相应的代表主题的圆圈上，可以看到该主题下的词频分布（右边的bar chart）。比如主题2：</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/3cbf3bd2edb11b37c7169d39357fca65.png" alt="topic-graph2" /></p>
+
+<p>主题2的关键词包括节目、娱乐、文化、选秀、社会、电视、观众等。 这些和电视文化有关。 再看另一典型的主题，主题6：</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/e199045c38fd7b413f2ebe18a260ab3a.png" alt="topic-graph3" /></p>
+
+<p>图三在此</p>
+
+<p>主题6更像是关于节目的硬件产业，如媒体、互联网、平台、内容等。 类似之前说到的媒介融合和媒介产业发展。
+最后是不相关的、与众不同骨骼惊奇的主题10，见图四：</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/dc9d4de4290b045c550fe13dbce5ee99.png" alt="topic-graph4" /></p>
+
+<p>图四在此</p>
+
+<p>图四更多的是一些类似社会影响议题，如记者、北京、科普等等。从词频分布上看有些杂词还没有处理干净，还有一些没有意义的词语。至于更加细致的对于每一类的详细地解释及解释，这里就不再赘述了，毕竟Discussion 部分是公认的“魔幻现实小说体”。
+总体而言，这个小作品仅仅是从传统的针对媒介建构（constructionist）的研究出发——如之前用过的对framing alignment进行定量分析、以及运用Gamson 等人提出的“意识形态包裹”（ideological packages） 中的 “建构器具”（framing devices ） 对报道话语进行主观解读——多走一小步，用文本挖掘的方法生硬武断（brutal）地检视话题内在的规律。没有上下文脉络以及对字词句段篇章浑然一体触摸玩味的文本挖掘是没有意义的（尽管“玩味”是何物，本身就是一个无法证伪的伪命题）。 我们很难断定 Zipf 与巴赫金谁对文字的敏感性更胜一筹，也无法判断机器学习的结果是否可以与拉康学派所谓想象的能指进行有效的对话，这或许也是话语分析中cohesion 与 coherence 之间的分野。事实上，运用解读传统（the interpretative approach）的方法、基于语言学的方法（如critical discourse analysis）也许同样可以得出与本文相同的结论，但也可能因为选篇和立意的不同，得出完全相反的结论。这就仰赖于本文前半部分的理论探讨（比如分析层面的选取），以及行文的内在逻辑（internal consistency）和结果的解释力（explanatory power）。 可惜这些都是本文无法、也是作者现阶段尚未够资历去探讨的话题。</p>
+
+<p>未来针对现有这些资料的下一步研究可以有两个：一是进行历时分析；二是将媒介话语与现实社会的一些指标结合起来，比如针对娱乐节目的管理规定。对于题目一，王成军的帖子是很好的一个起点。对于题目二，我过去粗浅地对比过中港两地电视剧管理的规定（Zhang, 2010），但是对于社会指标应该有比规定更为可操作化的指标。这样一来，针对相应话题可视化的可能性也大大拓展。然而要真正实现这些题目，还得诚邀各路豪杰共商大计。最后，该研究技术路线比较朴素，行文仓促，做工也非常粗糙，很多代码的意思还弄得不是很透彻。希望媒体和学者朋友多加批评。</p>
+
+<h2 id="references">References</h2>
+<p>Cui, L., &amp; Lee, F. L. (2010). Becoming extra-ordinary: Negotiation of media power in the case of Super Girls’ Voice in China. Popular Communication, 8(4), 256-272.</p>
+<p>Gamson, W. A., &amp; Modigliani, A. (1989). Media discourse and public opinion on nuclear power: A constructionist approach. American journal of sociology, 1-37.</p>
+<p>Hallin, D. C., &amp; Mancini, P. (2004). Comparing media systems: Three models of media and politics. Cambridge University Press.</p>
+<p>He, Z. (2000). Working with a dying ideology: Dissonance and its reduction in Chinese journalism. Journalism Studies, 1(4), 599-616.</p>
+<p>Lee, C. C., He, Z., &amp; Huang, Y. (2006). ‘Chinese Party Publicity Inc.’conglomerated: the case of the Shenzhen press group. Media, Culture &amp; Society, 28(4), 581-602.</p>
+<p>Lee, C. C., He, Z., &amp; Huang, Y. (2007). Party-market corporatism, clientelism, and media in Shanghai. The Harvard International Journal of Press/Politics, 12(3), 21-42.</p>
+<p>Meng, B. (2009). Who needs democracy if we can pick our favorite girl? Super Girl as media spectacle. Chinese Journal of Communication, 2(3), 257-272.</p>
+<p>Ng, S. H., Ye, J., &amp; Lee, C. C. (2011). Media Discourse on Globalization in China: A Social—Psychological Analysis. Journal of Language and Social Psychology, 30(2), 139-157.</p>
+<p>Postman, N. (2006). Amusing ourselves to death: Public discourse in the age of show business. Penguin.</p>
+<p>Schramm, W (1964). Mass media and national development: the role of information in the developing countries, Stanford University Press, Stanford, Calif.</p>
+<p>Shlapentokh, V. (1986). Soviet public opinion and ideology: Mythology and pragmatism in interaction. Praeger Publishers.</p>
+<p>Zhang, X. (2010). Comparing the content regulations of TV drama between mainland China and Hong Kong: A case of criminal drama (中港電視劇內容管理管窺：以警匪、犯罪、涉案題材為例). Media Digest [Hong Kong: Radio Television Hong Kong], 2010(4), 4-5. Fulltext: http://rthk.hk/mediadigest/20100422_76_122599.html</p>
+<p>Zhao, Y. (2000). From commercialization to conglomeration: The transformation of the Chinese press within the orbit of the party state. Journal of Communication, 50(2), 3-26.</p>
+<p>祝建華. (2001). 中文傳播研究之理論化與本土化: 以受眾及媒介效果的整合理論為例. 新聞學研究, (68), 1-22.</p>
+<p>谈和（2015） LDAvis——用R做中文LDA主题模型可视化分析。 计算传播网。URL：http://computational-communication.com/2015/12/ldavis/#comment-151</p>
+<p>王成军（2015） 对《政府工作报告》进行文本挖掘。 计算传播网。<a href="http://computational-communication.com/2016/03/%E5%AF%B9%E3%80%8A%E6%94%BF%E5%BA%9C%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A%E3%80%8B%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98/">URL</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-04-26T00:00:00+00:00">April 26, 2016</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E7%94%B7%E5%A5%B3%E9%80%89%E7%A7%80%E5%BC%A5%E6%BC%AB%E4%B8%8E%E5%A8%B1%E4%B9%90%E6%9C%BA%E5%99%A8%E8%BD%B0%E9%B8%A3+%E2%80%94%E2%80%94%E8%AF%95%E5%AF%B9%E3%80%8A%E4%BA%BA%E6%B0%91%E6%97%A5%E6%8A%A5%E3%80%8B%E7%9A%84%E5%A8%B1%E4%B9%90%E8%AF%9D%E8%AF%AD%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96+%EF%BC%882005-2016%EF%BC%89%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpeople-daily-topic-models%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpeople-daily-topic-models%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpeople-daily-topic-models%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpeople-daily-topic-models%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/traffic/" class="pagination--pager" title="中国交通事故媒介日记
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/fudan-class/" class="pagination--pager" title="计算新闻传播学2016课程资料发布（代码、数据、PPT）
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/people-daily-topic-models/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/people-daily-topic-models";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/people-daily-topic-models/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/people-daily-topic-models"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

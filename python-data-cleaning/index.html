@@ -1,0 +1,2640 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>使用python进行数据清洗 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="本文介绍使用python进行数据清洗的一个案例。在数据新闻教学当中，我们通常会介绍使用open refine进行数据清洗。不过我一贯主张采用编程的思路来进行数据清洗，以保证分析的可复制性。本文介绍使用python，尤其是pandas包对university data进行数据清洗的一个例子。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="使用python进行数据清洗">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/python-data-cleaning/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/python-data-cleaning/">
+
+
+
+  <meta property="og:description" content="本文介绍使用python进行数据清洗的一个案例。在数据新闻教学当中，我们通常会介绍使用open refine进行数据清洗。不过我一贯主张采用编程的思路来进行数据清洗，以保证分析的可复制性。本文介绍使用python，尤其是pandas包对university data进行数据清洗的一个例子。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="使用python进行数据清洗">
+  <meta name="twitter:description" content="本文介绍使用python进行数据清洗的一个案例。在数据新闻教学当中，我们通常会介绍使用open refine进行数据清洗。不过我一贯主张采用编程的思路来进行数据清洗，以保证分析的可复制性。本文介绍使用python，尤其是pandas包对university data进行数据清洗的一个例子。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/python-data-cleaning/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-14.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-11-19T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-14.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          使用python进行数据清洗
+
+        
+      </h1>
+      
+        <p class="page__lead">本文介绍使用python进行数据清洗的一个案例。在数据新闻教学当中，我们通常会介绍使用open refine进行数据清洗。不过我一贯主张采用编程的思路来进行数据清洗，以保证分析的可复制性。本文介绍使用python，尤其是pandas包对university data进行数据清洗的一个例子。
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="使用python进行数据清洗">
+    <meta itemprop="description" content="本文介绍使用python进行数据清洗的一个案例。在数据新闻教学当中，我们通常会介绍使用open refine进行数据清洗。不过我一贯主张采用编程的思路来进行数据清洗，以保证分析的可复制性。本文介绍使用python，尤其是pandas包对university data进行数据清洗的一个例子。">
+    <meta itemprop="datePublished" content="November 19, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> Table</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#downloading-data" id="markdown-toc-downloading-data">Downloading Data</a>    <ul>
+      <li><a href="#what-you-can-learn" id="markdown-toc-what-you-can-learn">What you can learn</a></li>
+    </ul>
+  </li>
+  <li><a href="#reading-data-with-pandas" id="markdown-toc-reading-data-with-pandas">Reading Data with Pandas</a></li>
+  <li><a href="#deduplicate-entries-10" id="markdown-toc-deduplicate-entries-10">Deduplicate entries 1.0</a></li>
+  <li><a href="#clean-up-country-names" id="markdown-toc-clean-up-country-names">Clean up country names</a></li>
+  <li><a href="#clean-up-values-for-the-number-of-students" id="markdown-toc-clean-up-values-for-the-number-of-students">Clean up values for the number of students</a></li>
+  <li><a href="#clean-up-values-for-the-endowment" id="markdown-toc-clean-up-values-for-the-endowment">Clean up values for the endowment</a></li>
+  <li><a href="#others" id="markdown-toc-others">Others</a>    <ul>
+      <li><a href="#numfaculty" id="markdown-toc-numfaculty">numFaculty</a></li>
+      <li><a href="#numdoctoral" id="markdown-toc-numdoctoral">numDoctoral</a></li>
+      <li><a href="#numstaff" id="markdown-toc-numstaff">numStaff</a></li>
+      <li><a href="#numpostgrad" id="markdown-toc-numpostgrad">numPostgrad</a></li>
+      <li><a href="#numundergrad" id="markdown-toc-numundergrad">numUndergrad</a></li>
+      <li><a href="#established" id="markdown-toc-established">established</a></li>
+    </ul>
+  </li>
+  <li><a href="#university" id="markdown-toc-university">University</a></li>
+  <li><a href="#deduplicate-entries-20" id="markdown-toc-deduplicate-entries-20">Deduplicate entries 2.0</a></li>
+  <li><a href="#write-data" id="markdown-toc-write-data">Write data</a></li>
+  <li><a href="#jupyter-notebook" id="markdown-toc-jupyter-notebook">Jupyter Notebook</a></li>
+</ul>
+
+  </nav>
+</aside>
+
+<p>This tutorial was partially adapted from http://enipedia.tudelft.nl/wiki/OpenRefine_Tutorial, where you can learn more about Open Refine. It used to be called Google Refine so try that too when you are searching for information. However, in our case, we use python to do the same thing.</p>
+
+<h1 id="downloading-data">Downloading Data</h1>
+
+<p>The university data can be downloaed from http://enipedia.tudelft.nl/enipedia/images/f/ff/UniversityData.zip</p>
+
+<h2 id="what-you-can-learn">What you can learn</h2>
+
+<p>The data contains quite a few issues, and this tutorial shows how to do things like:</p>
+
+<ul>
+  <li>Cleaning up inconsistent spelling of terms (i.e. “USA”, “U.S.A”, “U.S.”, etc).</li>
+  <li>Converting values that are text descriptions of numeric values (i.e. $123 million) to actual numeric values (i.e. 123000000) which are usable for analysis.</li>
+  <li>Identifying which rows of a specific column contain a search term</li>
+  <li>Extracting and cleaning values for dates</li>
+  <li>Removing duplicate rows</li>
+  <li>Using a scatterplot to visualize relationships between values in different columns</li>
+  <li><del>Finding geographic coordinates for a list of place names (i.e. the names of universities, etc.)</del></li>
+  <li>Exporting cleaned data to Excel</li>
+</ul>
+
+<h1 id="reading-data-with-pandas">Reading Data with Pandas</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+
+<span class="n">matplotlib</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">'ggplot'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'universityData.csv'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paris Universitas</td>
+      <td>15</td>
+      <td>5500</td>
+      <td>8000</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>25000</td>
+      <td>70000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Paris Universitas</td>
+      <td>15</td>
+      <td>5500</td>
+      <td>8000</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>25000</td>
+      <td>70000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lumi%C3%A8re University Lyon 2</td>
+      <td>121</td>
+      <td>NaN</td>
+      <td>1355</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>1835</td>
+      <td>7046</td>
+      <td>14851</td>
+      <td>27393</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Confederation College</td>
+      <td>4700000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Canada</td>
+      <td>NaN</td>
+      <td>1967</td>
+      <td>not available</td>
+      <td>pre-university students; technical</td>
+      <td>21160</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>NaN</td>
+      <td>1878</td>
+      <td>66</td>
+      <td>878</td>
+      <td>894</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Lumi%C3%A8re University Lyon 2
+</code></pre></div></div>
+
+<p>Apparently, there are duplicate rows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>75043
+</code></pre></div></div>
+
+<h1 id="deduplicate-entries-10">Deduplicate entries 1.0</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>15534
+</code></pre></div></div>
+
+<p>We already see an issue here where there is both the full name of a country (United States) and its abbreviation (US). To fix this, we can just copy/paste “United States” as the new cell value.</p>
+
+<h1 id="clean-up-country-names">Clean up country names</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">unique</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array(['France', 'Canada', 'United States', 'USA', 'Italy', 'South Korea',
+       'Japan', 'United States of America', 'England, UK',
+       'United States )', 'Saudi Arabia', 'Honduras', 'United Kingdom',
+       'England', 'the Netherlands', 'India', 'Russia', 'U.S.', 'Brazil',
+       'US', 'U.S.A.', 'Philippines', 'Australia',
+       'England, United Kingdom', 'Wales', ',', 'China', 'South Africa',
+       'UK', 'Puerto Rico', 'Bulgaria', 'Botswana', 'Taiwan', 'Sri Lanka',
+       'Colombia', 'Iran', 'Russian Federation', 'Rossija', 'Finland',
+       'Republic of China', 'Chile', 'Romania', 'Utopia', 'Singapore',
+       'Lebanon', 'Turkey', 'Canada B1P 6L2', 'Jordan', 'Albania',
+       'Canada C1A 4P3 Telephone: 902-566-0439 Fax: 902-566-0795',
+       'Scotland', 'Pakistan', 'Scotland, United Kingdom', 'Denmark',
+       'Mexico', 'Thailand', 'Argentina', 'Cura%C3%A7ao', 'Sweden',
+       'Scotland, UK', 'Bangladesh', 'Nepal', 'Netherlands', 'Switzerland',
+       'Egypt', 'Spain', 'Satellite locations:',
+       'Nassau, Bahamas Fort Myers, FL Jacksonville, FL Miami, FL Miramar, FL Orlando, FL Palm Beach, FL Tampa, FL'], dtype=object)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">country_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'country'</span><span class="p">).</span><span class="n">size</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">country_df</span><span class="p">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">country_df</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(',', 2)
+('Albania', 8)
+('Argentina', 1)
+('Australia', 49)
+('Bangladesh', 27)
+('Botswana', 1)
+('Brazil', 10)
+('Bulgaria', 2)
+('Canada', 625)
+('Canada B1P 6L2', 40)
+('Canada C1A 4P3 Telephone: 902-566-0439 Fax: 902-566-0795', 1)
+('Chile', 1)
+('China', 4)
+('Colombia', 1)
+('Cura%C3%A7ao', 1)
+('Denmark', 8)
+('Egypt', 1)
+('England', 338)
+('England, UK', 286)
+('England, United Kingdom', 64)
+('Finland', 2)
+('France', 8)
+('Honduras', 1)
+('India', 40)
+('Iran', 9)
+('Italy', 2)
+('Japan', 112)
+('Jordan', 2)
+('Lebanon', 5)
+('Mexico', 2)
+('Nassau, Bahamas Fort Myers, FL Jacksonville, FL Miami, FL Miramar, FL Orlando, FL Palm Beach, FL Tampa, FL', 1)
+('Nepal', 4)
+('Netherlands', 2)
+('Pakistan', 2)
+('Philippines', 147)
+('Puerto Rico', 2)
+('Republic of China', 1)
+('Romania', 1)
+('Rossija', 2)
+('Russia', 1)
+('Russian Federation', 2)
+('Satellite locations:', 1)
+('Saudi Arabia', 1)
+('Scotland', 64)
+('Scotland, UK', 16)
+('Scotland, United Kingdom', 16)
+('Singapore', 4)
+('South Africa', 7)
+('South Korea', 7)
+('Spain', 1)
+('Sri Lanka', 4)
+('Sweden', 24)
+('Switzerland', 8)
+('Taiwan', 1)
+('Thailand', 4)
+('Turkey', 4)
+('U.S.', 304)
+('U.S.A.', 81)
+('UK', 83)
+('US', 455)
+('USA', 5104)
+('United Kingdom', 405)
+('United States', 6949)
+('United States )', 1)
+('United States of America', 167)
+('Utopia', 1)
+('Wales', 2)
+('the Netherlands', 2)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">us_condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">isin</span><span class="p">([</span><span class="s">'U.S.'</span><span class="p">,</span> <span class="s">'U.S.A.'</span><span class="p">,</span> <span class="s">'US'</span><span class="p">,</span> <span class="s">'United States'</span><span class="p">,</span> <span class="s">'United States )'</span><span class="p">,</span> <span class="s">'United States of America'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">us_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'USA'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Canada'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'Canada'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'China'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'China'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'England'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'England'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Scotland'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'England'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uk_condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">isin</span><span class="p">([</span><span class="s">'UK'</span><span class="p">,</span> <span class="s">'United Kingdom'</span><span class="p">,</span> <span class="s">'Wales'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">uk_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'England'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Netherlands'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'Netherlands'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Russia'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'Russia'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca_condition</span> <span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Bahamas'</span><span class="p">):</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ca_condition</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">ca_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">'Bahamas'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'Russian Federation'</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'Russia'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uk_condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span><span class="o">==</span><span class="s">'Cura%C3%A7ao'</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">uk_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">"Curacao"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span><span class="o">==</span><span class="s">','</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2130</th>
+      <td>Universidad Ju%C3%A1rez Aut%C3%B3noma de Tabasco</td>
+      <td>23760.0</td>
+      <td>2188</td>
+      <td>NaN</td>
+      <td>,</td>
+      <td>1087</td>
+      <td>1958-11-20</td>
+      <td>971</td>
+      <td>24921</td>
+      <td>35271</td>
+    </tr>
+    <tr>
+      <th>3077</th>
+      <td>Universidad Ju%C3%A1rez Aut%C3%B3noma de Tabasco</td>
+      <td>34140.0</td>
+      <td>2188</td>
+      <td>NaN</td>
+      <td>,</td>
+      <td>1087</td>
+      <td>1958-11-20</td>
+      <td>971</td>
+      <td>24921</td>
+      <td>35271</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Universidad Juárez Autónoma de Tabasco is a public institution of higher learning located in Villahermosa, Tabasco, Mexico.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uk_condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span><span class="o">==</span><span class="s">','</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">uk_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">"Mexico"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span><span class="o">==</span><span class="s">'Satellite locations:'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>75009</th>
+      <td>Nova Southeastern University</td>
+      <td>US $64.5 million</td>
+      <td>2083</td>
+      <td>NaN</td>
+      <td>Satellite locations:</td>
+      <td>4319</td>
+      <td>1964</td>
+      <td>22060</td>
+      <td>6397</td>
+      <td>28457</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Nova Southeastern University (NSU) is a private nonprofit university, with a main campus located on 300 acres (120 ha) in Davie, in the US state of Florida. Formerly referred to as “Nova” and now commonly called “NSU”, the university currently consists of 18 colleges and schools offering over 175 programs of study with more than 250 majors.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uk_condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">]</span><span class="o">==</span><span class="s">'Satellite locations:'</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'country'</span><span class="p">][</span><span class="n">uk_condition</span><span class="p">]</span>  <span class="o">=</span> <span class="s">"USA"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">country_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'country'</span><span class="p">).</span><span class="n">size</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">country_df</span><span class="p">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">country_df</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('Albania', 8)
+('Argentina', 1)
+('Australia', 49)
+('Bahamas', 1)
+('Bangladesh', 27)
+('Botswana', 1)
+('Brazil', 10)
+('Bulgaria', 2)
+('Canada', 666)
+('Chile', 1)
+('China', 5)
+('Colombia', 1)
+('Curacao', 1)
+('Denmark', 8)
+('Egypt', 1)
+('England', 1274)
+('Finland', 2)
+('France', 8)
+('Honduras', 1)
+('India', 40)
+('Iran', 9)
+('Italy', 2)
+('Japan', 112)
+('Jordan', 2)
+('Lebanon', 5)
+('Mexico', 4)
+('Nepal', 4)
+('Netherlands', 4)
+('Pakistan', 2)
+('Philippines', 147)
+('Puerto Rico', 2)
+('Romania', 1)
+('Rossija', 2)
+('Russia', 3)
+('Saudi Arabia', 1)
+('Singapore', 4)
+('South Africa', 7)
+('South Korea', 7)
+('Spain', 1)
+('Sri Lanka', 4)
+('Sweden', 24)
+('Switzerland', 8)
+('Taiwan', 1)
+('Thailand', 4)
+('Turkey', 4)
+('USA', 13062)
+('Utopia', 1)
+</code></pre></div></div>
+
+<h1 id="clean-up-values-for-the-number-of-students">Clean up values for the number of students</h1>
+
+<p>We need to clean the data for the number of students. Not all of the values are numeric, and many of them contain bits of text in addition to the actual number of the students.
+To figure out which entries need to be fixed, we need to use a Numeric facet:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>15534</td>
+      <td>15504</td>
+      <td>13541</td>
+      <td>602</td>
+      <td>15534</td>
+      <td>3166</td>
+      <td>15534</td>
+      <td>15183</td>
+      <td>15532</td>
+      <td>13830</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>1085</td>
+      <td>1172</td>
+      <td>601</td>
+      <td>63</td>
+      <td>47</td>
+      <td>352</td>
+      <td>448</td>
+      <td>887</td>
+      <td>1104</td>
+      <td>698</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Pennsylvania State University</td>
+      <td>1.708E9</td>
+      <td>8864</td>
+      <td>60</td>
+      <td>USA</td>
+      <td>3373</td>
+      <td>1855</td>
+      <td>800</td>
+      <td>77,179 Total</td>
+      <td>800</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>8960</td>
+      <td>4480</td>
+      <td>8960</td>
+      <td>192</td>
+      <td>13062</td>
+      <td>216</td>
+      <td>8970</td>
+      <td>651</td>
+      <td>896</td>
+      <td>564</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array(['70000', '27393', '21160', '894', '15553', '62801', '65234', nan,
+       '15424', '4533', '5756', '24424', '2426', '7730', '2987', '10477',
+       '13773', '14388', '14522', '32472', '40829', '17101', '7497',
+       '2400', '7306', '17500', '4463', '2200', '6448', '4863', '900+',
+       '13570', '4927', '32739', '1604', '2499', '13785', '16317', '339',
+       '1874', '10790', '4494', '4836', '4176', '4352', '30819', '6314',
+       '26851', '3251', '616', '49589', '50116', '3224', '52405',
+       '~50,000', '7773', '3785', '3822', '5000', '20712', '21000',
+       '21048', '7787', '17231', '18502', '6158', '11804', '36041',
+       '38912', '29390', '1207', '3090', '3249', '24370', '2654', '2815',
+       '15705', '14575', '1144', '10235', '1015', '3657', '1033', '1062',
+       '9840', '32762', '14806', '10623', '13438', '18900', '23420',
+       '3192', '2480', '12125', '4800', '30930', '7848', '5560', '12130',
+       '25063', '25277', '16567', '12270', '2566', '7881', '1972', '1779',
+       '2715', '4179', '3200', '971', '7538', '10133', '6214', '14196',
+       '35271', '11034', '17055', '14153', '998', '4238', '9251', '23500',
+       '4666', '17502', '11722', '47430', '4600', '9000', '7110', '3120',
+       '20655', '2766', '29290', '3740', '8394', '600', '3927', '1836',
+       '7313', '4061', '2073', '2183', '1315', '15484', '3345', '735',
+       '15872', '11308', '15889', '7885', '1066', '1331', '3574', '6840',
+       '1737', '11604', '6058', '1917', '5079', '23859', '23930', '2110',
+       '2640', '14000', '2942', '3483', '4854', '5930', '23175', '23855',
+       '2355', '9625', '4500', '1000', '779', '1760', '1885', '37641',
+       '3739', '17000', 'http://www.brocku.ca/athletics/quickfacts.php',
+       '20762', '21080', '757', '1116', '2000', '9748', '14177', '2242',
+       '2488', '19000', '2305', '16548', '16809', '38140', '13863', '4900',
+       '10363', '21016', '27008', '18,234 -', '26,101 -', '36000', '4200',
+       '21091', '110436', '18396', '18448', '9558', '7.07184E7',
+       '7.71264E7', '10000', '1650', '5097', '5471', '5008', '7542',
+       '8800', '1791', '23122', '30328', '6080', '2776', '14235', '2636',
+       '2744', '4250', '8094', '13600', '34767', '3709', '22125', '24875',
+       '2225', '9203', '27676', '8955', '25215', '29549', '30000', '11659',
+       '17', '3168', '17849', '22280', '19020', '800', '2725', '32275',
+       '33825', '4337', '3974', '12114', '23135', '3000', '3485', '29703',
+       '8831', '30303', '11476', '11842', '602', '8649', '1703', '3500',
+       '5201', '3719', '42099', '42595', '5760', '6082', '2175', '2231',
+       '22479', '4183', '47122', '5790', '4014', '28602', '42513', '1118',
+       '15405', '18442', '5033', '4600800.0', '10534', '28525', '55014',
+       '7751', '7755', '58698', '7567', '11201', '2100', '24531', '1500',
+       '1,500+', '46422', '46423', '754', '17290', '39165', '9300',
+       '41674', '42716', '42761', '42907', '49020', '12445', '19333',
+       '22405', '24662', '18572', '11593', '3209', '23162', '23590',
+       '8742', '5552', '5,552 total', '1415', '16822', '7942', '6957',
+       '11733', '28311', '5200', '13995', '14070', '30823', '31766',
+       '10688', '12557', '21225', '25313', '12024', '12683', '2124',
+       '5500', '5514', '5525', '12725', '9517', '35274', '37132', '450',
+       '23315', '24735', '10502', '20407', '8034', '1210', '46302',
+       '13959', '24849', '13490', '15265', '8606', '29462', '7615',
+       '24170', '8603', '8645', '9135', '8878', '9370', '29616', '22707',
+       '2334', '28018', '33585', '21210', '3439', '19700', '25890',
+       '26073', '9555', '13351', '13676', '4278', '35200', '14560', '7943',
+       '8005', '12714', '12002', '23761', '24977', '12400', '82', '3432',
+       '24594', '2648', '19890', '10820', '6101', '2565', '29894', '29952',
+       '5260', '22275', '16000', '20222', '21011', '37426', '19391',
+       '25700', '26960', '5379', '24593', '14765', '2900',
+       'faculty to student ratio: 12:1', '9150', '1600', '35204', '4000',
+       '47966', '1683', '~1,610', '363', '44', '32304', '6945', '51611',
+       '51721', '51853', '30540', '32500', '13183', '9940', '18475',
+       '38934', '57409', '24225', '22805', '30461', '44595', '49000',
+       '4991', '9339', '23085', '23336', '17455', '10383', '12000', '811',
+       '3246', '21827', '2282', '11646', '15642', '8810', '23600', '24192',
+       '8298', '23470', '13089', '19415', '19740', '41215', '2836', '3700',
+       '3770', '3829', '3721', '4525', '5365', '3050', '2345', '7700',
+       '7257', '2263', '19780', '2589', '2542', '29898', '2120', '2300',
+       '3600', '4384', '1748', '7928', '7005', '7277', '7740', '2270',
+       '1130.0', '1841.0', '6919', '47878', '34000', '9106', '8278',
+       '3378', '7131', '19966', '6964', '5809', '19664', '19993', '3420',
+       '2658', '2609', '1938', '2442', '42606', '2435', '10074', '20212',
+       '20,000+', '1460', '6276', '1308', '2719', '40000', '11065', '2660',
+       '3633', '80022011', '20487', '111329', '852', '131403', '24595',
+       '28', '1371', '3800', '23883', '3137', '33788', '28394', '30377',
+       '5.29092E7', '5.49E7', '14706', '720', '2674', '2886', '23103',
+       '8000', '10482', '6', '1890', '1872', '34255', '53337', '27523',
+       '18498', '11922', '6398', '15189', '70440', '72254', '23588',
+       '24378', '8985', '3461', '2', '27209', '22974', '11581', '47800',
+       '47954', '14769', '15195', '1771', '16355',
+       'One MEELLLLIOONNN DOLL HAIRS', '19500', '17499', '10894', '33500',
+       '15319', '3480', '28094', '8846', '6726', '27606', '20939', '20330',
+       '21535', '6647', '1454', '20643', '21329', '13925', '4496', '17261',
+       '17333', '21559', '630', '795', '6290', '8524', '33977', '44817',
+       '95833', '630 Dickinson School of Law', '800 College of Medicine',
+       '8,524 World Campus', '44,817 University Park', '795 Great Valley',
+       '95,833 Total', '33,977 Commonwealth Campuses',
+       '6,290 PA College of Tech', '25045', '29887', '31040', '27816',
+       '87274', '17999', '17950', '4197033329', '41710', '15649', '11956',
+       '28766', '28823', '2724', '45963', '978', '11180', '12312', '19721',
+       '5233', '29689', '4072', '11867', '38010', '18630', '27195',
+       '15657', '14820', '13381', '13893', '3245', '15064', '15473',
+       '7521', '5913', '5998', '33602', '31899', '39271', '39922', '33490',
+       '24125', '28994', '28290', '1115', '17351', '2284', '17533',
+       '18971', '39697', '39726', '27269', '19379', '13410', '2203',
+       '19728', '3005', '3045', '3540', '2459', '18004', '45126', '45954',
+       '2559', '15446', '32611', '56868', '28203', '20956', '3537', '6654',
+       '285392012', '15920', '34870', '8289', '25469', '10549', '18762',
+       '14713', '28091', '55115', '32653', '5152', '380', '14754', '7764',
+       '15951', '16040', '15536', '9799', '9352', '28457'], dtype=object)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">float</span><span class="p">(</span><span class="s">'5.29092E7'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>52909200.0
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStudents</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'+'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStudents</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'-'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStudents</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://stackoverflow.com/questions/4138202/using-isdigit-for-floats
+</span><span class="k">def</span> <span class="nf">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">isDigit</span><span class="p">(</span><span class="s">'1130.0'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">str</span><span class="p">.</span><span class="n">isdigit</span><span class="p">(</span><span class="s">'1130.0'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>False
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numStudents'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numStudents'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numStudents'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>15534
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>70000.0
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">.</span><span class="n">unique</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 70000.,  27393.,  21160.,    894.,  15553.,  62801.,  65234.,
+           nan,  15424.,   4533.])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">.</span><span class="nb">max</span><span class="p">(),</span> <span class="n">df</span><span class="p">.</span><span class="n">numStudents</span><span class="p">.</span><span class="nb">min</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(4197033329.0, 2.0)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># df.numStudents.astype('float')
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pd.to_numeric(df.numStudents)#, errors='ignore')
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1.380000e+04</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.934969e+05</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>3.585477e+07</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.065000e+03</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.068800e+04</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.397700e+04</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4.197033e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1 id="clean-up-values-for-the-endowment">Clean up values for the endowment</h1>
+
+<p>First remove the numeric facet for numStudents and create a new numeric facet for endowment. Select only the non-numeric values, as was done for the number of students.
+Already we see issues like “US$1.3 billion” and “US $186 million”</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'endowment'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0                       15
+2                      121
+3                  4700000
+4                 16586100
+5                 16586100
+6                 40200750
+7                 40200750
+8                 40200750
+9                 40200750
+10                40200750
+11                40200750
+12                40200750
+13                40200750
+14                40200750
+15                40200750
+16                40200750
+17                40200750
+18               562000000
+19               562000000
+22                     NaN
+23                     NaN
+24                     NaN
+25                     NaN
+26                     NaN
+27                   1.3E7
+28                   1.0E7
+29                   3.5E8
+30                   4.5E8
+31                     0.0
+32                     0.0
+               ...        
+74996        $2,17 billion
+74997        $2,17 billion
+74998        $2,17 billion
+74999        $2,17 billion
+75000        $2,17 billion
+75001        $2,17 billion
+75002        $2,17 billion
+75003        $2,17 billion
+75004    US $401.2 million
+75006    US $213.2 million
+75007      US $381 million
+75008     US $64.5 million
+75009     US $64.5 million
+75010     US $64.5 million
+75011    US $716.8 million
+75012    US $716.8 million
+75013    US $716.8 million
+75014    US $716.8 million
+75015    US $716.8 million
+75016    US $716.8 million
+75017    US $716.8 million
+75018    US $716.8 million
+75019    US $716.8 million
+75020    US $716.8 million
+75021    US $716.8 million
+75022    US $716.8 million
+75023    US $716.8 million
+75024    US $716.8 million
+75025    US $716.8 million
+75026    US $716.8 million
+Name: endowment, dtype: object
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">odds</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'endowment'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('US$226 million', 1),
+ ('US $6.44 billion', 16),
+ ('1,5 billion \xe2\x82\xac', 1)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="s">'1E6'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1000000.0
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'US $'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'US$'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'USD$'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'USD $'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'U.S. $'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+
+<span class="n">endowment</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span><span class="p">.</span><span class="n">__contains__</span><span class="p">(</span><span class="s">'$'</span><span class="p">):</span>
+        <span class="n">endowment</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">'$'</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">endowment</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="n">endowment</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">' million'</span><span class="p">,</span> <span class="s">'E6'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">' billion'</span><span class="p">,</span> <span class="s">'E9'</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'million'</span><span class="p">,</span> <span class="s">'E6'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'billion'</span><span class="p">,</span> <span class="s">'E9'</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">' Million'</span><span class="p">,</span> <span class="s">'E6'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">' Billion'</span><span class="p">,</span> <span class="s">'E9'</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'M'</span><span class="p">,</span> <span class="s">'E6'</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">endowment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">';'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'+'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">endowment</span><span class="p">]</span>
+<span class="c1"># df.endowment = [str(i).split('xbf')[1] for i in df.endowment]
+# df.endowment = [str(i).split('xb')[1] for i in df.endowment]
+# df.endowment = [str(i).split('xa')[1] for i in df.endowment]
+</span>
+</code></pre></div></div>
+
+<p>After most of this has been cleaned up, select the non-numeric values, and delete them, just as was done for the numStudents.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'endowment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'endowment'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>endowment</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1.490400e+04</td>
+      <td>1.380000e+04</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2.149103e+09</td>
+      <td>3.934969e+05</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.927573e+10</td>
+      <td>3.585477e+07</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000e+00</td>
+      <td>2.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2.430000e+08</td>
+      <td>1.065000e+03</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.546000e+09</td>
+      <td>1.068800e+04</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.708000e+09</td>
+      <td>3.397700e+04</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.545840e+12</td>
+      <td>4.197033e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<ul>
+  <li>巴西雷亚尔的符号 R$</li>
+  <li>CANADA DOLLARS  C$</li>
+  <li>澳元的货币符号 A$</li>
+</ul>
+
+<p>Both “million” and “Million” are in the values, so it’s useful to convert all the values to lowercase instead of cleaning this up twice.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paris Universitas</td>
+      <td>15.0</td>
+      <td>5500</td>
+      <td>8000</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>25000</td>
+      <td>70000.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lumi%C3%A8re University Lyon 2</td>
+      <td>121.0</td>
+      <td>NaN</td>
+      <td>1355</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>1835</td>
+      <td>7046</td>
+      <td>14851</td>
+      <td>27393.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Confederation College</td>
+      <td>4700000.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Canada</td>
+      <td>NaN</td>
+      <td>1967</td>
+      <td>not available</td>
+      <td>pre-university students; technical</td>
+      <td>21160.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>1878</td>
+      <td>66</td>
+      <td>878</td>
+      <td>894.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>1878</td>
+      <td>66</td>
+      <td>878</td>
+      <td>894.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1 id="others">Others</h1>
+
+<p>numFaculty, numDoctoral, numStaff, numPostgrad, numUndergrad, established</p>
+
+<h2 id="numfaculty">numFaculty</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Total: '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'&gt;'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numFaculty'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numFaculty'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numFaculty'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+</code></pre></div></div>
+
+<h2 id="numdoctoral">numDoctoral</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numDoctoral'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('available', 1),
+ ('N\\A', 27),
+ ('not available', 40),
+ ('N.A', 16),
+ ('~25', 4)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numDoctoral</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numFaculty</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numDoctoral'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numDoctoral'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="numstaff">numStaff</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numStaff'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('incl. 1,403 academics and 150 researchers', 2),
+ ('Total: 873', 48),
+ ('Approximately 7,170', 1),
+ ('approximately 30', 1),
+ ('167 full-time academic faculty,  \n596 non-academic staff', 4),
+ ('Around 120', 27),
+ ('~500', 4),
+ ('190 researchers &amp; lecturers, 153 administrative &amp; technical staff', 2),
+ ('Approximately 500', 1),
+ ('4,478 employees', 64),
+ ('Around 5,000', 48),
+ ('&gt;21,000', 2),
+ ('?', 1),
+ ('~100', 4),
+ ('full-time, part-time', 1),
+ ('Total: 1,608', 2),
+ ('Total: 1,600', 16),
+ ('Full-time: 1,469', 2),
+ ('156 full-time; 229 part-time', 1),
+ ('Part-time: 139', 2),
+ ('960 full-time, 460 part-time', 16),
+ ('appx. 20', 8),
+ ('~', 1)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Total: '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'&gt;'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Around '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'appx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">' employees'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Approximately '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Full-time: '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Part-time: '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'approximately '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numStaff</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">]</span>
+
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numStaff'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numStaff'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="numpostgrad">numPostgrad</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numPostgrad'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('268 full-time MBA', 24),
+ ('approx. 300', 1),
+ ('~650', 4),
+ ('n/a', 1),
+ ('Aprx. 2,000', 2),
+ ('630 Dickinson School of Law', 640),
+ ('120+', 8),
+ ('795 Great Valley', 640),
+ ('Does not offer postgraduate studies', 1),
+ ('~3,914', 1),
+ ('4,937 full-time, 1,446 part-time', 2),
+ ('800 College of Medicine', 640),
+ ('not available', 1),
+ ('~3,200', 2),
+ ('Masters of Business Administration in Community Economic Development', 20),
+ ('Some postdoctoral students and visiting scholars', 1),
+ ('postgraduate level degree available', 1),
+ ('~160', 3),
+ ('142 Ph.D. students', 2),
+ ('1,682 Commonwealth Campuses', 640),
+ ('available', 1),
+ ('71 MLHR', 24),
+ ('14,020 Total', 640),
+ ('Approximately 1000', 1),
+ ('Approx. 600', 1),
+ ('----', 4),
+ ('~500', 4),
+ ('~5,500', 2),
+ ('~60', 4),
+ ('325 part-time MBA', 24),
+ ('over 1,300', 1),
+ ('N\\A', 9),
+ ('none', 1),
+ ('6,223 University Park', 640),
+ ('ca. 3,230', 2),
+ ('95 MAcc', 24),
+ ('9,957 \xe2\x80\x93 Vancouver', 24),
+ ('531 \xe2\x80\x93 Okanagan', 24),
+ ('3,890 World Campus', 640),
+ ('TBD', 2)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'approx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Approx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Approximately '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Aprx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'+'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'over'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">]</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numPostgrad'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numPostgrad'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="numundergrad">numUndergrad</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'numUndergrad'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('4,747 full-time', 96),
+ ('over 2,000', 1),
+ ('Approximately 10,000', 1),
+ ('2,000+', 8),
+ ('approximately 1,500', 1),
+ ('n/a', 1),
+ ('Aprx. 2,000', 2),
+ ('School of Liberal Arts; School of Science &amp; Technology; School of Graduate &amp; Professional Studies; Shannon School of Business',
+  20),
+ ('approx. 2,000', 1),
+ ('36,518 \xe2\x80\x93 Vancouver', 24),
+ ('~25,000', 2),
+ ('65 per year', 1),
+ ('77,179 Total', 896),
+ ('approx. 1,200', 8),
+ ('Approx. 12,000', 2),
+ ('38,594  University Park', 896),
+ ('32,295 Commonwealth Campuses', 896),
+ ('Approximately 2,300', 1),
+ ('7,004 \xe2\x80\x93 Okanagan', 24),
+ ('~400', 1),
+ ('pre-university students; technical', 1),
+ ('Around 10,000', 2),
+ ('available', 3),
+ ('21,726 -', 24),
+ ('None', 1),
+ ('900+', 1),
+ ('475 Resident Undergraduates', 1),
+ ('ca. 3,046', 2),
+ ('Approx. 7,100', 1),
+ ('6,290 PA College of Tech', 896),
+ ('4,634 World Campus', 896),
+ ('28,477 full-time, 2,102 part-time', 2),
+ ('none', 1),
+ ('approx. 2,150', 4),
+ ('Approximately 730', 1),
+ ('~13,000', 2),
+ ('~2,000', 4),
+ ('diploma, degree available', 1),
+ ('Approx. 13,000', 1),
+ ('2,000 traditional', 1),
+ ('~1,560', 1),
+ ('???', 1),
+ ('~1,550', 4)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'~'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'approx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Approx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Approximately '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Aprx. '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'approximately '</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'Around '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'+'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'over'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">numUndergrad</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'numUndergrad'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'numUndergrad'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="established">established</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">established</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0                            2005
+2                            1835
+3                            1967
+4                            1878
+5                            1878
+6                            1901
+7                            1901
+8                            1947
+9                            1947
+10                           1963
+11                           1963
+12       1963 - university status
+13       1963 - university status
+14       1947 - four-year college
+15       1947 - four-year college
+16                         1901 -
+17                         1901 -
+18                           1924
+19                           1924
+22                           1970
+23                     1918-05-01
+24                           1925
+25               Established 1985
+26                 Chartered 1984
+27                           1994
+28                           1947
+29                           1948
+30                           1878
+31                     2004-09-30
+32                     2004-09-30
+                   ...           
+74996                        1848
+74997                        1848
+74998                        1848
+74999                        1848
+75000                        1848
+75001                        1848
+75002                        1848
+75003                        1848
+75004                  1881-08-28
+75006                  1855-10-15
+75007                        1911
+75008                        1964
+75009                        1964
+75010                        1964
+75011                        1851
+75012                        1851
+75013                        1851
+75014                        1851
+75015                        1851
+75016                        1851
+75017                        1851
+75018                        1851
+75019                        1851
+75020                        1851
+75021                        1851
+75022                        1851
+75023                        1851
+75024                        1851
+75025                        1851
+75026                        1851
+Name: established, dtype: object
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odds</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s">'established'</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isDigit</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">odds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">odds</span><span class="p">.</span><span class="n">items</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">getYear</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s">'.*([1-3][0-9]{3})'</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">established</span> <span class="o">=</span> <span class="p">[</span><span class="n">getYear</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">established</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1.490400e+04</td>
+      <td>1.348700e+04</td>
+      <td>1.348700e+04</td>
+      <td>3.161000e+03</td>
+      <td>15186.000000</td>
+      <td>1.513800e+04</td>
+      <td>1.550000e+04</td>
+      <td>1.380000e+04</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2.149103e+09</td>
+      <td>8.695432e+03</td>
+      <td>8.695432e+03</td>
+      <td>1.057127e+04</td>
+      <td>1865.196036</td>
+      <td>1.104538e+04</td>
+      <td>2.762582e+05</td>
+      <td>3.934969e+05</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.927573e+10</td>
+      <td>1.286384e+05</td>
+      <td>1.286384e+05</td>
+      <td>2.483439e+05</td>
+      <td>65.865596</td>
+      <td>3.622826e+05</td>
+      <td>2.581618e+07</td>
+      <td>3.585477e+07</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>2.000000e+00</td>
+      <td>1066.000000</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>2.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2.430000e+08</td>
+      <td>1.953000e+03</td>
+      <td>1.953000e+03</td>
+      <td>1.592000e+03</td>
+      <td>1855.000000</td>
+      <td>8.000000e+02</td>
+      <td>6.290000e+03</td>
+      <td>1.065000e+03</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.546000e+09</td>
+      <td>8.864000e+03</td>
+      <td>8.864000e+03</td>
+      <td>2.799000e+03</td>
+      <td>1855.000000</td>
+      <td>3.067000e+03</td>
+      <td>1.782100e+04</td>
+      <td>1.068800e+04</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.708000e+09</td>
+      <td>8.864000e+03</td>
+      <td>8.864000e+03</td>
+      <td>5.000000e+03</td>
+      <td>1881.000000</td>
+      <td>6.223000e+03</td>
+      <td>3.667500e+04</td>
+      <td>3.397700e+04</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.545840e+12</td>
+      <td>1.407201e+07</td>
+      <td>1.407201e+07</td>
+      <td>1.280201e+07</td>
+      <td>2012.000000</td>
+      <td>2.998201e+07</td>
+      <td>3.198523e+09</td>
+      <td>4.197033e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<h1 id="university">University</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'university'</span><span class="p">].</span><span class="n">unique</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s">'university'</span><span class="p">].</span><span class="n">unique</span><span class="p">().</span><span class="n">size</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(array(['Paris Universitas', 'Lumi%C3%A8re University Lyon 2',
+        'Confederation College', ..., 'University of San Francisco',
+        'Loyola Marymount University', 'Nova Southeastern University'], dtype=object),
+ 1085)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># university_df = df.groupby('university').size()
+# for k in university_df.index:
+#     print(k, university_df[k])
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%2C'</span><span class="p">,</span> <span class="s">''</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">','</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%89'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%A9'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%E2%80%93'</span><span class="p">,</span> <span class="s">' '</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%22'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%A3'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%A7'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%AA'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%BA'</span><span class="p">,</span> <span class="s">'u'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%A1'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C3%B3'</span><span class="p">,</span> <span class="s">'o'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">university</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%CA%BB'</span><span class="p">,</span> <span class="s">"'"</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">'%C4%81'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="p">.</span><span class="n">university</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paris Universitas</td>
+      <td>15.0</td>
+      <td>5500.0</td>
+      <td>5500.0</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>2005.0</td>
+      <td>NaN</td>
+      <td>25000.0</td>
+      <td>70000.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lumi%C3%A8re University Lyon 2</td>
+      <td>121.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>1835.0</td>
+      <td>7046.0</td>
+      <td>14851.0</td>
+      <td>27393.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Confederation College</td>
+      <td>4700000.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Canada</td>
+      <td>NaN</td>
+      <td>1967.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21160.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>1878.0</td>
+      <td>66.0</td>
+      <td>878.0</td>
+      <td>894.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>1878.0</td>
+      <td>66.0</td>
+      <td>878.0</td>
+      <td>894.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>15534
+</code></pre></div></div>
+
+<h1 id="deduplicate-entries-20">Deduplicate entries 2.0</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4919
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>country</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Paris Universitas</td>
+      <td>15.0</td>
+      <td>5500.0</td>
+      <td>5500.0</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>2005.0</td>
+      <td>NaN</td>
+      <td>25000.0</td>
+      <td>70000.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lumi%C3%A8re University Lyon 2</td>
+      <td>121.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>France</td>
+      <td>NaN</td>
+      <td>1835.0</td>
+      <td>7046.0</td>
+      <td>14851.0</td>
+      <td>27393.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Confederation College</td>
+      <td>4700000.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Canada</td>
+      <td>NaN</td>
+      <td>1967.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21160.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Rocky Mountain College</td>
+      <td>16586100.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>USA</td>
+      <td>NaN</td>
+      <td>1878.0</td>
+      <td>66.0</td>
+      <td>878.0</td>
+      <td>894.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Idaho State University</td>
+      <td>40200750.0</td>
+      <td>838.0</td>
+      <td>838.0</td>
+      <td>USA</td>
+      <td>1269.0</td>
+      <td>1901.0</td>
+      <td>2661.0</td>
+      <td>12892.0</td>
+      <td>15553.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>endowment</th>
+      <th>numFaculty</th>
+      <th>numDoctoral</th>
+      <th>numStaff</th>
+      <th>established</th>
+      <th>numPostgrad</th>
+      <th>numUndergrad</th>
+      <th>numStudents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>4.585000e+03</td>
+      <td>3.650000e+03</td>
+      <td>3.650000e+03</td>
+      <td>2.159000e+03</td>
+      <td>4677.000000</td>
+      <td>4.568000e+03</td>
+      <td>4.887000e+03</td>
+      <td>3.734000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.128695e+09</td>
+      <td>1.101300e+04</td>
+      <td>1.101300e+04</td>
+      <td>1.302496e+04</td>
+      <td>1879.911268</td>
+      <td>2.654159e+04</td>
+      <td>8.144919e+05</td>
+      <td>1.390889e+06</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>3.311783e+10</td>
+      <td>2.472490e+05</td>
+      <td>2.472490e+05</td>
+      <td>3.004688e+05</td>
+      <td>95.221953</td>
+      <td>6.592566e+05</td>
+      <td>4.597518e+07</td>
+      <td>6.892540e+07</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>2.000000e+00</td>
+      <td>1066.000000</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>2.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2.900000e+07</td>
+      <td>5.315000e+02</td>
+      <td>5.315000e+02</td>
+      <td>1.178000e+03</td>
+      <td>1855.000000</td>
+      <td>1.305000e+03</td>
+      <td>4.634000e+03</td>
+      <td>7.542000e+03</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.892540e+08</td>
+      <td>1.099000e+03</td>
+      <td>1.099000e+03</td>
+      <td>2.211000e+03</td>
+      <td>1887.000000</td>
+      <td>3.364000e+03</td>
+      <td>1.348000e+04</td>
+      <td>1.933300e+04</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.295000e+09</td>
+      <td>3.694000e+03</td>
+      <td>3.694000e+03</td>
+      <td>4.478000e+03</td>
+      <td>1924.000000</td>
+      <td>6.614250e+03</td>
+      <td>2.332800e+04</td>
+      <td>2.570000e+04</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.545840e+12</td>
+      <td>1.407201e+07</td>
+      <td>1.407201e+07</td>
+      <td>1.280201e+07</td>
+      <td>2012.000000</td>
+      <td>2.998201e+07</td>
+      <td>3.198523e+09</td>
+      <td>4.197033e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">())</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets//img2017/output_104_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">correlation_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span> <span class="k">as</span> <span class="n">cm</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s">'white'</span><span class="p">)</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="p">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">'jet'</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">ax1</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">"nearest"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Correlation'</span><span class="p">)</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">''</span><span class="p">,</span><span class="s">'endowment'</span><span class="p">,</span><span class="s">'numFaculty'</span><span class="p">,</span><span class="s">'numDoctoral'</span><span class="p">,</span><span class="s">'numStaff'</span><span class="p">,</span>\
+            <span class="s">'established'</span><span class="p">,</span><span class="s">'numPostgrad'</span><span class="p">,</span><span class="s">'numUndergrad'</span><span class="p">,</span><span class="s">'numStudents'</span><span class="p">]</span>
+    <span class="n">ax1</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">rotation</span> <span class="o">=</span> <span class="mi">90</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="p">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="c1"># Add colorbar, make sure to specify tick locations to match desired ticklabels
+</span>    <span class="n">fig</span><span class="p">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">correlation_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets//img2017/output_105_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">numStaff</span><span class="p">,</span> <span class="n">df</span><span class="p">.</span><span class="n">numPostgrad</span><span class="p">,</span> <span class="s">'o'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">yscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xscale</span><span class="p">(</span><span class="s">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'$Staff$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'$Post\;Graduates$'</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets//img2017/output_106_0.png" alt="png" /></p>
+
+<h1 id="write-data">Write data</h1>
+
+<p>df.to_csv(‘universityDataClean.csv’, index = False)</p>
+
+<h1 id="jupyter-notebook">Jupyter Notebook</h1>
+
+<p>本文所使用到的所有代码见 <a href="http://nbviewer.jupyter.org/github/data-journalism/dj2017/blob/master/code/dataCleaningWithPython.ipynb">nbviewer</a>。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-11-19T00:00:00+00:00">November 19, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-data-cleaning%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-data-cleaning%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-data-cleaning%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fpython-data-cleaning%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/ROC-analysis/" class="pagination--pager" title="ROC分析与统计检验
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/network2map/" class="pagination--pager" title="基于泰森多边形的网络可视化
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/python-data-cleaning/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/python-data-cleaning";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/python-data-cleaning/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/python-data-cleaning"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

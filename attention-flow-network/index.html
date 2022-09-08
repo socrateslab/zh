@@ -1,0 +1,720 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>注意力流网络分析的三个维度 - 计算传播网</title>
+
+
+
+
+<meta name="description" content="12月22日上午九点三十分，南京大学新闻传播学院计算传播实验中心第四次讲座如约开讲，本次应邀前来为大家做讲座的是来自亚利桑那州立大学的博士后研究者吴令飞博士。吴令飞博士毕业于香港城市大学媒体与传播学系，曾在百度做算法工程师，主要研究方向为注意力动力学。">
+
+
+
+
+<meta name="author" content="梁夏">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="注意力流网络分析的三个维度">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/attention-flow-network/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/attention-flow-network/">
+
+
+
+  <meta property="og:description" content="12月22日上午九点三十分，南京大学新闻传播学院计算传播实验中心第四次讲座如约开讲，本次应邀前来为大家做讲座的是来自亚利桑那州立大学的博士后研究者吴令飞博士。吴令飞博士毕业于香港城市大学媒体与传播学系，曾在百度做算法工程师，主要研究方向为注意力动力学。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="注意力流网络分析的三个维度">
+  <meta name="twitter:description" content="12月22日上午九点三十分，南京大学新闻传播学院计算传播实验中心第四次讲座如约开讲，本次应邀前来为大家做讲座的是来自亚利桑那州立大学的博士后研究者吴令飞博士。吴令飞博士毕业于香港城市大学媒体与传播学系，曾在百度做算法工程师，主要研究方向为注意力动力学。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/attention-flow-network/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@extravagantman">
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2014-12-23T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/bio-photo-2.jpg" class="author__avatar" alt="梁夏" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">梁夏</h3>
+    
+      <p class="author__bio" itemprop="description">
+        What do you want, jewels? I am a very extravagant man.
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="http://thewhip.com" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:billy@rick.com">
+            <meta itemprop="email" content="billy@rick.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/extravagantman" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+BillyRick" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="注意力流网络分析的三个维度">
+    <meta itemprop="description" content="12月22日上午九点三十分，南京大学新闻传播学院计算传播实验中心第四次讲座如约开讲，本次应邀前来为大家做讲座的是来自亚利桑那州立大学的博士后研究者吴令飞博士。吴令飞博士毕业于香港城市大学媒体与传播学系，曾在百度做算法工程师，主要研究方向为注意力动力学。">
+    <meta itemprop="datePublished" content="December 23, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">注意力流网络分析的三个维度
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>12月22日上午九点三十分，南京大学新闻传播学院计算传播实验中心第四次讲座如约开讲，本次应邀前来为大家做讲座的是来自亚利桑那州立大学的博士后研究者吴令飞博士。吴令飞博士毕业于香港城市大学媒体与传播学系，曾在百度做算法工程师，主要研究方向为注意力动力学。</p>
+
+<p>本次讲座的题为：注意力动力学：理论与应用（Attention Dynamics: From theory to application）。围绕这个崭新的概念，吴令飞博士以Stackexchange.com为数据样本，向大家展示了注意力动力学的研究思路和最新研究成果。</p>
+
+<h2 id="q什么是stackexchangecom">Q:什么是Stackexchange.com?</h2>
+
+<p>A:Stackexchange.com是一个问答网站，在网站中你可以提问，也可以回答别人提出的问题。在Stackexchange.com上，超过半数的问题在十二分钟内会获得解答，其内容的实用性与Quora的趣味性形成鲜明对比，二者被誉为迄今为止世界上最成功的两个问答网站。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/4a3bc373e5617d5b98ca604150f022ed.png" alt="stacktime" /></p>
+
+<p>吴令飞博士的研究思路，是按照注意力路径，注意力空间和注意力动力学三个方面进行的：</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/8f39988ca59218192935038a4db43920.png" alt="stack_summary" /></p>
+
+<h3 id="注意力路径path">注意力路径（Path）</h3>
+
+<p>吴令飞博士对Stackexchange.com中的问题进行分类量化，通过对数据点之间流量移动的监测，可以描述出各个用户在Stackexchange.com中活动的路径。在这样的活动路径中，可以捕捉到用户从一个问题进入到下一个问题，直到离开网站的整个“路程”，而用户在网站中行进的“路程”，则可以被称之为流距离。</p>
+
+<p>将数据呈现到二维函数象限中，可以观测到不同的话题社区其流距离是完全不同的，可以想到，流距离越长，就意味着用户在网站中驻足的时间更长，涉及的问题更多，这一社区发展的潜力也就更大。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/b3d849db3c06faa81fd123881eda07fe.png" alt="stack46" /></p>
+
+<h3 id="注意力空间space">注意力空间（Space）</h3>
+
+<p>在注意力的空间中，在不同的问题之间存在相关性与联系，通过对点和点之间，逐个相关性的距离计算，可以确定整个网站中问题和问题之间的空间结构是怎样的。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/e227eb45d58fbed6f9ede72a985dc2d0.png" alt="stack08" /></p>
+
+<p>在对问题进行空间建构后，可以发现：问题发生了两极化。处于注意力中心的问题，例如“如何简单地定义狭义相对论”这样的问题，往往比较简单，会引来很多人回答。而例如“工程管理学中的狭义相对论”这类问题，比较边缘化，也只有很少人可以回答，这样的问题则处在了注意力的外围。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/fde25f8ddc7a486ea35f6be0c1a53f79.png" alt="stack29" /></p>
+
+<h3 id="注意力动力学force">注意力动力学（Force）</h3>
+
+<p>在PATH中，对用户行为进行了流距离的研究，在SPACE中，又将问题嵌入到了一个二维空间中，而在FORCE中，吴令飞博士综合了之前的PATH和SPACE，并加入了时间维度，用以描述注意力动力学这一过程。</p>
+
+<p>通过对Stackexchange.com的数据分析，随着时间推移，网络热点出现时，不断地缩短流距离的过程中，会吸引更多的用户流量。可以想见，在这种运动中，流距离的长短与用户的流量的大小呈反比。</p>
+
+<p><img src="http://oaf2qt3yk.bkt.clouddn.com/672889c3eadab07c2c3a150ea298e4c0.png" alt="stack49" /></p>
+
+<p>吴令飞博士认为，这样一个模型的建立和使用，可以有效地对网络热点和网站的生存状态等众多议题进行预测，这也正是计算传播学的真正魅力所在。</p>
+
+<p>​</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E6%B3%A8%E6%84%8F%E5%8A%9B" class="page__taxonomy-item" rel="tag">注意力</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E6%B5%81%E7%BD%91%E7%BB%9C" class="page__taxonomy-item" rel="tag">流网络</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-12-23T00:00:00+00:00">December 23, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%B5%81%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E7%9A%84%E4%B8%89%E4%B8%AA%E7%BB%B4%E5%BA%A6%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fattention-flow-network%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fattention-flow-network%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fattention-flow-network%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fattention-flow-network%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/average-shortest-path-length/" class="pagination--pager" title="使用networkx计算平均最短路径长度
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/correlation-profile/" class="pagination--pager" title="演员网络中的度相关：随机洗牌的影响
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/attention-flow-network/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/attention-flow-network";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/attention-flow-network/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/attention-flow-network"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

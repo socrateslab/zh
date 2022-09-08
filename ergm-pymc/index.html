@@ -1,0 +1,1383 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Estimating ERGM using PyMC - 计算传播网</title>
+
+
+
+
+<meta name="description" content="This post aims to analyzing networks with ERGMs using PyMC in python.">
+
+
+
+
+<meta name="author" content="计算传播网">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="Estimating ERGM using PyMC">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/ergm-pymc/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/ergm-pymc/">
+
+
+
+  <meta property="og:description" content="This post aims to analyzing networks with ERGMs using PyMC in python.">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="Estimating ERGM using PyMC">
+  <meta name="twitter:description" content="This post aims to analyzing networks with ERGMs using PyMC in python.">
+  <meta name="twitter:url" content="https://socrateslab.github.io/ergm-pymc/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-gallery-image-2-th.jpg">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@计算传播网">
+  
+
+
+
+  
+
+  
+
+
+
+  <meta property="og:image" content="https://socrateslab.github.io/forum/assets/images/unsplash-image-15.jpg">
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-06-27T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style="background-color: #000; background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://socrateslab.github.io/forum/assets/images/unsplash-image-15.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 class="page__title" itemprop="headline">
+        
+          Estimating ERGM using PyMC
+
+        
+      </h1>
+      
+        <p class="page__lead">This post aims to analyzing networks with ERGMs using PyMC in python.
+</p>
+      
+      
+      
+    </div>
+  
+  
+    <span class="page__hero-caption">Photo credit: <a href="https://unsplash.com"><strong>Unsplash</strong></a>
+</span>
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/logo.jpg" class="author__avatar" alt="计算传播网" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">计算传播网</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Computational Communication
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Nanjing</span>
+        </li>
+      
+
+      
+        <li>
+          <a href="https://computational-communication.com" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:computational.communication@gmail.com">
+            <meta itemprop="email" content="computational.communication@gmail.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.weibo.com/http://weibo.com/p/10080843f915e125a13c116fe1854bc43ccf0a/home" itemprop="sameAs">
+            <i class="fa fa-fw fa-weibo" aria-hidden="true"></i> Weibo
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Estimating ERGM using PyMC">
+    <meta itemprop="description" content="This post aims to analyzing networks with ERGMs using PyMC in python.">
+    <meta itemprop="datePublished" content="June 27, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="exponential-random-graph-models-in-python">Exponential random graph models in python</h1>
+
+<p>Author: <a href="http://socialabstractions-blog.tumblr.com/post/53391947460/exponential-random-graph-models-in-python">social Abstractions</a></p>
+
+<p>For readers unfamiliar with ERGM, it is a modeling framework for network or graph data. An unfortunate fact of statistical inference on networks is that the independence assumptions of ordinary least squares are violated in deep, complex and interconnected ways (one of the core insights of social network analysis is that whether or not I am friends with you is tightly related to whether or not I am friends with your friends). ERGMs attempt to bring a linear modeling approach to network estimation by assuming that these inherent interdependencies depend mostly on network characteristics that a savvy modeler can explicitly specify. If you have reason to believe that the major network dependencies in your data can be controlled for by reciprocity and transitivity, for instance, you can simply include those terms in your model specification and hope (read: assume) that the rest of your errors are independent. While they are not perfect, ERGMs have become a widely accepted method among social network analysts.</p>
+
+<p>Most often, ERGMs are estimated using the ergm package for the R statistical environment. This is a wonderful package put together by many of the top researchers in the field of network inference.</p>
+
+<p>Recently I needed to estimate a model that allowed more low-level control of the modelling than this package allowed however, so I turned to PyMC to see if I could implement ERGM estimation myself.</p>
+
+<p>PyMC is an invaluable python package that makes Markov-chain Monte-Carlo (MCMC) estimation straightforward and, importantly, very fast to implement. Getting estimates for pretty much any model in PyMC takes barely any more work than just specifying that model, and it’s well designed enough that writing your own step methods (and even sampling algorithms) in python is a snap.</p>
+
+<h2 id="gagnon--macrae-prison-friendship-network">Gagnon &amp; MacRae prison friendship network</h2>
+<p>As a sanity check on my work, I decided to estimate the same model on the same data with  ergm in R and then with PyMC in python. The data I used is the prison friendship network from Gagnon &amp; MacRae1, which I got from the UCINET IV datasets page. I was only interested in directed friendship ties between inmates, so I discarded any information about the prisoners themselves; you can download my cleaned up adjacency matrix</p>
+
+<h2 id="the-model">The Model</h2>
+<p>I specify a pretty simple model for the network. I use Y to refer to the adjacency matrix of the network and $y_{i,j}$ to refer to the (i,j)th element of Y. The value of $y_{i,j}$ is one if prisoner i listed prisoner j as a friend, and zero otherwise. The ERGM is specified as</p>
+
+\[Pr(Y|θ)∝exp[θ′Ψ(Y)]\]
+
+<p>where θ is our vector of coefficients, and $Ψ(Y)$ is a vector of network statistics on Y. With ERGMs, $Ψ$ is where the modeler includes all of the statistics she deems relevant to the network ties. I include a few straightforward statistics:</p>
+
+<h3 id="mutual-tie-count">mutual tie count:</h3>
+<p>The number of pairs in the network for which both of the directed edges (i,j) and (j,i) exist. (How many pairs of prisoners mutually nominated each other as friends)</p>
+<h3 id="density">density:</h3>
+<p>The total number of edges present in the graph. (How many total friendship nominations were made)</p>
+<h3 id="2-instar-count">2-instar count:</h3>
+<p>The total number of nodes with exactly two incoming edges. (How many prisoners were listed as friends by exactly two other prisoners)</p>
+<h3 id="3-instar-count">3-instar count:</h3>
+<p>The total number of nodes with exactly three incoming edges. (How many prisoners were listed as friends by exactly three other prisoners)</p>
+<h3 id="2-outstar-count">2-outstar count:</h3>
+<p>The total number of nodes with exactly two outgoing edges. (How many prisoners listed exactly two other prisoners as friends)</p>
+
+<p>library(ergm)</p>
+
+<p>prisonAdj &lt;- matrix(scan(‘prison.dat’),nrow=67,byrow=T)</p>
+
+<p>prisonNet &lt;- network(prisonAdj)</p>
+
+<p>prisonEst &lt;- ergm(prisonNet ~ mutual+istar(1:3)+ostar(2))</p>
+
+<h2 id="estimating-in-python">Estimating in python</h2>
+<p>A standard result from ERGMs can be reduced to a simple logistic regression with a case for each edge in the network.</p>
+
+<p>**In this case, each covariate represents the change in a particular network statistic if the edge in question were present versus not present. **</p>
+
+<p>Formally, let $Y_{i,j}^+$ be the network obtained by setting $y_{i,j}=1$ in Y, and let $Y_{i,j}^-$ be the network obtained by setting $y_{i,j}=0$.</p>
+
+<p>For a particular network statistic $Φ_k(Y)$ the corresponding change statistic for edge (i,j) is defined as \(ϕ_k(Y,i,j)=Φ_k(Y_{i,j}^+)−Φ_k(Y_{i,j}^-)\)</p>
+
+<p>So for edge (i,j) the change in the mutual edge count, $ϕ_M(Y,i,j)$ would depend on the value of $y_{j,i}$. If$y_{j,i} = 0$, then holding the rest of the network fixed edge (i,j) would be unable to change the total mutual edge count, so $ϕ(Y,i,j)=0$. If $y_{j,i}=1$, then $y_{i,j}$ would determine whether the edge was mutual and $ϕ(Y,i,j)=1$.</p>
+
+<p>The first step in the python implementation, then, is to construct these ϕ covariates for each of our network statistics.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="n">sp</span>
+<span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">comb</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">pymc</span> <span class="kn">import</span>  <span class="n">Normal</span><span class="p">,</span> <span class="n">Bernoulli</span><span class="p">,</span> <span class="n">InvLogit</span><span class="p">,</span> <span class="n">MCMC</span><span class="p">,</span><span class="n">MAP</span><span class="p">,</span><span class="n">deterministic</span>
+
+<span class="c1"># functions to get delta matrices
+</span><span class="k">def</span> <span class="nf">mutualDelta</span><span class="p">(</span><span class="n">am</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">am</span><span class="p">.</span><span class="n">copy</span><span class="p">().</span><span class="n">transpose</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">istarDelta</span><span class="p">(</span><span class="n">am</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># if k == 1 then this is just density
+</span>        <span class="n">res</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="n">j</span><span class="p">:</span>
+            <span class="n">nin</span> <span class="o">=</span> <span class="n">am</span><span class="p">[:,</span><span class="n">j</span><span class="p">].</span><span class="nb">sum</span><span class="p">()</span><span class="o">-</span><span class="n">am</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">nin</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">exact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">ostarDelta</span><span class="p">(</span><span class="n">am</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># if k == 1 then this is just density
+</span>        <span class="n">res</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">am</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">!=</span><span class="n">j</span><span class="p">:</span>
+            <span class="n">nin</span> <span class="o">=</span> <span class="n">am</span><span class="p">[</span><span class="n">i</span><span class="p">,:].</span><span class="nb">sum</span><span class="p">()</span><span class="o">-</span><span class="n">am</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">nin</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">exact</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">makeModel</span><span class="p">(</span><span class="n">adjMat</span><span class="p">):</span>
+
+    <span class="c1"># define and name the deltas
+</span>    <span class="n">termDeltas</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'deltamutual'</span><span class="p">:</span><span class="n">mutualDelta</span><span class="p">(</span><span class="n">adjMat</span><span class="p">),</span>
+        <span class="s">'deltaistar1'</span><span class="p">:</span><span class="n">istarDelta</span><span class="p">(</span><span class="n">adjMat</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s">'deltaistar2'</span><span class="p">:</span><span class="n">istarDelta</span><span class="p">(</span><span class="n">adjMat</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+        <span class="s">'deltaistar3'</span><span class="p">:</span><span class="n">istarDelta</span><span class="p">(</span><span class="n">adjMat</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
+        <span class="s">'deltaostar2'</span><span class="p">:</span><span class="n">ostarDelta</span><span class="p">(</span><span class="n">adjMat</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1"># create term list with coefficients
+</span>    <span class="n">termList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">coefs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">dName</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="n">termDeltas</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tName</span> <span class="o">=</span> <span class="s">'theta'</span><span class="o">+</span><span class="n">dName</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+        <span class="n">coefs</span><span class="p">[</span><span class="n">tName</span><span class="p">]</span> <span class="o">=</span> <span class="n">Normal</span><span class="p">(</span><span class="n">tName</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.001</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="n">sp</span><span class="p">.</span><span class="n">rand</span><span class="p">()</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">termList</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">coefs</span><span class="p">[</span><span class="n">tName</span><span class="p">])</span>
+
+    <span class="c1"># get individual edge probabilities
+</span>    <span class="o">@</span><span class="n">deterministic</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">probs</span><span class="p">(</span><span class="n">termList</span><span class="o">=</span><span class="n">termList</span><span class="p">):</span>
+        <span class="n">probs</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">sp</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">termList</span><span class="p">)))</span>
+        <span class="n">probs</span><span class="p">[</span><span class="n">sp</span><span class="p">.</span><span class="n">diag_indices_from</span><span class="p">(</span><span class="n">probs</span><span class="p">)]</span><span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+
+    <span class="c1"># define the outcome as
+</span>    <span class="n">outcome</span> <span class="o">=</span> <span class="n">Bernoulli</span><span class="p">(</span><span class="s">'outcome'</span><span class="p">,</span><span class="n">probs</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="n">adjMat</span><span class="p">,</span><span class="n">observed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">return</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load the prison data
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'../data/prison_mod.dat'</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">rowList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">rowList</span><span class="p">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l</span><span class="p">.</span><span class="n">strip</span><span class="p">().</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)])</span>
+    <span class="n">adjMat</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">rowList</span><span class="p">)</span>
+
+<span class="c1"># make the model as an MCMC object
+</span><span class="n">m</span> <span class="o">=</span> <span class="n">makeModel</span><span class="p">(</span><span class="n">adjMat</span><span class="p">)</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">MCMC</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="c1"># estimate
+</span><span class="n">mc</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">30000</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [-----------------100%-----------------] 30000 of 30000 complete in 34.6 sec
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc</span><span class="p">.</span><span class="n">tName</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'thetaostar2'
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetamutual"</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 3.6531157 ,  3.73607108,  3.54492143,  3.85161951,  3.31308036])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mutual_trace</span> <span class="o">=</span> <span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetamutual"</span><span class="p">)[:]</span>
+<span class="n">istar1_trace</span> <span class="o">=</span> <span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetaistar1"</span><span class="p">)[:]</span>
+<span class="n">istar2_trace</span> <span class="o">=</span> <span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetaistar2"</span><span class="p">)[:]</span>
+<span class="n">istar3_trace</span> <span class="o">=</span> <span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetaistar3"</span><span class="p">)[:]</span>
+<span class="n">ostar2_trace</span> <span class="o">=</span> <span class="n">mc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"thetaostar2"</span><span class="p">)[:]</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">"mutual: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mutual_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">mutual_trace</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"density: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">istar1_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">istar1_trace</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"istar2: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">istar2_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">istar2_trace</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"istar3: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">istar3_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">istar3_trace</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"ostar2: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ostar2_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">ostar2_trace</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mutual: 3.567, 0.178
+density: -4.478, 0.266
+istar2: 0.447, 0.117
+istar3: -0.090, 0.038
+ostar2: -0.054, 0.060
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">521</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mutual_trace</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"mutual_trace"</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">522</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mutual_trace</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"mutual_trace"</span><span class="p">)</span>
+
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">523</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">istar1_trace</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"density"</span><span class="p">)</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">524</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">istar1_trace</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"density"</span><span class="p">)</span>
+
+<span class="n">ax5</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">525</span><span class="p">)</span>
+<span class="n">ax5</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">istar2_trace</span><span class="p">)</span>
+<span class="n">ax5</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"istar2_trace"</span><span class="p">)</span>
+<span class="n">ax6</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">526</span><span class="p">)</span>
+<span class="n">ax6</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">istar2_trace</span><span class="p">)</span>
+<span class="n">ax6</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"istar2_trace"</span><span class="p">)</span>
+
+<span class="n">ax7</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">527</span><span class="p">)</span>
+<span class="n">ax7</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">istar3_trace</span><span class="p">)</span>
+<span class="n">ax7</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"istar3_trace"</span><span class="p">)</span>
+<span class="n">ax8</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">528</span><span class="p">)</span>
+<span class="n">ax8</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">istar3_trace</span><span class="p">)</span>
+<span class="n">ax8</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"istar3_trace"</span><span class="p">)</span>
+
+<span class="n">ax9</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">529</span><span class="p">)</span>
+<span class="n">ax9</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ostar2_trace</span><span class="p">)</span>
+<span class="n">ax9</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"ostar2_trace"</span><span class="p">)</span>
+<span class="n">ax10</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax10</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ostar2_trace</span><span class="p">)</span>
+<span class="n">ax10</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"ostar2_trace"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets/img2017/pymc4.png" alt="" /></p>
+
+<h1 id="analyzing-greys-antomy-hookup-network">analyzing Grey’s Antomy Hookup Network</h1>
+
+<p><strong>Author</strong>: David Masad</p>
+
+<p>Source: <a href="https://gist.github.com/dmasad/78cb940de103edbee699">https://gist.github.com/dmasad/78cb940de103edbee699</a></p>
+
+<p>This is really a mashup of two tutorials:</p>
+
+<ol>
+  <li>Benjamin Lind’s <a href="http://badhessian.org/2012/09/lessons-on-exponential-random-graph-modeling-from-greys-anatomy-hook-ups/">ERGM tutorial using the Grey’s Anatomy hookup network</a>,</li>
+  <li>and this <a href="http://socialabstractions-blog.tumblr.com/post/53391947460/exponential-random-graph-models-in-python">tutorial on ERGMs using PyMC</a>.</li>
+</ol>
+
+<p>Mostly, I wanted to work through the latter tutorial with a different dataset, to make sure I understood what was going on. I’m sharing this in case anyone else finds it useful.</p>
+
+<p>For a more detailed explanation of ERGMs, check out both of the tutorials linked above, or my own tutorial on <a href="http://davidmasad.com/blog/ergms-from-scratch/">implementing ERGMs from scratch in Python</a> (the end of that has a good roundup of papers for further reading).</p>
+
+<p>For more information on PyMC, you might also want to check out the excellent free handbook <a href="https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers">Bayesian Methods for Hackers</a> by Cam Davidson-Pilon.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">comb</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">import</span> <span class="nn">pymc</span>
+</code></pre></div></div>
+
+<h1 id="loading-the-data">Loading the data</h1>
+<p>Unfortunately, the data from the original Grey’s Anatomy tutorial seems to be offline. Fortunately, it was preserved on GitHub by <a href="https://github.com/alexleavitt/SNAinRworkshop">Alex Leavitt and Joshua Clark</a>.</p>
+
+<p>The data comes in two tables: the adjacency table gives us the graph itself, and a node attribute table gives us node-level information on each character. Below, I’m going to load both into NetworkX.</p>
+
+<h2 id="loading-the-adjacency-table">Loading the adjacency table</h2>
+
+<p>NetworkX doesn’t have a native loader for an adjacency matrix with row and column headers, so here’s some code to load it manually.</p>
+
+<p>First, we get the top row; this tell us how many nodes there are, and will be useful for labeling them.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'../data/grey_adjacency.tsv'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>addison</th>
+      <th>adele</th>
+      <th>altman</th>
+      <th>amelia</th>
+      <th>arizona</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>addison</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>adele</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>altman</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>amelia</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>arizona</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adj</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">as_matrix</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">from_numpy_matrix</span><span class="p">(</span><span class="n">adj</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">relabel_nodes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">df</span><span class="p">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">44</span><span class="p">)})</span>
+</code></pre></div></div>
+
+<h1 id="loading-attributes">Loading attributes</h1>
+<p>The attribute data is in a nice, conventional table: each row is a character, and each column is a character attribute. (See the original tutorial for more information on where this data comes from).
+Using Python’s built-in csv module, we can read in all the rows as dictionaries, which makes it easy to assign the attributes to the network.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_nodes</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'../data/grey_nodes.tsv'</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
+<span class="n">df_nodes</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,]</span>
+</code></pre></div></div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>sex</th>
+      <th>race</th>
+      <th>birthyear</th>
+      <th>position</th>
+      <th>season</th>
+      <th>sign</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>addison</td>
+      <td>F</td>
+      <td>White</td>
+      <td>1967</td>
+      <td>Attending</td>
+      <td>1</td>
+      <td>Libra</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>adele</td>
+      <td>F</td>
+      <td>Black</td>
+      <td>1949</td>
+      <td>Non-Staff</td>
+      <td>2</td>
+      <td>Leo</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>altman</td>
+      <td>F</td>
+      <td>White</td>
+      <td>1969</td>
+      <td>Attending</td>
+      <td>6</td>
+      <td>Pisces</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>amelia</td>
+      <td>F</td>
+      <td>White</td>
+      <td>1981</td>
+      <td>Attending</td>
+      <td>7</td>
+      <td>Libra</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>arizona</td>
+      <td>F</td>
+      <td>White</td>
+      <td>1976</td>
+      <td>Attending</td>
+      <td>5</td>
+      <td>Leo</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">node_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df_nodes</span><span class="p">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">node_attributes</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_nodes</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">to_dict</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">node_attributes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'birthyear': 1967,
+ 'name': 'addison',
+ 'position': 'Attending',
+ 'race': 'White',
+ 'season': 1,
+ 'sex': 'F',
+ 'sign': 'Libra'}
+</code></pre></div></div>
+
+<p>Assign the attributes to each node, which are now keyed on the character names:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_attributes</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">"name"</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">G</span><span class="p">.</span><span class="n">node</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</code></pre></div></div>
+
+<h1 id="drawing-the-hookup-graph">Drawing the hookup graph</h1>
+<p>Now that we have the data loaded in, we can draw the hookup graph. I color the male characters in blue and the female characters in pink (because gender norms).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s">"M"</span><span class="p">:</span> <span class="s">"mediumslateblue"</span><span class="p">,</span>
+          <span class="s">"F"</span><span class="p">:</span> <span class="s">"hotpink"</span><span class="p">}</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">"sex"</span><span class="p">]]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="p">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">)]</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">0.075</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw_networkx_nodes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets/img2017/pymc0.png" alt="" /></p>
+
+<h1 id="building-the-ergm">Building the ERGM</h1>
+<p>Now comes the important part: building and fitting the ERGM with <strong>PyMC</strong>.</p>
+
+<p>To start with, we need to know what model we’re actually fitting. I use the simplest one, explaining the network in terms of the number of edges and whether those edges are between nodes with the same gender.</p>
+
+<p>We need two NxN matrices, one for each network statistic. Each cell in each matrix indicates how the presence of that potential edge would change that statistic, holding the rest of the network constant.</p>
+
+<p>For the edge count, the matrix is just all 1s – since any new edge, by definition, increases the edge count by 1.
+Gender matching is a specific example of attribute matching: we want a matrix $M$ such that $m_{i,j}=1$ if nodes $i$ and $j$ have the same attribute value (e.g. their gender), and otherwise $0$.</p>
+
+<p>Now, here’s one change we make here from the Social Abstractions tutorial. Unlike the prison friendship network, the hookup graph is undirected – if $i$ has hooked up with $j$, then $j$ has obviously also hooked up with $i$. That means we really need only one half of each matrix, either the upper or lower triangle. We can zero out the other triangle, to make sure that we can only realize one edge per dyad.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">edge_count</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="c1"># Zero out the upper triangle:
+</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">.</span><span class="n">is_directed</span><span class="p">():</span>
+        <span class="n">ones</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">ones</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">ones</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">node_match</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">attrib</span><span class="p">):</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">attribs</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">attrib</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="p">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">)]</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span> <span class="ow">and</span> <span class="n">attribs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">attribs</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="n">match</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="p">.</span><span class="n">is_directed</span><span class="p">():</span>
+        <span class="n">match</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">match</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">match</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create the gender-match matrix
+</span><span class="n">gender_match_mat</span> <span class="o">=</span> <span class="n">node_match</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s">"sex"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now we bring in PyMC stochastic variables for the coefficients on both statistics matrices. The prior for them can be pretty arbitrary, but we want them to be able to take on any value, either positive or negative, and be centered on 0. So, normal distributions it is.</p>
+
+<p>The actual term for each statistic is the coefficient times the matrix; since these values are wholly dependent on stochastic variables, they are PyMC deterministic variables themselves.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">density_coef</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">"density"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">gender_match_coef</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">Normal</span><span class="p">(</span><span class="s">"gender_match"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+
+<span class="n">density_term</span> <span class="o">=</span> <span class="n">density_coef</span> <span class="o">*</span> <span class="n">edge_count</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">gender_match_term</span> <span class="o">=</span> <span class="n">gender_match_coef</span> <span class="o">*</span> <span class="n">gender_match_mat</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">term_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">density_term</span><span class="p">,</span> <span class="n">gender_match_term</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Next, we create the probability matrix, where $p_{i,j}$ is the probability of an edge between $i$ and $j$. This is another PyMC deterministic variable, since the probability is based on the two terms defined above.</p>
+
+<p>We set the upper triangle to 0 here, so that there is only one probability associated with each dyad.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">pymc</span><span class="p">.</span><span class="n">deterministic</span>
+<span class="k">def</span> <span class="nf">probs</span><span class="p">(</span><span class="n">term_list</span><span class="o">=</span><span class="n">term_list</span><span class="p">):</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">term_list</span><span class="p">)))</span> <span class="c1"># The logistic function
+</span>    <span class="n">probs</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">diag_indices_from</span><span class="p">(</span><span class="n">probs</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Manually cut off the top triangle:
+</span>    <span class="n">probs</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">probs</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">probs</span>
+</code></pre></div></div>
+
+<p>Finally, we create the outcome variable: it’s a matrix of Bernoulli random values, one for each potential edge, each realized with probability as determined by our mode. This matrix is actually observed as the network’s adjacency matrix. It’s this outcome that PyMC will maximize the probability of the model generating.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Get the adjacency matrix, and zero out the upper triangle
+</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">to_numpy_matrix</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">matrix</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">matrix</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">outcome</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s">"outcome"</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">matrix</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In order to view sample networks drawn from the posterior distribution, I add one more random variable: a simulated outcome. This takes the same form as the outcome matrix above, but isn’t set as observed. Instead, the value of each potential edge will be randomly drawn based on the probs matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sim_outcome</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s">"sim_outcome"</span><span class="p">,</span> <span class="n">probs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="fitting-the-model">Fitting the model</h1>
+
+<p>With all the variables finally set, we can plug them all into a model object, and start the MCMC process.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">Model</span><span class="p">([</span><span class="n">outcome</span><span class="p">,</span> <span class="n">sim_outcome</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span>
+                    <span class="n">density_coef</span><span class="p">,</span> <span class="n">density_term</span><span class="p">,</span>
+                    <span class="n">gender_match_coef</span><span class="p">,</span> <span class="n">gender_match_term</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mcmc</span> <span class="o">=</span> <span class="n">pymc</span><span class="p">.</span><span class="n">MCMC</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">mcmc</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [-----------------100%-----------------] 50000 of 50000 complete in 29.3 sec
+</code></pre></div></div>
+
+<p>The estimated coefficients and standard errors are computed from the traces:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">density_trace</span> <span class="o">=</span> <span class="n">mcmc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"density"</span><span class="p">)[:]</span>
+<span class="n">gender_match_trace</span> <span class="o">=</span> <span class="n">mcmc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"gender_match"</span><span class="p">)[:]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Density: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">density_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">density_trace</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Gender: {0:.3f}, {1:.3f}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">gender_match_trace</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">gender_match_trace</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Density: -2.307, 0.156
+Gender: -3.372, 0.847
+</code></pre></div></div>
+
+<p>These are pretty close to the coefficients and standard errors computed in R, suggesting that the model was specified and fit correctly.</p>
+
+<h1 id="diagnostics">Diagnostics</h1>
+
+<p>The R ergm package can plot some diagnostic charts automatically, to help us make sure the model is not degenerate and that chain is mixing well. I plot similar charts below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">density_trace</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Density"</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">density_trace</span><span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Density"</span><span class="p">)</span>
+
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gender_match_trace</span><span class="p">)</span>
+<span class="n">ax3</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Gender_Match"</span><span class="p">)</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">gender_match_trace</span><span class="p">)</span>
+<span class="n">ax4</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Gender_Match"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets/img2017/pymc1.png" alt="" /></p>
+
+<h1 id="checking-the-goodness-of-fit">Checking the goodness-of-fit</h1>
+
+<p>One way to inspect the goodness-of-fit of the model is to take a random realization of the network from the posterior distribution, and see how it compares to the observed network. This is one of the things we can do with the sim_outcome variable we added to the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">realization</span> <span class="o">=</span> <span class="n">mcmc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"sim_outcome"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Take the last one
+</span>
+</code></pre></div></div>
+
+<p>Or you can fix the coefficients and draw at random:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># density_coef.value = np.mean(density_trace)
+# gender_match_coef.value = np.mean(gender_match_trace)
+#realization = sim_outcome.random()
+</span></code></pre></div></div>
+
+<p>Convert the realized matrix to a full network, and add the node attributes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sim_g</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">from_numpy_matrix</span><span class="p">(</span><span class="n">realization</span><span class="p">)</span>
+
+<span class="n">sim_g</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">relabel_nodes</span><span class="p">(</span><span class="n">sim_g</span><span class="p">,</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">df</span><span class="p">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">44</span><span class="p">)})</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_attributes</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">"name"</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">sim_g</span><span class="p">.</span><span class="n">node</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</code></pre></div></div>
+
+<p>And visualize. We don’t care about the individuals here, since our model was only looking at the gender matching:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="s">"M"</span><span class="p">:</span> <span class="s">"mediumslateblue"</span><span class="p">,</span>
+          <span class="s">"F"</span><span class="p">:</span> <span class="s">"hotpink"</span><span class="p">}</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">"sex"</span><span class="p">]]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sim_g</span><span class="p">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">)]</span>
+
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">sim_g</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">0.075</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw_networkx_nodes</span><span class="p">(</span><span class="n">sim_g</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">nx</span><span class="p">.</span><span class="n">draw_networkx_edges</span><span class="p">(</span><span class="n">sim_g</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="c1">#nx.draw_networkx_labels(sim_g, pos, ax=ax)
+</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets/img2017/pymc2.png" alt="" /></p>
+
+<p>This graph looks ‘about right’ (a really scientific assessment), and the model seems to be capturing a lot of the tendency towards heterosexual pairings (though there appear to be more same-sex pairs, and especially pairs of women, than observed in the actual data). There are also more singletons than observed in the actual data – though about as many as produced by the R model.</p>
+
+<h1 id="degree-distribution">Degree distribution</h1>
+
+<p>Another way of assessing the goodness-of-fit is comparing the degree distribution of the simulated networks to the observed one. The R ergm package has that built in, but here we have to do it ourselves.</p>
+
+<p>To do it, we count the number of nodes of each degree in the observed network, and across all of the simulated networks, and plot them together.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
+
+</code></pre></div></div>
+
+<p>Observed degree distribution:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">obs_deg_freq</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">nx</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">G</span><span class="p">).</span><span class="n">values</span><span class="p">())</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obs_deg_freq</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obs_deg_freq</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+
+</code></pre></div></div>
+
+<p>Simulated degree distributions:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">deg_freq</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="c1"># We don't care about node properties here, just the degree.
+</span><span class="k">for</span> <span class="n">realization</span> <span class="ow">in</span> <span class="n">mcmc</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span><span class="s">"sim_outcome"</span><span class="p">)[:]:</span>
+    <span class="n">sim_g</span> <span class="o">=</span> <span class="n">nx</span><span class="p">.</span><span class="n">from_numpy_matrix</span><span class="p">(</span><span class="n">realization</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">deg</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">Counter</span><span class="p">(</span><span class="n">nx</span><span class="p">.</span><span class="n">degree</span><span class="p">(</span><span class="n">sim_g</span><span class="p">).</span><span class="n">values</span><span class="p">()).</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">deg_freq</span><span class="p">[</span><span class="n">deg</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+
+<span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">deg_freq</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">deg_freq</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>And finally, plot: black dots for the observed degree count, box-and-whiskers plots for the distributions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">"$Degree$"</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"$Frequency$"</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">"Degree distribution</span><span class="se">\n</span><span class="s">Observed vs Simulated"</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://socrateslab.github.io/forum/assets/img2017/pymc3.png" alt="" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#ergm" class="page__taxonomy-item" rel="tag">ergm</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#python" class="page__taxonomy-item" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-06-27T00:00:00+00:00">June 27, 2017</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=Estimating+ERGM+using+PyMC%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fergm-pymc%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fergm-pymc%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fergm-pymc%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2Fergm-pymc%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/algorithm/fitting-powerlaw/" class="pagination--pager" title="使用powerlaw拟合重尾分布
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/ergm-python/" class="pagination--pager" title="Implementing an ERGM from scratch in Python
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/ergm-pymc/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/ergm-pymc";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/ergm-pymc/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/ergm-pymc"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>

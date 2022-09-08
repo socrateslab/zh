@@ -1,0 +1,746 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.6.0 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>网络残缺度：共同好友间可否两步到达？ - 计算传播网</title>
+
+
+
+
+<meta name="description" content="网络是由节点和关系构成的，而对于关系的描述是社会网络的关键。我们已经知道对于节点的网络特性可以从中心度、近度、介度、特征度（eigenvalue centrality）等方式描述。那么对于关系呢？最简单的就是直接关系的强度了。">
+
+
+
+
+<meta name="author" content="王成军">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="计算传播网">
+<meta property="og:title" content="网络残缺度：共同好友间可否两步到达？">
+
+
+  <link rel="canonical" href="https://socrateslab.github.io/forum/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/">
+  <meta property="og:url" content="https://socrateslab.github.io/forum/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/">
+
+
+
+  <meta property="og:description" content="网络是由节点和关系构成的，而对于关系的描述是社会网络的关键。我们已经知道对于节点的网络特性可以从中心度、近度、介度、特征度（eigenvalue centrality）等方式描述。那么对于关系呢？最简单的就是直接关系的强度了。">
+
+
+
+  <meta name="twitter:site" content="@ChengJunWang">
+  <meta name="twitter:title" content="网络残缺度：共同好友间可否两步到达？">
+  <meta name="twitter:description" content="网络是由节点和关系构成的，而对于关系的描述是社会网络的关键。我们已经知道对于节点的网络特性可以从中心度、近度、介度、特征度（eigenvalue centrality）等方式描述。那么对于关系呢？最简单的就是直接关系的强度了。">
+  <meta name="twitter:url" content="https://socrateslab.github.io/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
+    <meta name="twitter:creator" content="@ChengJunWang">
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2014-06-26T00:00:00+00:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "计算传播网",
+      "url" : "https://socrateslab.github.io/forum",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://socrateslab.github.io/forum/feed.xml" type="application/atom+xml" rel="alternate" title="计算传播网 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/forum/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<!--mathjax start-->
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+         processEscapes: true
+       },
+      TeX: {
+         equationNumbers: { autoNumber: "AMS" }
+      }
+     });
+    </script>
+    <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!--mathjax end-->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="https://socrateslab.github.io/forum/">计算传播网</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/about/">关于</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/year-archive/">文章</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io/forum/authors/">作者</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://socrateslab.github.io">中心</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://computational-communication.com/wiki/">百科</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://socrateslab.github.io/forum/assets/images/author/chengjun.jpg" class="author__avatar" alt="王成军" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">王成军</h3>
+    
+      <p class="author__bio" itemprop="description">
+        Follow your logic！
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        <li>
+          <a href="https://chengjunwang.com/" itemprop="url">
+            <i class="fa fa-fw fa-chain" aria-hidden="true"></i> Website
+          </a>
+        </li>
+      
+
+      
+        <li>
+          <a href="mailto:">
+            <meta itemprop="email" content="" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://twitter.com/ChengJunWang" itemprop="sameAs">
+            <i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter
+          </a>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="https://plus.google.com/+" itemprop="sameAs">
+            <i class="fa fa-fw fa-google-plus-square" aria-hidden="true"></i> Google+
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="网络残缺度：共同好友间可否两步到达？">
+    <meta itemprop="description" content="网络是由节点和关系构成的，而对于关系的描述是社会网络的关键。我们已经知道对于节点的网络特性可以从中心度、近度、介度、特征度（eigenvalue centrality）等方式描述。那么对于关系呢？最简单的就是直接关系的强度了。">
+    <meta itemprop="datePublished" content="June 26, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">网络残缺度：共同好友间可否两步到达？
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>网络是由节点和关系构成的，而对于关系的描述是社会网络的关键。我们已经知道对于节点的网络特性可以从中心度、近度、介度、特征度（eigenvalue centrality）等方式描述。那么对于关系呢？最简单的就是直接关系的强度了。</p>
+
+<h2 id="关系强度tie-strength">关系强度（<code class="language-plaintext highlighter-rouge">tie strength</code>)</h2>
+<p>通常对于关系强度的测量是基于两个节点之间链接的权重来衡量的。并不是说关系的强度越高越好，也不是说越多的强关系就越好。例如，格兰诺维特的论文<code class="language-plaintext highlighter-rouge">The strength of weak ties</code>强调了弱关系的重要性。</p>
+
+<h2 id="共同好友common-friends">共同好友（<code class="language-plaintext highlighter-rouge">common friends</code>）</h2>
+<p>但是以直接的链接强度度量一对关系的强度显然过于简单。它忽略的网络中的三角形（triads）：网络的局部传递性(transtivity)。关系的传递性是社会网络分析的一种重要观点。比如，朋友的朋友成为自己的朋友的可能性很高。这种关系的强度不只限于一模网络中。在传播学中有ABX模型，A和B是两个人，X是一种对象（信息、意见、创新等）。A和B是好朋友，A喜欢X，那么B喜欢X的可能性就提高。也就是爱朋友及朋友喜欢的东西，有点像爱屋及乌。</p>
+
+<p>怎么抓住网络的传递性？找两个节点(一对关系)的共同好友！找到共同好友就抓住了网络中的三角形。存在的三角形数量就表明了传递性的程度。这种思路其实对于做共引（co-citation)分析的学者来说并不陌生。如果一篇论文同时引用了两篇论文，那么这两篇论文就存在一定的相似性。因此，找共同好友类似于找共引关系。</p>
+
+<h2 id="嵌入度embededness">嵌入度（<code class="language-plaintext highlighter-rouge">embededness</code>）</h2>
+<p><img src="https://farm6.staticflickr.com/5323/13926813860_7382ec2f52_o.png" alt="" /></p>
+
+<p>共同好友数量是判断两个人亲密程度的一个重要变量。如果共同好友的数量足够多，表明这两个人彼此深度的融入了对方的社会关系当中。基于这种思路，我们可以计算嵌入型。对于i和j两个人, $k_{i}$、$k_{j}$分别表示i和j的好友数量。$n_{ij}$表示其共同好友数量。那么，我们可以如下计算嵌入度：</p>
+
+\[Embededness_{ij} = \frac{n_{ij}}{(k_{i} -1) + (k_{j} -1) - n_{ij}}\]
+
+<h2 id="残缺性dispersion">残缺性（<code class="language-plaintext highlighter-rouge">dispersion</code>）</h2>
+
+<p>残缺度（<code class="language-plaintext highlighter-rouge">dispersion</code>， 或译为分散度）是Lars Backstrom &amp; Jon Kleinberg (2013) 为了识别Facebook中亲密关系而提出的度量。它同样是基于共同好友的，主要测量的是共同好友之间的链接缺失程度。</p>
+
+<blockquote>
+  <p>‘dispersion’ — the extent to which two people’s mutual friends are not themselves well-connected. <code class="language-plaintext highlighter-rouge">Lars Backstrom &amp; Jon Kleinberg (2013)</code></p>
+</blockquote>
+
+<p>Lars Backstrom &amp; Jon Kleinberg使用了脸书的数据发现，使用残缺度这个度量方式，可以非常准确识别诸如夫妻、男女朋友、恋爱关系。</p>
+
+<p><img src="https://farm8.staticflickr.com/7429/14090280746_d962b282c8_o.png" alt="" /></p>
+
+<p>如上图中，u和v两个人有a、b、c、d四个共同好友。残缺度主要考察在多大程度上，这些共同好友<strong>不能</strong>在<code class="language-plaintext highlighter-rouge">两步之内到达彼此</code>。如果两个共同好友之间不存在直接连接，且也不存在（除去u和v之外的）共同好友，那么残缺度就增加1。</p>
+
+<p>以C_{uv}来表示u和v的共同好友之间的链接，那么在上图中只有a、b之间和c、d之间存在链接。a-c, a-d, b-c, b-d四对节点之间既没有直接链接又没有共同好友（除去了u和v)。所以残缺度是4。</p>
+
+<p>再举一个例子，如果u和v的共同好友b-c之间存在直接的链接。那么残缺度会是多大？如下图：</p>
+
+<p><img src="https://farm3.staticflickr.com/2936/14133498133_ed0857e2a0_o.png" alt="" /></p>
+
+<p>因为只有a-d之间没有办法在两步内到达彼此，所以残缺度是1。</p>
+
+<p>当然了这种定义残缺度的方法是基于节点间的距离的。例如以$d_{s,t}$表示共同好友中任意两个节点s和t之间的距离。在这个初始的定义中，两步内不能到达算是关系残缺。那么我们可以将其扩展为3步内不能到达算残缺，或者n步能不能到达算残缺。不过根据Lars Backstrom &amp; Jon Kleinberg的实验，两步不能到达是一个较好的基准。</p>
+
+<p>如果浪漫关系的确可以由高残缺度刻画，那么说明兔子不吃窝边草在国外是存在的。太熟了下不去手的现象在国内也是存在的。记得一个笑话说：找男女朋友的时候都说找互补的，实际上找到的都是类似的！白富美总是跟高富帅在一起嘛。这应该是对的，人的收入、相貌、工作都是匹配的（match）,从这个角度上讲的确是相似的。但至少从网路结构的角度来说，男女关系依然是互补的！</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p>Lars Backstrom &amp; Jon Kleinberg (2013) Romantic Partnerships and the <code class="language-plaintext highlighter-rouge">Dispersion</code> of Social Ties: A Network Analysis of Relationship Status on Facebook.arXiv</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E5%85%B3%E7%B3%BB" class="page__taxonomy-item" rel="tag">关系</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E5%B5%8C%E5%85%A5%E5%BA%A6" class="page__taxonomy-item" rel="tag">嵌入度</a><span class="sep">, </span>
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/tags/#%E6%AE%8B%E7%BC%BA%E5%BA%A6" class="page__taxonomy-item" rel="tag">残缺度</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="https://socrateslab.github.io/forum/categories/#%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C" class="page__taxonomy-item" rel="tag">社会网络</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-06-26T00:00:00+00:00">June 26, 2014</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+<!-- needsharebutton Javascript file -->
+<script src="/assets/js/needsharebutton.min.js"></script>
+<!-- needsharebutton CSS file -->
+<link href="/assets/css/needsharebutton.min.css" rel="stylesheet" />
+
+<button  class="btn btn-default need-share-button">Share</button>
+  <a href="https://twitter.com/intent/tweet?via=ChengJunWang&text=%E7%BD%91%E7%BB%9C%E6%AE%8B%E7%BC%BA%E5%BA%A6%EF%BC%9A%E5%85%B1%E5%90%8C%E5%A5%BD%E5%8F%8B%E9%97%B4%E5%8F%AF%E5%90%A6%E4%B8%A4%E6%AD%A5%E5%88%B0%E8%BE%BE%EF%BC%9F%20https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E7%25A4%25BE%25E4%25BC%259A%25E7%25BD%2591%25E7%25BB%259C%2Fcommon-friends%2F" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E7%25A4%25BE%25E4%25BC%259A%25E7%25BD%2591%25E7%25BB%259C%2Fcommon-friends%2F" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E7%25A4%25BE%25E4%25BC%259A%25E7%25BD%2591%25E7%25BB%259C%2Fcommon-friends%2F" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fsocrateslab.github.io%2Fforum%2F%25E7%25A4%25BE%25E4%25BC%259A%25E7%25BD%2591%25E7%25BB%259C%2Fcommon-friends%2F" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="https://socrateslab.github.io/forum/%E3%80%8A%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93%E9%98%85%E8%AF%BB%E6%8A%A5%E5%91%8A%E3%80%8B/sns-evolution/" class="pagination--pager" title="从概念到真实:SNS的形式蜕变
+">Previous</a>
+    
+    
+      <a href="https://socrateslab.github.io/forum/network-evolution-and-loacal-transtivity/" class="pagination--pager" title="社交网络演化中的局部传递性
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+    
+        <h4 class="page__comments-title">Leave a Comment</h4>
+        <section id="disqus_thread">
+          <a href="#" onclick="disqus();return false;">Show Comments</a>
+        </section>
+      
+</div>
+
+    
+
+    
+  </article>
+
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-4-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/thresholdbook/" rel="permalink">王成军副教授专著《跨越网络的门槛》出版
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">‘信息扩散作为一种普遍存在的现象，在人类生活中扮演着重要角色。伴随着Web2.0的兴起，信息共享网站（Information Sharing Website，ISW）已经成为互联网信息扩散的新平台。信息共享网站通常以社交网络服务（Social Networking Service，SNS）、信息聚合器（infor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/500x300.png"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/ugly-duckling/" rel="permalink">寻找真、假新闻中的“丑小鸭”：使用窥视策略预测新闻扩散规模和真实性
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">信息扩散中存在着一些“丑小鸭”类型的信息。“丑小鸭”类型的信息初始阶段就与众不同，一经转发，便可成为网络中的流行信息。
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/douban-group/" rel="permalink">计算传播网迁移至豆瓣小组
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">为了方便维护和更新，计算传播网正式迁移至豆瓣小组。链接为：https://www.douban.com/group/webmining/
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src=
+          
+            "/assets/images/unsplash-gallery-image-2-th.jpg"
+          
+          alt="">
+      </div>
+    
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      <a href="/forum/python/actual-entropy/" rel="permalink">思考真实熵
+</a>
+    </h2>
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">在Limits of Predictability in Human Mobility一文（Song, 2010, Science）当中，Song等人提出人类移动行为的可预测性问题。强调了采用香农熵或随机熵不能捕捉到移动位置的时间序列特点，主张采用一种真实熵(the actual entropy)的测量方式，表示...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="https://twitter.com/ChengJunWang"><i class="fa fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+    
+    
+    
+    
+    
+    <li><a href="https://socrateslab.github.io/forum/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 计算传播网. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/forum/assets/js/main.min.js"></script>
+
+
+
+
+  
+      <script type="text/javascript">
+// Replace labnol with your disqus shortname
+var disqus_shortname = 'computational-communication';
+// Put the permalink of your web page / blog post
+var disqus_url = "https://socrateslab.github.io/forum/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/";
+// Put the permalink of your web page / blog post
+var disqus_identifier = "/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends";
+var disqus_loaded = false;
+// This is the function that will load Disqus comments on demand
+function disqus() {
+  if (!disqus_loaded)  {
+    // This is to ensure that Disqus widget is loaded only once
+    disqus_loaded = true;
+    var e = document.createElement("script");
+    e.type = "text/javascript";
+    e.async = true;
+    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+    (document.getElementsByTagName("head")[0] ||
+     document.getElementsByTagName("body")[0])
+    .appendChild(e);
+  }
+}
+</script>
+<!--
+
+
+  <script type="text/javascript">
+  	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  	var disqus_shortname = 'computational-communication';
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function() {
+  		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  	})();
+  	/* * * DON'T EDIT BELOW THIS LINE * * */
+  	(function () {
+  		var s = document.createElement('script'); s.async = true;
+  		s.type = 'text/javascript';
+  		s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  	}());
+  </script>
+
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://socrateslab.github.io/forum/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/%E7%A4%BE%E4%BC%9A%E7%BD%91%E7%BB%9C/common-friends"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://computational-communication.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+-->
+
+    
+
+
+
+  </body>
+</html>
