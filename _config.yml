@@ -12,13 +12,13 @@ minimal_mistakes_skin    : "contrast" #"default" # "air", "contrast", "dark", "d
 
 # Site Settings
 locale                   : "en"
-title                    : "计算传播网"
+title                    : "计算传播学实验中心"
 title_separator          : "-"
-name                     : "计算传播网"
+name                     : "计算传播学实验中心"
 description              : "An amazing website."
 url                      : "https://socrateslab.github.io"
-baseurl                  : "/forum"   # the subpath of your site, e.g. "/blog"
-repository               : "socrateslab/forum" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+baseurl                  : "/zh"   # the subpath of your site, e.g. "/blog"
+repository               : "socrateslab/zh" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/500x300.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -66,7 +66,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "计算传播网"
+  name             : "计算传播学实验中心"
   avatar           : "/assets/logo.jpg"
   bio              : "Computational Communication"
   location         : "Nanjing"
