@@ -9,7 +9,7 @@ header:
   cta_label: "Read More"
   cta_url: "/about/"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
-excerpt: "寻找人类传播行为可计算化的基因.
+excerpt: "寻找人类传播行为可计算化的基因."
 author_profile: true
 ---
 
