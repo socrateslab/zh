@@ -75,7 +75,7 @@ author_profile: true
   
 </table>
 
-## 联系方式
+## 联系
 
 ![image](https://github.com/user-attachments/assets/7f8fe705-9f29-427d-841b-e339c43b60ff)
 
