@@ -77,6 +77,9 @@ author_profile: true
 </table>
 
 ## 联系方式
+
+![image](https://github.com/user-attachments/assets/7f8fe705-9f29-427d-841b-e339c43b60ff)
+
 - 邮箱：computational.communication@gmail.com
 - 地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）新闻传播学院307 (邮编210023).
 
