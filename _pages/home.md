@@ -67,7 +67,7 @@ author_profile: true
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://zhicongchen.github.io/images/czc.png" width = 100px height = 100px><br>
-            <a href="https://zhicongchen.github.io/">陈志聪/a><br>
+            <a href="https://zhicongchen.github.io/">陈志聪</a><br>
             助理教授
         </div>
     </td>
