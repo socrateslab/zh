@@ -40,7 +40,6 @@ author_profile: true
             教授
         </div>
     </td>
-
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://kekeshang.github.io/assets/images/-96x116.jpeg" width = 100px height = 100px><br>
@@ -49,6 +48,7 @@ author_profile: true
         </div>
     </td>
   </tr>
+  
   <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
@@ -57,7 +57,6 @@ author_profile: true
             助理教授
         </div>
     </td>
- 
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://zhouyixin.xyz/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7ea1fe81-6cef-4dac-952c-3807fe426b98%2FIMG_1196_.jpg?table=block&id=3cb2fb58-19e4-4d51-be13-fc8b6089b258&spaceId=949b0961-e586-4e70-926a-3778ff946257&width=250&userId=&cache=v2" width = 100px height = 100px><br>
@@ -66,7 +65,8 @@ author_profile: true
         </div>
     </td>
   </tr>
-    <tr>
+  
+  <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://zhicongchen.github.io/images/czc.png" width = 100px height = 100px><br>
