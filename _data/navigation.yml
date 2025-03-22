@@ -4,6 +4,8 @@ main:
      url: /
    - title: "新闻"
      url: /year-archive/
+   - title: "论坛"
+     url: https://www.douban.com/group/webmining/  
    - title: "百科"
      url: https://socrateslab.github.io/wiki/  
    - title: "English"
