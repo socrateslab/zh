@@ -1,13 +1,13 @@
 ---
 layout: single
 title: "我们的愿景"
-permalink: /
+permalink: /about/
 header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: /assets/images/unsplash-image-11.jpg
   cta_label: "Read More"
-  cta_url: "/"
+  cta_url: "/about/"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "寻找人类传播行为可计算化的基因."
 modified: 2016-11-03T11:55:22-04:00
