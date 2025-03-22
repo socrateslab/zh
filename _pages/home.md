@@ -20,8 +20,6 @@ author_profile: true
 
 ## 简介
 
-![](https://computational-communication.com/assets/CCC.png)
-
 计算传播学实验中心（CCC、C-Cube或C3）由南京大学新闻传播学院于2015年2月成立。计算传播学实验中心致力于于寻找传播学可计算化的基因、学习和传播可计算化思维/方法（电子化数据收集能力、编程能力、数学建模能力、网络分析、文本挖掘）、了解和训练计算传播学的社会化应用方法（数据新闻、计算广告、可视化等）。
 
 > 基因是生物学飞跃的原因，货币是经济学发展的关键。人类传播行为所隐藏的计算化“基因”是什么？
@@ -80,6 +78,6 @@ author_profile: true
 
 ## 联系方式
 - 邮箱：computational.communication@gmail.com
-- 地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）紫金楼307 (邮编210023).
+- 地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）新闻传播学院307 (邮编210023).
 
 [🔥 Kindling the fire in your heart!](https://github.com/socrateslab/forum/edit/master/_pages/home.md)
