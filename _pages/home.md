@@ -30,7 +30,7 @@ author_profile: true
 
 计算传播学网站致力于寻找传播学可计算化的基因、学习和传播可计算化思维/方法（电子化数据收集能力、编程能力、数学建模能力、网络分析、文本挖掘）、了解和训练计算传播学的社会化应用方法（数据新闻、计算广告、可视化等）。
 
-### 成员
+## 成员
 
 <table style="table-layout: auto; width: 150px">
   <tr>
@@ -74,5 +74,7 @@ author_profile: true
   </tr>
   
 </table>
+
+
 
 [🔥 Kindling the fire in your heart!](https://github.com/socrateslab/forum/edit/master/_pages/home.md)
