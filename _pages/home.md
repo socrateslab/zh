@@ -41,6 +41,8 @@ author_profile: true
             教授
         </div>
     </td>
+  </tr>
+  <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://kekeshang.github.io/assets/images/-96x116.jpeg" width = 100px height = 100px><br>
@@ -48,6 +50,8 @@ author_profile: true
             副教授
         </div>
     </td>
+  </tr>
+  <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://scholar.googleusercontent.com/citations?view_op=view_photo&user=qscxWlUAAAAJ&citpid=2" width = 100px height = 100px><br>
@@ -64,6 +68,8 @@ author_profile: true
             副教授
         </div>
     </td>
+  </tr>
+    <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://zhicongchen.github.io/images/czc.png" width = 100px height = 100px><br>
