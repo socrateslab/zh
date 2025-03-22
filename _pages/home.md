@@ -31,7 +31,7 @@ author_profile: true
 
 ## 成员
 
-<table style="table-layout: auto; width: 150px">
+<table style="table-layout: auto; width: 450px">
   <tr>
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
@@ -79,7 +79,7 @@ author_profile: true
 </table>
 
 ## 联系方式
-邮箱：computational.communication@gmail.com
-地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）紫金楼307 (邮编210023).
+- 邮箱：computational.communication@gmail.com
+- 地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）紫金楼307 (邮编210023).
 
 [🔥 Kindling the fire in your heart!](https://github.com/socrateslab/forum/edit/master/_pages/home.md)
