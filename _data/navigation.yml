@@ -8,5 +8,7 @@ main:
      url: https://www.douban.com/group/webmining/  
    - title: "百科"
      url: https://socrateslab.github.io/wiki/  
+   - title: "管理"
+     url: https://github.com/socrateslab/zh/
    - title: "English"
      url: https://socrateslab.github.io
