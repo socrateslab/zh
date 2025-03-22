@@ -40,8 +40,7 @@ author_profile: true
             教授
         </div>
     </td>
-  </tr>
-  <tr>
+
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://kekeshang.github.io/assets/images/-96x116.jpeg" width = 100px height = 100px><br>
@@ -58,8 +57,7 @@ author_profile: true
             助理教授
         </div>
     </td>
-  </tr>
-  <tr>    
+ 
     <td style="text-align: center; vertical-align: middle; padding:10px">
         <div>
             <img src="https://zhouyixin.xyz/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7ea1fe81-6cef-4dac-952c-3807fe426b98%2FIMG_1196_.jpg?table=block&id=3cb2fb58-19e4-4d51-be13-fc8b6089b258&spaceId=949b0961-e586-4e70-926a-3778ff946257&width=250&userId=&cache=v2" width = 100px height = 100px><br>
@@ -80,6 +78,8 @@ author_profile: true
   
 </table>
 
-
+## 联系方式
+邮箱：computational.communication@gmail.com
+地址：中国江苏省南京市栖霞区仙林大道163号，南京大学（仙林校区）紫金楼307 (邮编210023).
 
 [🔥 Kindling the fire in your heart!](https://github.com/socrateslab/forum/edit/master/_pages/home.md)
