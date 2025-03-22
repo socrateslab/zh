@@ -2,12 +2,11 @@
 main:
    - title: "首页"
      url: /
-   - title: "文章"
+   - title: "新闻"
      url: /year-archive/
-   - title: "作者"
+   - title: "信息"
      url: /authors/
-   - title: "中心"
-     url: https://socrateslab.github.io
    - title: "百科"
-     url: https://socrateslab.github.io/wiki/
-     
+     url: https://socrateslab.github.io/wiki/  
+   - title: "English"
+     url: https://socrateslab.github.io
