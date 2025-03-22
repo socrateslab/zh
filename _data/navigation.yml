@@ -4,8 +4,6 @@ main:
      url: /
    - title: "新闻"
      url: /year-archive/
-   - title: "信息"
-     url: /authors/
    - title: "百科"
      url: https://socrateslab.github.io/wiki/  
    - title: "English"
