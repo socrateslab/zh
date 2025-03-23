@@ -16,7 +16,7 @@ author_profile: true
 {% include toc title="Table" icon="file-text" %}
 
 
-[寻找人类传播行为的计算基因🧬!]({{ "/" | absolute_url }}){: .btn .btn--success .btn--large}
+[寻找人类传播行为的计算基因🧬]({{ "/" | absolute_url }}){: .btn .btn--success .btn--large}
 
 ## 简介
 
