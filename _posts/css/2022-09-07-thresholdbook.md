@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "王成军副教授专著《跨越网络的门槛》出版"
+title: "王成军教授专著《跨越网络的门槛》出版"
 header:
   teaser: "/assets/images/unsplash-gallery-image-4-th.jpg"
   overlay_color: "#000"
